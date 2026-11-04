@@ -1,7 +1,25 @@
 // Application Engine for Creative Engineering Showcase & Interactive Syllabus (2026 Edition)
-const SKILLS_DATA = (typeof window !== 'undefined' && window.SKILLS_DATA) ? window.SKILLS_DATA : [];
-const TEACHING_MODULES = (typeof window !== 'undefined' && window.TEACHING_MODULES) ? window.TEACHING_MODULES : [];
-const OrbitControls = (typeof window !== 'undefined' && window.OrbitControls) ? window.OrbitControls : ((typeof THREE !== 'undefined' && THREE.OrbitControls) ? THREE.OrbitControls : null);
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+if (typeof window !== 'undefined') {
+  window.THREE = THREE;
+  window.OrbitControls = OrbitControls;
+}
+
+import { SKILLS_DATA as IMPORTED_SKILLS, TEACHING_MODULES as IMPORTED_MODULES } from './skills-data.js';
+import { initCouncilDemocracy } from './modules/council-democracy.js';
+import { initBlenderStudio } from './modules/blender-mcp-studio.js';
+import { initFlavourWorlds, setFlavourWorld, FLAVOUR_WORLDS } from './modules/flavour-worlds.js';
+import { initLiquidGlass } from './modules/liquid-glass.js';
+import { initHero3DSpecimens, morphToSpecimen } from './modules/hero-3d-specimens.js';
+
+const SKILLS_DATA = (typeof window !== 'undefined' && window.SKILLS_DATA && window.SKILLS_DATA.length) 
+  ? window.SKILLS_DATA 
+  : (IMPORTED_SKILLS || []);
+
+const TEACHING_MODULES = (typeof window !== 'undefined' && window.TEACHING_MODULES && window.TEACHING_MODULES.length) 
+  ? window.TEACHING_MODULES 
+  : (IMPORTED_MODULES || []);
 
 // ============================================================================
 // THREE.JS 3D INTERACTIVE STAGE & SHADER PIPELINE
@@ -1375,7 +1393,7 @@ export function setupGlassLaboratory() {
   const scaleSlider = document.getElementById('glass-scale-slider');
   const chromaticToggle = document.getElementById('chromatic-toggle');
   const glassCard = document.getElementById('demo-glass-card');
-  const displacementNode = document.querySelector('#liquid-glass-filter feDisplacementMap');
+  const displacementNode = document.querySelector('#liquid-glass-lens feDisplacementMap, #liquid-glass-displacement');
 
   if (scaleSlider) {
     scaleSlider.addEventListener('input', (e) => {
@@ -1389,7 +1407,7 @@ export function setupGlassLaboratory() {
   if (chromaticToggle && glassCard) {
     chromaticToggle.addEventListener('change', (e) => {
       if (e.target.checked) {
-        glassCard.style.filter = "url(#liquid-glass-filter)";
+        glassCard.style.filter = "url(#liquid-glass-lens)";
       } else {
         glassCard.style.filter = "none";
       }
@@ -1482,6 +1500,14 @@ export function setupNavigationTabs() {
 
     if (targetId === 'section-3d-lab') {
       setTimeout(init3DStage, 50);
+    } else if (targetId === 'section-council') {
+      setTimeout(() => {
+        if (typeof window.refreshCouncilStage === 'function') window.refreshCouncilStage();
+      }, 50);
+    } else if (targetId === 'section-blender') {
+      setTimeout(() => {
+        if (typeof window.resizeBlenderStudio === 'function') window.resizeBlenderStudio();
+      }, 50);
     } else if (targetId === 'section-motion-lab') {
       setTimeout(() => {
         if (typeof resizeParticleCanvas === 'function') resizeParticleCanvas();
@@ -1513,6 +1539,16 @@ export function setupNavigationTabs() {
       }
     });
   });
+
+  // Wire any buttons with data-nav-target (e.g. Hero CTAs)
+  const navTargetBtns = document.querySelectorAll('[data-nav-target]');
+  navTargetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-nav-target');
+      const targetTab = document.querySelector(`.nav-tab-bar .nav-tab-btn[data-target="${target}"]`);
+      if (targetTab) activateTab(targetTab);
+    });
+  });
 }
 
 function escapeHtml(str) {
@@ -1540,7 +1576,24 @@ if (typeof document !== 'undefined') {
     initVariableProximityDemo();
     initShinyTextDemo();
     initParticleBurstSandbox();
+    initCouncilDemocracy();
+    initBlenderStudio();
+    initFlavourWorlds();
+    initLiquidGlass();
+    initHero3DSpecimens();
   });
+
+  window.renderTeachingModule = renderTeachingModule;
+  window.togglePresenterMode = togglePresenterMode;
+  window.toggleSolution = toggleSolution;
+  window.revealSolution = revealSolution;
+  window.hideSolution = hideSolution;
+  window.logToTerminal = logToTerminal;
+  window.initLiquidGlass = initLiquidGlass;
+  window.initHero3DSpecimens = initHero3DSpecimens;
+  window.morphToSpecimen = morphToSpecimen;
+  window.TEACHING_MODULES = TEACHING_MODULES;
+  window.SKILLS_DATA = SKILLS_DATA;
 }
 
 // ============================================================================
