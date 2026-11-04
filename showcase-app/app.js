@@ -1551,7 +1551,11 @@ export function setupNavigationTabs() {
       t.setAttribute('tabindex', '-1');
     });
 
-    sections.forEach(s => s.style.display = 'none');
+    sections.forEach(s => {
+      s.classList.remove('active');
+      s.style.display = 'none';
+      s.setAttribute('tabindex', '-1');
+    });
 
     tab.classList.add('active');
     tab.setAttribute('aria-selected', 'true');
@@ -1559,10 +1563,17 @@ export function setupNavigationTabs() {
     tab.focus();
 
     const targetSection = document.getElementById(targetId);
-    if (targetSection) targetSection.style.display = 'block';
+    if (targetSection) {
+      targetSection.classList.add('active');
+      targetSection.style.display = 'block';
+      targetSection.setAttribute('tabindex', '0');
+    }
 
     if (targetId === 'section-3d-lab') {
-      setTimeout(init3DStage, 50);
+      setTimeout(() => {
+        init3DStage();
+        resize3DStage();
+      }, 50);
     } else if (targetId === 'section-council') {
       setTimeout(() => {
         if (typeof window.refreshCouncilStage === 'function') window.refreshCouncilStage();
@@ -1576,7 +1587,26 @@ export function setupNavigationTabs() {
         if (typeof resizeParticleCanvas === 'function') resizeParticleCanvas();
         if (typeof refreshProximityCenters === 'function') refreshProximityCenters();
       }, 60);
+    } else if (targetId === 'section-syllabus') {
+      renderTeachingModule(currentModuleIdx);
     }
+  }
+
+  // Synchronize initial state: only the active tab's section is shown
+  const initialActiveTab = document.querySelector('.nav-tab-bar .nav-tab-btn.active') || tabs[0];
+  if (initialActiveTab) {
+    const initialTargetId = initialActiveTab.getAttribute('data-target');
+    sections.forEach(s => {
+      if (s.id === initialTargetId) {
+        s.classList.add('active');
+        s.style.display = 'block';
+        s.setAttribute('tabindex', '0');
+      } else {
+        s.classList.remove('active');
+        s.style.display = 'none';
+        s.setAttribute('tabindex', '-1');
+      }
+    });
   }
 
   tabs.forEach((tab, index) => {
@@ -1609,7 +1639,10 @@ export function setupNavigationTabs() {
     btn.addEventListener('click', () => {
       const target = btn.getAttribute('data-nav-target');
       const targetTab = document.querySelector(`.nav-tab-bar .nav-tab-btn[data-target="${target}"]`);
-      if (targetTab) activateTab(targetTab);
+      if (targetTab) {
+        activateTab(targetTab);
+        targetTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   });
 }
@@ -1639,11 +1672,52 @@ if (typeof document !== 'undefined') {
     initVariableProximityDemo();
     initShinyTextDemo();
     initParticleBurstSandbox();
-    initCouncilDemocracy();
-    initBlenderStudio();
-    initFlavourWorlds();
-    initLiquidGlass();
-    initHero3DSpecimens();
+
+    // ========================================================================
+    // Integrated Subagent Frontier Modules (Graceful System Initialization)
+    // ========================================================================
+    // 1. Hero 3D Centerpiece Specimen Stage (12,000+ morphing particles, Y-axis descending sorting)
+    try {
+      if (typeof initHero3DStage === 'function') {
+        initHero3DStage();
+      } else if (typeof initHero3DSpecimens === 'function') {
+        initHero3DSpecimens();
+      }
+    } catch (err) {
+      console.warn("initHero3DStage initialization error:", err);
+    }
+
+    // 2. SunChips Whole-Canvas Flavour Worlds (Calibrated WCAG AA contrast tokens)
+    try {
+      if (typeof initFlavourWorlds === 'function') initFlavourWorlds();
+    } catch (err) {
+      console.warn("initFlavourWorlds initialization error:", err);
+    }
+
+    // 3. Apple Tahoe Liquid Glass Refraction Lab (SVG feDisplacementMap + Specular Stack)
+    try {
+      if (typeof initLiquidGlass === 'function') initLiquidGlass();
+    } catch (err) {
+      console.warn("initLiquidGlass initialization error:", err);
+    }
+
+    // 4. AI Council Chamber & Democracy Console (3-6 Agent Frontier Council + Adversarial Jester)
+    try {
+      if (typeof initCouncilChamber === 'function') {
+        initCouncilChamber();
+      } else if (typeof initCouncilDemocracy === 'function') {
+        initCouncilDemocracy();
+      }
+    } catch (err) {
+      console.warn("initCouncilChamber initialization error:", err);
+    }
+
+    // 5. Blender 5.2 MCP Parametric Studio (Headless bpy generator & OptiX Cycles GPU simulation)
+    try {
+      if (typeof initBlenderStudio === 'function') initBlenderStudio();
+    } catch (err) {
+      console.warn("initBlenderStudio initialization error:", err);
+    }
   });
 
   window.renderTeachingModule = renderTeachingModule;
@@ -1652,9 +1726,19 @@ if (typeof document !== 'undefined') {
   window.revealSolution = revealSolution;
   window.hideSolution = hideSolution;
   window.logToTerminal = logToTerminal;
-  window.initLiquidGlass = initLiquidGlass;
+  window.reset3DCamera = reset3DCamera;
+  window.cycleRenderMode = cycleRenderMode;
+  window.resize3DStage = resize3DStage;
+  window.initHero3DStage = initHero3DStage;
   window.initHero3DSpecimens = initHero3DSpecimens;
   window.morphToSpecimen = morphToSpecimen;
+  window.initFlavourWorlds = initFlavourWorlds;
+  window.setFlavourWorld = setFlavourWorld;
+  window.FLAVOUR_WORLDS = FLAVOUR_WORLDS;
+  window.initLiquidGlass = initLiquidGlass;
+  window.initCouncilChamber = initCouncilChamber;
+  window.initCouncilDemocracy = initCouncilDemocracy;
+  window.initBlenderStudio = initBlenderStudio;
   window.TEACHING_MODULES = TEACHING_MODULES;
   window.SKILLS_DATA = SKILLS_DATA;
 }
