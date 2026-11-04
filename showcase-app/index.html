@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Creative Engineering & Skills Encyclopedia (2026 Edition)</title>
+  
+  <!-- Zero-FOUC Render-Blocking Intro -->
+  <link rel="expect" href="#app-root" blocking="render">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Roboto+Flex:wght,wdth@100..900,25..151&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js r170+ Import Map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body id="app-root">
+
+  <!-- SVG Optical Refraction Definition for Apple Tahoe Liquid Glass -->
+  <svg class="sr-only" aria-hidden="true">
+    <defs>
+      <filter id="liquid-glass-filter" x="-20%" y="-20%" width="140%" height="140%">
+        <!-- Procedural Normal Displacement Simulation -->
+        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+        <feOffset in="displaced" dx="1.5" dy="0" result="redShift" />
+        <feColorMatrix in="redShift" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red" />
+        <feOffset in="displaced" dx="-1.5" dy="0" result="blueShift" />
+        <feColorMatrix in="blueShift" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
+        <feBlend in="red" in2="displaced" mode="screen" result="rb" />
+        <feBlend in="blue" in2="rb" mode="screen" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="app-container">
+    
+    <!-- Top Masthead & Repository Pill -->
+    <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+      <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">
+          ● 2026 FRONTIER EDITION
+        </span>
+        <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
+          LEUL-5070TI // RTX 5070 Ti // BLENDER 5.2
+        </span>
+      </div>
+
+      <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer" class="tone-badge" aria-label="GitHub repository LeulTew/skills (opens in new tab)" style="text-decoration:none; color:var(--t-primary); background:rgba(255,255,255,0.06); cursor:pointer;">
+        <span>GitHub: <strong style="color:var(--c-amber);">LeulTew/skills (94 Skills)</strong></span>
+        <span aria-hidden="true">&nearr;</span>
+      </a>
+    </header>
+
+    <!-- Hero Introduction -->
+    <main>
+      <section style="margin-bottom:3rem;">
+        <h1 class="hero-title" style="margin-bottom:1.2rem;">
+          Physical Precision <br>
+          <span style="color:var(--c-ember);">Over Generative Slop.</span>
+        </h1>
+        <p style="font-size:clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem); color:var(--t-secondary); max-width:820px; margin-bottom:2rem;">
+          The master interactive knowledge hub and demonstration platform for award-winning UI/UX architectures, Three.js WebGPU pipelines, Blender 5.2 MCP socket automation, and deterministic programmatic video.
+        </p>
+
+        <!-- Navigation Tab Bar -->
+        <nav class="nav-tab-bar" role="tablist" aria-label="Encyclopedia Sections" style="margin-bottom:2.5rem;">
+          <button id="tab-syllabus" role="tab" aria-selected="true" aria-controls="section-syllabus" class="nav-tab-btn active" data-target="section-syllabus">Interactive Syllabus (10 Modules)</button>
+          <button id="tab-3d-lab" role="tab" aria-selected="false" aria-controls="section-3d-lab" class="nav-tab-btn" data-target="section-3d-lab">3D &amp; WebGPU Laboratory</button>
+          <button id="tab-glass-lab" role="tab" aria-selected="false" aria-controls="section-glass-lab" class="nav-tab-btn" data-target="section-glass-lab">Apple Tahoe Liquid Glass</button>
+          <button id="tab-motion-lab" role="tab" aria-selected="false" aria-controls="section-motion-lab" class="nav-tab-btn" data-target="section-motion-lab">Motion &amp; Kinetic Playground</button>
+          <button id="tab-catalog" role="tab" aria-selected="false" aria-controls="section-catalog" class="nav-tab-btn" data-target="section-catalog">Skills &amp; MCP Catalog (94 Skills)</button>
+        </nav>
+      </section>
+
+      <!-- VIEW 1: INTERACTIVE SYLLABUS & TEACHING MODE -->
+      <section id="section-syllabus" class="view-section" role="tabpanel" aria-labelledby="tab-syllabus" tabindex="0" aria-live="polite">
+        <!-- Presenter Mode HUD (Visible in Fullscreen / Presenter Deck Mode) -->
+        <div class="presenter-hud">
+          <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+            <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">
+              ● PRESENTER DECK MODE
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-muted);">
+              HOTKEYS: <strong style="color:var(--c-amber);">&larr; / &rarr;</strong> Slide &bull; <strong style="color:var(--c-amber);">Space</strong> Next &bull; <strong style="color:var(--c-amber);">R</strong> Reveal &bull; <strong style="color:var(--c-amber);">M</strong> Modules &bull; <strong style="color:var(--c-amber);">Esc</strong> Exit
+            </span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem;">
+            <button id="hud-drawer-btn" class="deck-btn" title="Module Selector Drawer (M)">☰ Modules [M]</button>
+            <button id="hud-exit-btn" class="deck-btn deck-btn-primary" title="Exit Presenter Deck (Esc)">✕ Exit Deck [Esc]</button>
+          </div>
+        </div>
+
+        <div class="liquid-glass-card" style="margin-bottom:2rem;">
+          <!-- Slide Top Toolbar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.8rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+              <span class="tone-badge" id="mod-number">Module 01 / 10</span>
+              <span class="tone-badge" id="mod-tag" style="border-color:var(--c-cobalt-rim); color:var(--c-amber);">UI Foundations</span>
+              <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-muted);">
+                Slide <strong id="current-slide-num" style="color:var(--t-primary);">1</strong> of 10
+              </span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+              <div role="progressbar" id="syllabus-progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="10" aria-label="Syllabus curriculum progress" style="width:160px; height:8px; background:var(--c-elevated-zinc); border-radius:4px; overflow:hidden;">
+                <div id="syllabus-progress" style="width:10%; height:100%; background:var(--c-ember); transition:width 0.3s ease;"></div>
+              </div>
+              <button id="open-drawer-btn" class="deck-btn" title="Open Module Selector Drawer (M)">☰ Modules [M]</button>
+              <button id="toggle-presenter-btn" class="deck-btn deck-btn-primary" title="Toggle Fullscreen Presenter Deck (F)">⚡ Presenter Deck [F]</button>
+            </div>
+          </div>
+
+          <!-- Hotkey Navigation Bar -->
+          <div class="deck-hotkey-bar" style="margin-bottom:1.6rem;">
+            <span class="deck-hotkey-pill"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> or <kbd>Space</kbd> Navigate</span>
+            <span class="deck-hotkey-pill"><kbd>R</kbd> Reveal Solution</span>
+            <span class="deck-hotkey-pill"><kbd>F</kbd> Fullscreen Deck</span>
+            <span class="deck-hotkey-pill"><kbd>M</kbd> Modules Drawer</span>
+            <span class="deck-hotkey-pill"><kbd>1-0</kbd> Jump Module</span>
+          </div>
+
+          <!-- Slide Stage Content -->
+          <div id="slide-stage-container" class="slide-content-transition">
+            <h2 id="mod-title" class="section-title" style="margin-bottom:0.8rem; font-size:1.85rem;">The Anti-Slop Mindset & Zero-Shadows</h2>
+            <p id="mod-concept" style="font-size:1.05rem; color:var(--t-secondary); margin-bottom:2rem; max-width:960px;">
+              Generic AI designs rely on pastel linear gradients on black, floating cards, and gratuitous blur drop-shadows. Award-winning craft creates depth solely through calibrated tone steps, 1px hairlines, and concentric radii.
+            </p>
+
+            <div class="grid-2col" style="margin-bottom:2rem;">
+              <!-- Mentor Discussion Inquiry Card -->
+              <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.4rem;">
+                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.8rem;">
+                  <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--c-amber); font-weight:700;">[MENTOR DISCUSSION INQUIRY]</span>
+                </div>
+                <p id="mod-mentor-prompt" style="font-size:0.95rem; color:var(--t-primary); font-style:italic; line-height:1.6;">
+                  Look at this UI card. What makes it look like generic AI slop? How would you redesign it to feel like an expensive editorial object?
+                </p>
+              </div>
+
+              <!-- Engineering Target Solution Card with Quiz Mode Reveal -->
+              <div id="mod-solution-card" style="background:var(--c-deep-zinc); border:1px solid rgba(249, 115, 22, 0.35); border-radius:var(--r-inner); padding:1.4rem; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
+                    <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--c-ember); font-weight:700;">[ENGINEERING TARGET SOLUTION]</span>
+                    <div style="display:flex; align-items:center; gap:0.5rem;">
+                      <span id="solution-status-badge" class="quiz-badge quiz-badge-masked">QUIZ: MASKED</span>
+                      <button id="reveal-solution-btn" class="reveal-btn" title="Toggle Solution Visibility (Hotkey: R)">
+                        <span id="reveal-btn-icon">👁️</span>
+                        <span id="reveal-btn-text">Reveal Solution [R]</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Masked Placeholder View for Quiz Mode -->
+                  <div id="solution-masked-view" class="solution-masked-box" title="Click or press [R] to reveal target solution">
+                    <p>🔒 <strong>Target solution concealed for quiz mode.</strong><br><span style="font-size:0.82rem; color:var(--t-muted);">Discuss the mentor inquiry with your peer, then click or press <kbd style="color:var(--c-amber);">[R]</kbd> to verify!</span></p>
+                  </div>
+
+                  <!-- Revealed Solution View -->
+                  <div id="solution-revealed-view" class="solution-revealed-box" style="display:none;">
+                    <p id="mod-student-target" style="font-size:0.95rem; color:var(--t-primary); line-height:1.6;">
+                      Strip the 20px black drop-shadow, replace it with a 1px cobalt border (#1e293b), set the surface to deep zinc (#12141a), and align the inner radius to outer minus padding.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Editable Code Playground & Preview Sandbox -->
+            <div class="code-playground-card">
+              <div class="playground-header">
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                  <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--c-amber); font-weight:700;">[LIVE CODE PLAYGROUND]</span>
+                  <span id="code-lang-badge" class="tone-badge" style="font-size:0.72rem; padding:0.15rem 0.5rem;">CSS</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                  <button id="copy-code-btn" class="deck-btn" title="Copy code snippet to clipboard">📋 Copy Snippet</button>
+                  <button id="reset-code-btn" class="deck-btn" title="Reset code to original blueprint">↺ Reset</button>
+                  <button id="run-code-btn" class="deck-btn deck-btn-ember" title="Execute / Compile and Live Preview">▶ Run / Preview</button>
+                </div>
+              </div>
+
+              <!-- Code Editor Textarea -->
+              <div class="code-editor-wrapper">
+                <textarea id="code-editor-input" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Live code editor"></textarea>
+              </div>
+
+              <!-- Live Execution Sandbox Stage -->
+              <div class="code-preview-stage">
+                <div class="preview-subhead">
+                  <span id="preview-hint-text" style="color:var(--t-secondary); font-size:0.82rem;">Tweak code above and click "Run / Preview" to test.</span>
+                  <span id="preview-status-pill" class="preview-status-pill">● Status: Active Sandbox</span>
+                </div>
+
+                <!-- Dynamic Preview Canvas Mount -->
+                <div id="preview-sandbox-mount" class="preview-sandbox-mount">
+                  <!-- Dynamic Live Render Target -->
+                </div>
+
+                <!-- Terminal Execution Log -->
+                <div id="preview-terminal-log" class="preview-terminal-log" role="log" aria-live="polite">
+                  <div><span class="log-time">[INIT]</span> <span class="log-success">Playground initialized. Ready for execution.</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide Navigation Controls & Slide Dots -->
+          <div class="deck-nav-bar">
+            <button id="prev-module-btn" class="nav-tab-btn" aria-label="Previous syllabus module" style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim);" disabled>&larr; Previous Module [←]</button>
+            <div id="slide-dots-container" class="slide-dots-container"></div>
+            <button id="next-module-btn" class="nav-tab-btn deck-btn-ember" aria-label="Next syllabus module">Next Module [→ / Space] &rarr;</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: 3D & WEBGPU LABORATORY -->
+      <section id="section-3d-lab" class="view-section" role="tabpanel" aria-labelledby="tab-3d-lab" tabindex="0" style="display:none;">
+        <div class="liquid-glass-card" style="margin-bottom:2rem;">
+          
+          <!-- Viewport Header & Action Toolbar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span class="tone-badge" style="margin-bottom:0.5rem;">THREE.JS R170+ // COLORIMETRIC STAGE</span>
+              <h2 class="section-title" style="font-size:1.8rem;">Interactive WebGL/WebGPU 3D Viewport</h2>
+            </div>
+            <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+              <button id="rotate-toggle-btn" class="nav-tab-btn" aria-label="Pause or resume 3D object rotation" style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); display:inline-flex; align-items:center; gap:0.4rem;">
+                <span id="rotate-btn-icon" aria-hidden="true">⏸</span>
+                <span id="rotate-btn-text">Pause Spin</span>
+              </button>
+              <button id="camera-reset-btn" class="nav-tab-btn" aria-label="Reset 3D camera to default viewpoint" style="background:var(--c-deep-zinc); border:1px solid var(--c-ember); color:var(--c-ember); display:inline-flex; align-items:center; gap:0.4rem;">
+                <span aria-hidden="true">⟲</span>
+                <span>Reset Camera</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3D Canvas Frame with Floating Telemetry HUD & Screen-Reader Description -->
+          <div class="viewport-3d-frame" id="three-viewport-container" role="region" aria-label="Interactive 3D WebGPU and Three.js Viewport" style="position:relative; margin-bottom:1.8rem;">
+            <p class="sr-only">Interactive 3D viewport rendering real-time 3D geometry with configurable render modes (Solid PBR, Wireframe Hologram, and Point Cloud Particles), Tone Mapping selector (Khronos PBR Neutral, ACES Filmic, AgX, None), and studio lighting controls.</p>
+            
+            <!-- Floating Telemetry HUD -->
+            <div class="viewport-hud-overlay" aria-live="polite">
+              <div class="hud-item"><span class="hud-label">RENDER MODE:</span> <span id="hud-render-mode" class="hud-val">SOLID PBR</span></div>
+              <div class="hud-item"><span class="hud-label">TONE MAP:</span> <span id="hud-tone-mapping" class="hud-val">KHRONOS NEUTRAL</span></div>
+              <div class="hud-item"><span class="hud-label">GEOMETRY:</span> <span id="hud-geometry-info" class="hud-val">TORUS KNOT</span></div>
+              <div class="hud-item"><span class="hud-label">SORTING:</span> <span id="hud-sorting-info" class="hud-val">Y-AXIS TOP-TO-BOTTOM</span></div>
+            </div>
+
+            <!-- Viewport Interaction Gesture Hint -->
+            <div class="viewport-gesture-hint" aria-hidden="true">
+              <span>Drag to Orbit</span> &bull; <span>Scroll / Pinch to Zoom</span> &bull; <span>Right-Click / 2-Finger to Pan</span>
+            </div>
+          </div>
+
+          <!-- Master 3D Control Studio (Bento Grid) -->
+          <div class="controls-bento-grid">
+            
+            <!-- PANEL 1: SHADING & RENDER PIPELINE -->
+            <div class="control-panel-card">
+              <div class="panel-card-header">
+                <span class="tone-badge" style="font-size:0.72rem;">PIPELINE SHADING</span>
+                <h3 style="font-family:var(--font-display); font-size:1.05rem; color:var(--t-primary); margin:0;">Render & Shading Mode</h3>
+              </div>
+
+              <!-- Render Mode Selector -->
+              <div class="control-slider-group">
+                <label for="render-mode-select"><span>Render Mode</span><span id="render-mode-badge" style="color:var(--c-amber);">Solid PBR</span></label>
+                <select id="render-mode-select" class="custom-select" aria-label="Render Mode Selection">
+                  <option value="solid" selected>Solid PBR (Micro-facet Standard)</option>
+                  <option value="wireframe">Wireframe Hologram (HUD CAD Mesh)</option>
+                  <option value="particles">Point Cloud Particles (Y-Axis Sorted)</option>
+                </select>
+              </div>
+
+              <!-- Geometry Model Selector -->
+              <div class="control-slider-group">
+                <label for="geometry-select"><span>Geometry Model</span><span id="geometry-badge" style="color:var(--c-ember);">Superquadric</span></label>
+                <select id="geometry-select" class="custom-select" aria-label="Geometry Model Selection">
+                  <option value="torus" selected>Superquadric Torus Knot</option>
+                  <option value="box">Pillow Packaging Pack (PBR Mesh)</option>
+                  <option value="sphere">Particle Specimen Core (Icosahedron)</option>
+                </select>
+              </div>
+
+              <!-- Tone Mapping Selector -->
+              <div class="control-slider-group">
+                <label for="tone-mapping-select"><span>Tone Mapping Mode</span><span id="tonemap-badge" style="color:var(--c-amber);">Khronos Neutral</span></label>
+                <select id="tone-mapping-select" class="custom-select" aria-label="Colorimetric Tone Mapping Selection">
+                  <option value="neutral" selected>Khronos PBR Neutral (PBR 2026 Standard)</option>
+                  <option value="aces">ACES Filmic (Cinematic S-Curve)</option>
+                  <option value="agx">AgX (Next-Gen Wide DR Filmic)</option>
+                  <option value="none">None (Raw Linear [0,1] Clamp)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- PANEL 2: STUDIO LIGHTING RIG -->
+            <div class="control-panel-card">
+              <div class="panel-card-header">
+                <span class="tone-badge" style="font-size:0.72rem;">STUDIO RIG</span>
+                <h3 style="font-family:var(--font-display); font-size:1.05rem; color:var(--t-primary); margin:0;">Studio Lighting Channels</h3>
+              </div>
+
+              <!-- Warm Ember Rim Light Toggle -->
+              <label class="light-toggle-row" for="light-rim-toggle">
+                <div class="light-indicator" style="background:#f97316; box-shadow:0 0 10px #f97316;" aria-hidden="true"></div>
+                <div style="flex:1;">
+                  <div style="font-weight:600; font-size:0.9rem; color:var(--t-primary);">Warm Ember Rim Light</div>
+                  <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--t-muted);">0xf97316 &bull; Directional (3.5, 4.0, 3.0) &bull; 2.8x</div>
+                </div>
+                <input type="checkbox" id="light-rim-toggle" class="custom-switch" aria-label="Toggle Warm Ember Rim Light" checked>
+              </label>
+
+              <!-- Cobalt Key Light Toggle -->
+              <label class="light-toggle-row" for="light-key-toggle">
+                <div class="light-indicator" style="background:#38bdf8; box-shadow:0 0 10px #38bdf8;" aria-hidden="true"></div>
+                <div style="flex:1;">
+                  <div style="font-weight:600; font-size:0.9rem; color:var(--t-primary);">Cobalt Key Light</div>
+                  <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--t-muted);">0x38bdf8 &bull; Directional (-3.5, -2.0, -2.5) &bull; 2.2x</div>
+                </div>
+                <input type="checkbox" id="light-key-toggle" class="custom-switch" aria-label="Toggle Cobalt Key Light" checked>
+              </label>
+
+              <!-- Ambient Fill Light Toggle -->
+              <label class="light-toggle-row" for="light-ambient-toggle">
+                <div class="light-indicator" style="background:#ffffff; box-shadow:0 0 8px rgba(255,255,255,0.8);" aria-hidden="true"></div>
+                <div style="flex:1;">
+                  <div style="font-weight:600; font-size:0.9rem; color:var(--t-primary);">Ambient Fill Channel</div>
+                  <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--t-muted);">0xffffff &bull; Hemispheric Ambient &bull; 0.45x</div>
+                </div>
+                <input type="checkbox" id="light-ambient-toggle" class="custom-switch" aria-label="Toggle Ambient Fill Light" checked>
+              </label>
+            </div>
+
+            <!-- PANEL 3: SURFACE PHYSICS & MOTION -->
+            <div class="control-panel-card">
+              <div class="panel-card-header">
+                <span class="tone-badge" style="font-size:0.72rem;">PHYSICS & DYNAMICS</span>
+                <h3 style="font-family:var(--font-display); font-size:1.05rem; color:var(--t-primary); margin:0;">Surface Physics & Motion</h3>
+              </div>
+
+              <div class="control-slider-group">
+                <label for="roughness-slider"><span>Roughness (Micro-facet Scatter)</span><span id="roughness-val">0.18</span></label>
+                <input type="range" id="roughness-slider" aria-label="Roughness Micro-facet Scatter" min="0.0" max="1.0" step="0.01" value="0.18">
+              </div>
+
+              <div class="control-slider-group">
+                <label for="metallic-slider"><span>Metalness (F0 Specular Reflectance)</span><span id="metallic-val">0.88</span></label>
+                <input type="range" id="metallic-slider" aria-label="Metalness Specular Reflectance" min="0.0" max="1.0" step="0.01" value="0.88">
+              </div>
+
+              <div class="control-slider-group">
+                <label for="spin-speed-slider"><span>Auto-Spin Angular Velocity</span><span id="spin-speed-val">1.0x</span></label>
+                <input type="range" id="spin-speed-slider" aria-label="Auto-Spin Angular Velocity" min="0.1" max="3.0" step="0.1" value="1.0">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Educational Deep Dive Card: Live Colorimetric & Point Cloud Archaeology -->
+          <div id="theory-deepdive-card" class="theory-deepdive-box" style="margin-top:1.8rem;" aria-live="polite">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.8rem; flex-wrap:wrap;">
+              <span class="tone-badge" style="border-color:var(--c-amber); color:var(--c-amber);">ARCHITECTURAL ANALYSIS</span>
+              <span id="deepdive-topic-title" style="font-weight:700; font-size:0.95rem; color:var(--t-primary);">Khronos PBR Neutral Colorimetry</span>
+            </div>
+            <p id="deepdive-topic-text" style="font-size:0.9rem; color:var(--t-secondary); line-height:1.6; margin-bottom:0.8rem;">
+              Khronos PBR Neutral tone mapping preserves true packaging print colorimetry without highlight burnout. Unlike ACES Filmic which notoriously shifts saturated orange into pale yellow specular highlights, Neutral maintains exact brand chroma across the entire dynamic range. Standardized by Khronos for digital product visualization.
+            </p>
+            <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--t-muted); display:flex; gap:1.2rem; flex-wrap:wrap;">
+              <span>&bull; Rule: <strong>Top-to-Bottom Y-Sorting</strong> eliminates chaotic spatial scrambling during morphological transforms.</span>
+              <span>&bull; Memory: <strong>Strict BufferGeometry & Material disposal</strong> on state change.</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- VIEW 3: APPLE TAHOE LIQUID GLASS LAB -->
+      <section id="section-glass-lab" class="view-section" role="tabpanel" aria-labelledby="tab-glass-lab" tabindex="0" style="display:none;">
+        <div class="liquid-glass-card" style="margin-bottom:2rem;">
+          <span class="tone-badge" style="margin-bottom:0.5rem;">OPTICAL NORMAL DISPLACEMENT SHADERS</span>
+          <h2 class="section-title" style="font-size:1.8rem; margin-bottom:1rem;">Apple Tahoe Liquid Glass Laboratory</h2>
+          <p style="color:var(--t-secondary); margin-bottom:2rem; max-width:820px;">
+            Simulate true optical refraction. Unlike standard CSS backdrop blur, physical liquid glass bends underlying background content along surface normal gradients with chromatic rainbow separation.
+          </p>
+
+          <!-- Interactive Glass Demonstration Stage with Accessible Description -->
+          <div role="region" aria-label="Liquid Glass Simulation Stage" style="position:relative; width:100%; min-height:300px; background:radial-gradient(circle at 70% 30%, #f97316 0%, #3b82f6 50%, #0a0b0e 100%); border-radius:var(--r-frame); display:flex; align-items:center; justify-content:center; overflow:hidden; margin-bottom:1.8rem; padding:1.5rem 1rem;">
+            <p class="sr-only">Optical refraction stage demonstrating chromatic rainbow separation and normal displacement shaders over an animated multi-color grid.</p>
+            
+            <!-- Vibrant Animated Background Grid -->
+            <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px); background-size:32px 32px;" aria-hidden="true"></div>
+            
+            <!-- Liquid Glass Card Target -->
+            <div id="demo-glass-card" class="liquid-glass-stack" style="position:relative; width:min(340px, 100%); max-width:100%; padding:2rem; background:rgba(18, 20, 26, 0.45); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:24px; text-align:center;">
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:#ffb35c; text-transform:uppercase;">[PHYSICAL OPTICAL LENS]</span>
+              <h3 style="font-family:var(--font-display); font-size:1.4rem; color:#fff; margin:0.6rem 0;">Liquid Glass</h3>
+              <p style="font-size:0.85rem; color:rgba(255,255,255,0.85);">Zero text ghosting with 10-layer specular reflection.</p>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="grid-2col" style="background:var(--c-deep-zinc); padding:1.2rem; border-radius:var(--r-inner); border:1px solid var(--c-cobalt-rim);">
+            <div class="control-slider-group">
+              <label for="glass-scale-slider"><span>Displacement Scale (<span id="glass-scale-val">12</span>px)</span></label>
+              <input type="range" id="glass-scale-slider" aria-label="Liquid glass optical displacement scale in pixels" min="0" max="30" step="1" value="12">
+            </div>
+
+            <label for="chromatic-toggle" class="toggle-control-label">
+              <span style="font-family:var(--font-mono); font-size:0.88rem; color:var(--t-secondary);">Enable Optical Refraction Filter</span>
+              <input type="checkbox" id="chromatic-toggle" aria-label="Enable Optical Refraction Filter" checked>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: MOTION & KINETIC PLAYGROUND (REACTBITS + ANIME.JS) -->
+      <section id="section-motion-lab" class="view-section" role="tabpanel" aria-labelledby="tab-motion-lab" tabindex="0" style="display:none;">
+        
+        <!-- Section Intro Header -->
+        <div class="liquid-glass-card" style="margin-bottom:2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
+            <div>
+              <span class="tone-badge" style="margin-bottom:0.5rem; border-color:var(--c-ember); color:var(--c-ember);">
+                ● REACTBITS + ANIME.JS // KINETIC ENGINE
+              </span>
+              <h2 class="section-title" style="font-size:1.8rem;">Motion &amp; Kinetic Playground</h2>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
+              TEXT-MOTION-REACTBITS // ANIMEJS-CANVAS-SPRINGS
+            </span>
+          </div>
+          <p style="color:var(--t-secondary); max-width:920px; font-size:1rem; line-height:1.6;">
+            Physical, tactile motion primitives engineered to replace PowerPoint-style entrance animations. Explore live ReactBits ports (BlurText, DecryptedText, VariableProximity, ShinyText) alongside Anime.js spring-damped canvas particle burst dynamics.
+          </p>
+        </div>
+
+        <!-- Grid Row 1: BlurText + DecryptedText -->
+        <div class="grid-2col" style="margin-bottom:2rem;">
+          
+          <!-- 1. BlurText Interactive Demo -->
+          <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <span class="tone-badge">REACTBITS // BLURTEXT</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-ember);">GAUSSIAN STAGGER</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
+                BlurText Reveal Engine
+              </h3>
+              <p style="font-size:0.88rem; color:var(--t-secondary); margin-bottom:1.2rem;">
+                Characters emerge sequentially from deep Gaussian defocus and vertical translation with cubic spring easing.
+              </p>
+
+              <!-- BlurText Stage -->
+              <div class="motion-stage-box" style="margin-bottom:1.4rem; min-height:110px; display:flex; align-items:center; justify-content:center; text-align:center;">
+                <span id="blur-text-sr" class="sr-only">Physical Precision Over Generative Slop</span>
+                <div id="blur-text-stage" class="blur-text-display"></div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1rem; display:flex; flex-direction:column; gap:0.9rem;">
+              <div>
+                <label for="blur-input" style="display:block; font-size:0.78rem; font-family:var(--font-mono); color:var(--t-secondary); margin-bottom:0.3rem;">REVEAL PHRASE</label>
+                <input type="text" id="blur-input" value="Physical Precision Over Generative Slop" aria-label="Phrase to reveal with BlurText" style="width:100%; min-height:44px; padding:0.6rem 0.8rem; background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-ctl); color:var(--t-primary); font-family:var(--font-sans); font-size:0.85rem; outline:none;">
+              </div>
+
+              <div class="grid-2col" style="gap:0.8rem;">
+                <div class="control-slider-group">
+                  <label for="blur-stagger-slider"><span>Stagger Delay</span><span id="blur-stagger-val">45ms</span></label>
+                  <input type="range" id="blur-stagger-slider" aria-label="BlurText stagger delay in milliseconds" min="15" max="150" step="5" value="45">
+                </div>
+                <div class="control-slider-group">
+                  <label for="blur-amount-slider"><span>Defocus Radius</span><span id="blur-amount-val">12px</span></label>
+                  <input type="range" id="blur-amount-slider" aria-label="BlurText defocus blur radius in pixels" min="4" max="24" step="1" value="12">
+                </div>
+              </div>
+
+              <button id="blur-play-btn" class="nav-tab-btn" aria-label="Play BlurText Reveal Animation" style="background:var(--c-ember); color:#fff; width:100%; min-height:44px; padding:0.65rem; font-size:0.85rem; border:none; border-radius:var(--r-ctl); font-weight:600; cursor:pointer;">
+                &#9654; Play Reveal
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. DecryptedText Interactive Scramble -->
+          <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <span class="tone-badge">REACTBITS // DECRYPTEDTEXT</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-amber);">SCRAMBLE LOCK</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
+                Decrypted Cryptographic Scramble
+              </h3>
+              <p style="font-size:0.88rem; color:var(--t-secondary); margin-bottom:1.2rem;">
+                Random glyph cycling through matrix or cryptographic character sets before locking into the authentic string. Hover stage or click trigger.
+              </p>
+
+              <!-- DecryptedText Stage -->
+              <div id="decrypt-card-trigger" class="motion-stage-box" style="margin-bottom:1.4rem; min-height:110px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer;" title="Hover or click to scramble">
+                <span id="decrypt-text-sr" class="sr-only">LEUL-5070TI // QUANTUM_ENCRYPTED_2026</span>
+                <div id="decrypt-text-stage" class="decrypt-text-display"></div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1rem; display:flex; flex-direction:column; gap:0.9rem;">
+              <div>
+                <label for="decrypt-input" style="display:block; font-size:0.78rem; font-family:var(--font-mono); color:var(--t-secondary); margin-bottom:0.3rem;">TARGET TEXT</label>
+                <input type="text" id="decrypt-input" value="LEUL-5070TI // QUANTUM_ENCRYPTED_2026" aria-label="Target text for DecryptedText scramble" style="width:100%; min-height:44px; padding:0.6rem 0.8rem; background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-ctl); color:var(--t-primary); font-family:var(--font-mono); font-size:0.82rem; outline:none;">
+              </div>
+
+              <div class="grid-3col" style="gap:0.6rem;">
+                <div class="control-slider-group">
+                  <label for="decrypt-glyph-select"><span>Glyph Set</span></label>
+                  <select id="decrypt-glyph-select" class="custom-select" aria-label="Glyph character set selection">
+                    <option value="crypto">Cryptographic</option>
+                    <option value="matrix">Matrix Katakana</option>
+                    <option value="hex">Hexadecimal</option>
+                    <option value="binary">Binary</option>
+                  </select>
+                </div>
+                <div class="control-slider-group">
+                  <label for="decrypt-speed-slider"><span>Speed</span><span id="decrypt-speed-val">30ms</span></label>
+                  <input type="range" id="decrypt-speed-slider" aria-label="Scramble speed interval in milliseconds" min="15" max="80" step="5" value="30">
+                </div>
+                <div class="control-slider-group">
+                  <label for="decrypt-iter-slider"><span>Iterations</span><span id="decrypt-iter-val">6</span></label>
+                  <input type="range" id="decrypt-iter-slider" aria-label="Scramble iterations per character" min="3" max="15" step="1" value="6">
+                </div>
+              </div>
+
+              <button id="decrypt-trigger-btn" class="nav-tab-btn" aria-label="Trigger DecryptedText Scramble" style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); color:var(--c-amber); width:100%; min-height:44px; padding:0.65rem; font-size:0.85rem; border-radius:var(--r-ctl); font-weight:600; cursor:pointer;">
+                &#9881; Scramble Again
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Grid Row 2: VariableProximity + ShinyText -->
+        <div class="grid-2col" style="margin-bottom:2rem;">
+
+          <!-- 3. VariableProximity Font Axis Demo -->
+          <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <span class="tone-badge">REACTBITS // VARIABLEPROXIMITY</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-ember);">EUCLIDEAN AXIS WARP</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
+                Variable Proximity Font Axis
+              </h3>
+              <p style="font-size:0.88rem; color:var(--t-secondary); margin-bottom:1.2rem;">
+                Hover or move your cursor across the stage below. Characters dynamically morph their font weight (<code>wght</code> 200&rarr;900) and width (<code>wdth</code> 75&rarr;125%) in real time.
+              </p>
+
+              <!-- Proximity Stage -->
+              <div id="proximity-stage" class="proximity-container motion-stage-box" style="margin-bottom:1.4rem; min-height:120px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap;">
+                <span id="proximity-text-sr" class="sr-only">AWARD-WINNING PHYSICAL PRECISION</span>
+                <div id="proximity-chars-wrapper"></div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1rem; display:flex; flex-direction:column; gap:0.9rem;">
+              <div class="grid-2col" style="gap:0.8rem;">
+                <div class="control-slider-group">
+                  <label for="prox-radius-slider"><span>Influence Radius</span><span id="prox-radius-val">150px</span></label>
+                  <input type="range" id="prox-radius-slider" aria-label="VariableProximity influence radius in pixels" min="60" max="320" step="10" value="150">
+                </div>
+                <div class="control-slider-group">
+                  <label for="prox-weight-slider"><span>Max Weight Axis</span><span id="prox-weight-val">850</span></label>
+                  <input type="range" id="prox-weight-slider" aria-label="VariableProximity maximum font weight" min="500" max="900" step="50" value="850">
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--t-secondary);">
+                <span>Pointer Target: <strong id="prox-pointer-readout" style="color:var(--c-ember);">Waiting for hover...</strong></span>
+                <span>Falloff: <strong style="color:var(--c-amber);">Quadratic Distance</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. ShinyText Shimmer Toggle -->
+          <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <span class="tone-badge">REACTBITS // SHINYTEXT</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-amber);">SPECULAR GRADIENT</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
+                ShinyText Specular Shimmer
+              </h3>
+              <p style="font-size:0.88rem; color:var(--t-secondary); margin-bottom:1.2rem;">
+                Animated linear gradient mask sweeping across glyph silhouettes. Adjust vector gradient angle, cycle velocity, and chromatic palette.
+              </p>
+
+              <!-- ShinyText Stage -->
+              <div class="motion-stage-box" style="margin-bottom:1.4rem; min-height:120px; display:flex; align-items:center; justify-content:center; text-align:center;">
+                <span id="shiny-text-target" class="shiny-text-target">FRONTIER KINETIC TYPOGRAPHY</span>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1rem; display:flex; flex-direction:column; gap:0.9rem;">
+              <div class="grid-3col" style="gap:0.6rem;">
+                <div class="control-slider-group">
+                  <label for="shiny-angle-slider"><span>Angle</span><span id="shiny-angle-val">120&deg;</span></label>
+                  <input type="range" id="shiny-angle-slider" aria-label="ShinyText gradient vector angle in degrees" min="0" max="360" step="5" value="120">
+                </div>
+                <div class="control-slider-group">
+                  <label for="shiny-speed-slider"><span>Speed</span><span id="shiny-speed-val">2.2s</span></label>
+                  <input type="range" id="shiny-speed-slider" aria-label="ShinyText sweep animation duration in seconds" min="0.6" max="5.0" step="0.2" value="2.2">
+                </div>
+                <div class="control-slider-group">
+                  <label for="shiny-palette-select"><span>Palette</span></label>
+                  <select id="shiny-palette-select" class="custom-select" aria-label="ShinyText chromatic palette preset">
+                    <option value="ember">Ember Sunburst</option>
+                    <option value="silver">Liquid Silver</option>
+                    <option value="cobalt">Cobalt Electric</option>
+                    <option value="amber">Amber Gold</option>
+                  </select>
+                </div>
+              </div>
+
+              <button id="shiny-toggle-btn" class="nav-tab-btn" aria-label="Toggle ShinyText Shimmer Animation" style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); color:var(--t-primary); width:100%; min-height:44px; padding:0.65rem; font-size:0.85rem; border-radius:var(--r-ctl); font-weight:600; cursor:pointer;">
+                Pause Shimmer Sweep
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Grid Row 3: Anime.js Canvas Particle Burst Sandbox -->
+        <div class="liquid-glass-card" style="margin-bottom:2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.2rem;">
+            <div>
+              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.4rem;">
+                <span class="tone-badge">ANIME.JS // SPRING PARTICLE ENGINE</span>
+                <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">CLICK / DRAG STAGE</span>
+              </div>
+              <h3 style="font-family:var(--font-display); font-size:1.6rem; color:var(--t-primary);">
+                Anime.js Canvas Particle Burst Sandbox
+              </h3>
+            </div>
+
+            <!-- Live Particle HUD -->
+            <div style="display:flex; align-items:center; gap:0.8rem; font-family:var(--font-mono); font-size:0.82rem;">
+              <span class="tone-badge" style="background:var(--c-obsidian);">Active: <strong id="hud-particle-count" style="color:var(--c-ember);">0</strong></span>
+              <span class="tone-badge" style="background:var(--c-obsidian);">Bursts: <strong id="hud-burst-count" style="color:var(--c-amber);">0</strong></span>
+              <span class="tone-badge" style="background:var(--c-obsidian);">FPS: <strong id="hud-fps-count" style="color:#38bdf8;">60</strong></span>
+            </div>
+          </div>
+
+          <p style="font-size:0.95rem; color:var(--t-secondary); margin-bottom:1.5rem; max-width:920px;">
+            Click or click-and-drag across the sandbox canvas below. High-speed spring particles are ejected with customizable damping trajectories, chromatic color spectra, elastic shockwaves, and physics gravity.
+          </p>
+
+          <!-- Canvas Container -->
+          <div class="particle-canvas-wrapper" role="region" aria-label="Interactive Particle Burst Physics Stage" style="position:relative; width:100%; height:440px; background:radial-gradient(circle at 50% 50%, #151824 0%, #08090c 100%); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-frame); overflow:hidden; margin-bottom:1.5rem; cursor:crosshair;">
+            <p class="sr-only">Interactive canvas simulating high-speed spring physics particles and elastic shockwaves with customizable damping and color palettes.</p>
+            <canvas id="anime-particle-canvas" style="width:100%; height:100%; display:block; touch-action:none;"></canvas>
+            <div id="particle-canvas-hint" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.5s ease;">
+              <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--c-amber); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">[INTERACTIVE PHYSICS STAGE]</span>
+              <span style="font-family:var(--font-display); font-size:1.2rem; color:var(--t-secondary);">Click or drag anywhere to ignite kinetic particle bursts</span>
+            </div>
+          </div>
+
+          <!-- Particle Sandbox Controls -->
+          <div class="grid-3col" style="background:var(--c-deep-zinc); padding:1.2rem; border-radius:var(--r-inner); border:1px solid var(--c-cobalt-rim);">
+            <div class="control-slider-group">
+              <label for="particle-count-slider"><span>Particles per Burst</span><span id="particle-count-val">40</span></label>
+              <input type="range" id="particle-count-slider" aria-label="Particle count per click burst" min="15" max="90" step="5" value="40">
+            </div>
+
+            <div class="control-slider-group">
+              <label for="particle-velocity-slider"><span>Ejection Velocity</span><span id="particle-velocity-val">12</span></label>
+              <input type="range" id="particle-velocity-slider" aria-label="Particle ejection velocity" min="5" max="25" step="1" value="12">
+            </div>
+
+            <div class="control-slider-group">
+              <label for="particle-damping-slider"><span>Trajectory Damping</span><span id="particle-damping-val">0.05</span></label>
+              <input type="range" id="particle-damping-slider" aria-label="Particle trajectory damping coefficient" min="0.01" max="0.15" step="0.01" value="0.05">
+            </div>
+
+            <div class="control-slider-group">
+              <label for="particle-color-select"><span>Chromatic Spectrum</span></label>
+              <select id="particle-color-select" class="custom-select" aria-label="Particle chromatic color palette">
+                <option value="ember">Ember &amp; Amber Flare</option>
+                <option value="cyber">Cobalt &amp; Cyan Plasma</option>
+                <option value="spectral">Chromatic Multi-Spectrum</option>
+                <option value="supernova">Supernova White Sparks</option>
+              </select>
+            </div>
+
+            <div class="control-slider-group">
+              <label for="particle-shape-select"><span>Geometry Particle Form</span></label>
+              <select id="particle-shape-select" class="custom-select" aria-label="Particle geometry form">
+                <option value="circles">Luminous Circles</option>
+                <option value="shards">Angular Kinetic Shards</option>
+                <option value="mixed">Mixed Sparkles &amp; Shards</option>
+              </select>
+            </div>
+
+            <div style="display:flex; align-items:flex-end;">
+              <button id="clear-particles-btn" class="nav-tab-btn" aria-label="Clear all active particles from canvas" style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); color:var(--t-secondary); width:100%; min-height:44px; padding:0.65rem; font-size:0.85rem; border-radius:var(--r-ctl); cursor:pointer;">
+                Clear Canvas Stage
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- VIEW 5: SKILLS & MCP CATALOG -->
+      <section id="section-catalog" class="view-section" role="tabpanel" aria-labelledby="tab-catalog" tabindex="0" style="display:none;">
+        <div style="margin-bottom:2rem;">
+          <span class="tone-badge" style="margin-bottom:0.5rem;">CENTRALIZED KNOWLEDGE REGISTRY</span>
+          <h2 class="section-title" style="font-size:1.8rem; margin-bottom:1rem;">Production Skills & MCP Catalog</h2>
+          <p style="color:var(--t-secondary); margin-bottom:1.5rem;">
+            Query all 94 production-grade agent skills synchronized with <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer" style="color:var(--c-ember); text-decoration:none;">github.com/LeulTew/skills</a>.
+          </p>
+
+          <!-- Search Bar -->
+          <input type="search" id="skill-search-input" aria-label="Search skills by name, keyword, or architecture" placeholder="Search skills by name, keyword, or architecture (e.g. Three.js, Blender, GSAP, Liquid Glass)..." style="width:100%; min-height:48px; padding:0.9rem 1.4rem; background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-round); color:var(--t-primary); font-family:var(--font-sans); font-size:0.95rem; margin-bottom:1.2rem;">
+
+          <!-- Filter Buttons -->
+          <div role="group" aria-label="Skill category filters" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2rem;">
+            <button class="nav-tab-btn active skill-filter-btn" data-category="All">All (94)</button>
+            <button class="nav-tab-btn skill-filter-btn" data-category="3D & WebGPU">3D & WebGPU</button>
+            <button class="nav-tab-btn skill-filter-btn" data-category="3D & Blender">3D & Blender</button>
+            <button class="nav-tab-btn skill-filter-btn" data-category="UI & Shaders">UI & Shaders</button>
+            <button class="nav-tab-btn skill-filter-btn" data-category="Motion & Scroll">Motion & Scroll</button>
+            <button class="nav-tab-btn skill-filter-btn" data-category="Video & Motion">Video & Motion</button>
+            <button class="nav-tab-btn skill-filter-btn" data-category="AI & Tooling">AI & Tooling</button>
+          </div>
+
+          <!-- Skills Cards Grid -->
+          <div id="skills-catalog-grid" class="grid-2col">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer with Safe-Area Insets and Touch-Friendly Link -->
+    <footer style="margin-top:4rem; padding-top:2rem; border-top:1px solid var(--c-cobalt-rim); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; color:var(--t-muted); font-size:0.85rem;">
+      <div>
+        <span>Authored by <strong>Leul Tewolde (LeulTew)</strong></span> &bull; 
+        <span>RTX 5070 Ti &bull; Blender 5.2.2 LTS</span>
+      </div>
+      <div>
+        <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository LeulTew/skills (opens in new tab)" style="color:var(--c-amber); text-decoration:none; min-height:44px; display:inline-flex; align-items:center;">
+          github.com/LeulTew/skills
+        </a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Module Thumbnail Selector Drawer & Backdrop -->
+  <div id="module-drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+  <aside id="module-drawer" class="module-drawer" role="dialog" aria-modal="true" aria-label="Course Module Thumbnails">
+    <div class="drawer-header">
+      <div>
+        <span class="tone-badge" style="margin-bottom:0.3rem;">CURRICULUM INDEX</span>
+        <h3 style="font-family:var(--font-display); font-size:1.3rem; color:var(--t-primary);">Course Modules (10)</h3>
+      </div>
+      <button id="close-drawer-btn" class="drawer-close-btn" title="Close drawer (Esc)">&times;</button>
+    </div>
+    <div id="drawer-modules-list" class="drawer-modules-grid">
+      <!-- Dynamically populated by app.js -->
+    </div>
+  </aside>
+
+  <!-- Application Scripts (Self-contained and offline-ready) -->
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
