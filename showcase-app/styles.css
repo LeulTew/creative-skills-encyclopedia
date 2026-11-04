@@ -694,6 +694,10 @@ input[type="checkbox"] {
     overflow-x: hidden !important;
   }
 
+  code:not(pre code) {
+    word-break: break-word !important;
+  }
+
   /* 2. Header Masthead & Flavour Switcher */
   header {
     flex-direction: column !important;
@@ -2538,5 +2542,35 @@ body.glass-reduced-motion #demo-glass-card {
 .bpy-code-box pre code {
   white-space: pre;
   word-break: normal;
+}
+
+.blender-mesh-btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--r-round);
+  border: 1px solid var(--c-cobalt-rim);
+  background: transparent;
+  color: var(--t-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.blender-mesh-btn:hover {
+  color: var(--t-primary);
+  border-color: var(--c-amber);
+}
+
+.blender-mesh-btn.active {
+  background: var(--c-ember);
+  border-color: var(--c-ember);
+  color: #ffffff;
+  box-shadow: 0 0 12px var(--c-accent-glow);
 }
 

@@ -504,6 +504,54 @@ export function init3DStage() {
   }
 }
 
+// Resize 3D Tone Mapping Stage Viewport
+export function resize3DStage() {
+  const container = document.getElementById('three-viewport-container');
+  if (!container || !renderer || !camera) return;
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  if (w > 0 && h > 0) {
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  }
+}
+
+// Reset 3D Camera / Simulation Viewpoint
+export function reset3DCamera() {
+  if (camera) {
+    camera.position.set(0, 0, 4.2);
+    camera.lookAt(0, 0, 0);
+  }
+  if (controls) {
+    controls.target.set(0, 0, 0);
+    controls.reset();
+  }
+  if (activeObject) {
+    activeObject.rotation.set(0, 0, 0);
+  }
+}
+
+// Cycle Render Mode (Solid PBR -> Wireframe Hologram -> Point Cloud)
+export function cycleRenderMode() {
+  const modes = ['solid', 'wireframe', 'particles'];
+  const nextIdx = (modes.indexOf(renderMode) + 1) % modes.length;
+  renderMode = modes[nextIdx];
+  const select = document.getElementById('render-mode-select');
+  if (select) select.value = renderMode;
+  const badge = document.getElementById('render-mode-badge');
+  const badgeMap = {
+    'solid': 'Solid PBR',
+    'wireframe': 'Wireframe Hologram',
+    'particles': 'Point Cloud'
+  };
+  if (badge) badge.textContent = badgeMap[renderMode] || renderMode;
+  update3DObject();
+  updateRenderModeExplanation(renderMode);
+  logToTerminal(`Render mode toggled: ${badgeMap[renderMode] || renderMode} [M]`, 'info');
+}
+
 // 3D Controls Wiring
 export function setup3DControls() {
   const roughnessSlider = document.getElementById('roughness-slider');
@@ -562,17 +610,7 @@ export function setup3DControls() {
 
   if (cameraResetBtn) {
     cameraResetBtn.addEventListener('click', () => {
-      if (camera) {
-        camera.position.set(0, 0, 4.2);
-        camera.lookAt(0, 0, 0);
-      }
-      if (controls) {
-        controls.target.set(0, 0, 0);
-        controls.reset();
-      }
-      if (activeObject) {
-        activeObject.rotation.set(0, 0, 0);
-      }
+      reset3DCamera();
     });
   }
 
@@ -928,10 +966,16 @@ export function setupKeyboardNavigation() {
       return;
     }
 
-    // R: Toggle Reveal Solution
+    // R: Reset camera / simulation (Presenter Mode Hotkey)
     if (e.key === 'r' || e.key === 'R') {
       e.preventDefault();
-      toggleSolution();
+      reset3DCamera();
+      const clearParticlesBtn = document.getElementById('clear-particles-btn');
+      const motionLab = document.getElementById('section-motion-lab');
+      if (clearParticlesBtn && motionLab && motionLab.style.display !== 'none') {
+        clearParticlesBtn.click();
+      }
+      logToTerminal('Reset 3D camera / simulation controls [R]', 'info');
       return;
     }
 
@@ -942,8 +986,15 @@ export function setupKeyboardNavigation() {
       return;
     }
 
-    // M: Toggle Module Drawer
+    // M: Toggle render mode (Presenter Mode Hotkey: Solid -> Wireframe -> Point Cloud)
     if (e.key === 'm' || e.key === 'M') {
+      e.preventDefault();
+      cycleRenderMode();
+      return;
+    }
+
+    // D: Toggle Module Drawer
+    if (e.key === 'd' || e.key === 'D') {
       e.preventDefault();
       const drawer = document.getElementById('module-drawer');
       const backdrop = document.getElementById('module-drawer-backdrop');
@@ -1385,6 +1436,18 @@ export function setupTeachingControls() {
 
   if (hudExitBtn) {
     hudExitBtn.addEventListener('click', togglePresenterMode);
+  }
+
+  const heroDeckCta = document.getElementById('hero-deck-cta');
+  if (heroDeckCta) {
+    heroDeckCta.addEventListener('click', (e) => {
+      e.preventDefault();
+      const syllabusTab = document.querySelector('.nav-tab-bar .nav-tab-btn[data-target="section-syllabus"]');
+      if (syllabusTab && !syllabusTab.classList.contains('active')) {
+        syllabusTab.click();
+      }
+      togglePresenterMode();
+    });
   }
 }
 
