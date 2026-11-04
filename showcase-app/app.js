@@ -7,11 +7,11 @@ if (typeof window !== 'undefined') {
 }
 
 import { SKILLS_DATA as IMPORTED_SKILLS, TEACHING_MODULES as IMPORTED_MODULES } from './skills-data.js';
-import { initCouncilDemocracy } from './modules/council-democracy.js';
-import { initBlenderStudio } from './modules/blender-mcp-studio.js';
+import { initHero3DStage, initHero3DSpecimens, morphToSpecimen } from './modules/hero-3d-centerpiece.js';
 import { initFlavourWorlds, setFlavourWorld, FLAVOUR_WORLDS } from './modules/flavour-worlds.js';
 import { initLiquidGlass } from './modules/liquid-glass.js';
-import { initHero3DSpecimens, morphToSpecimen } from './modules/hero-3d-specimens.js';
+import { initCouncilChamber, initCouncilDemocracy } from './modules/council-democracy.js';
+import { initBlenderStudio } from './modules/blender-mcp-studio.js';
 
 const SKILLS_DATA = (typeof window !== 'undefined' && window.SKILLS_DATA && window.SKILLS_DATA.length) 
   ? window.SKILLS_DATA 
