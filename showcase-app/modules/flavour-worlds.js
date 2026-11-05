@@ -23,7 +23,7 @@ export const FLAVOUR_WORLDS = {
     id: 'ember',
     name: 'Ember',
     tagline: 'High-Chroma Ember Glow & Sunburst Amber',
-    emoji: '🔥',
+    emoji: '',
     obsidian: '#0a0b0e',      // Canvas Background (L: 0.0051)
     deepZinc: '#12141a',      // Primary Surface / Elevated Card
     elevatedZinc: '#181b24',  // Controls / Inputs
@@ -43,7 +43,7 @@ export const FLAVOUR_WORLDS = {
     id: 'cobalt',
     name: 'Cobalt',
     tagline: 'Midnight Navy & Electric Cobalt Blue',
-    emoji: '⚡',
+    emoji: '',
     obsidian: '#050b14',      // Canvas Background: Midnight Navy (L: 0.0053)
     deepZinc: '#0c192c',      // Surface: Cobalt Deep
     elevatedZinc: '#13243f',  // Controls: Elevated Navy
@@ -63,7 +63,7 @@ export const FLAVOUR_WORLDS = {
     id: 'harvest-gold',
     name: 'Harvest Gold',
     tagline: 'Dark Umber & Roasted Harvest Gold',
-    emoji: '🌾',
+    emoji: '',
     obsidian: '#0f0d08',      // Canvas Background: Dark Umber (L: 0.0051)
     deepZinc: '#1c1810',      // Surface: Golden Earth
     elevatedZinc: '#2a2418',  // Controls: Warm Umber
@@ -83,7 +83,7 @@ export const FLAVOUR_WORLDS = {
     id: 'cosmic-violet',
     name: 'Cosmic Violet',
     tagline: 'Abyssal Black & Cosmic Violet',
-    emoji: '✨',
+    emoji: '',
     obsidian: '#090611',      // Canvas Background: Abyssal Black (L: 0.0052)
     deepZinc: '#150f26',      // Surface: Deep Violet
     elevatedZinc: '#201738',  // Controls: Electric Violet Step

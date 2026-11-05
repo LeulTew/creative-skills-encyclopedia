@@ -31,55 +31,31 @@
 </head>
 <body id="app-root" data-flavour="ember">
 
-  <!-- SVG Optical Refraction Definition for Apple Tahoe Liquid Glass -->
-  <svg class="sr-only" aria-hidden="true">
-    <defs>
-      <filter id="liquid-glass-lens" x="-20%" y="-20%" width="140%" height="140%">
-        <!-- Procedural Normal Displacement Simulation -->
-        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" />
-        <feDisplacementMap id="liquid-glass-displacement" in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G" result="displaced" />
-        
-        <!-- Chromatic RGB Channel Separation -->
-        <feOffset id="liquid-glass-red-offset" in="displaced" dx="0" dy="0" result="redShift" />
-        <feColorMatrix in="redShift" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="redChannel" />
-        <feOffset id="liquid-glass-blue-offset" in="displaced" dx="0" dy="0" result="blueShift" />
-        <feColorMatrix in="blueShift" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blueChannel" />
-        <feBlend in="redChannel" in2="displaced" mode="screen" result="rbChannels" />
-        <feBlend in="blueChannel" in2="rbChannels" mode="screen" result="chromaDisplaced" />
-
-        <!-- Specular Lighting Stack with Dynamic Point Light -->
-        <feSpecularLighting in="noise" surfaceScale="2" specularConstant="1.8" specularExponent="24" lighting-color="#ffffff" result="specular">
-          <fePointLight id="liquid-glass-point-light" x="-50" y="-100" z="200" />
-        </feSpecularLighting>
-        <feComposite in="specular" in2="chromaDisplaced" operator="in" result="specularResult" />
-        <feBlend in="chromaDisplaced" in2="specularResult" mode="screen" />
-      </filter>
-    </defs>
-  </svg>
+  <!-- Optical Refraction uses pure CSS Backdrop-Filter and Specular Acrylic Stack (Zero Murky SVG Noise) -->
 
   <div class="app-container">
     
     <!-- Top Masthead with SunChips Flavour World Switcher & Repository Telemetry -->
     <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
       <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
-        <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">
+        <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">
           ● 2026 FRONTIER EDITION
         </span>
         <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
-          LEUL-5070TI // RTX 5070 Ti // BLENDER 5.2 MCP
+          LEUL-5070TI &bull; RTX 5070 Ti &bull; BLENDER 5.2 MCP
         </span>
       </div>
 
       <!-- SunChips Whole-Canvas Flavour World Switcher -->
       <div class="flavour-switcher" role="radiogroup" aria-label="Select Flavour World">
-        <button class="flavour-pill liquid-glass-btn active" data-set-flavour="ember" role="radio" aria-checked="true" title="Ember Glow & Sunburst Amber">🔥 Ember</button>
-        <button class="flavour-pill liquid-glass-btn" data-set-flavour="cobalt" role="radio" aria-checked="false" title="Midnight Navy & Electric Cobalt">⚡ Cobalt</button>
-        <button class="flavour-pill liquid-glass-btn" data-set-flavour="harvest-gold" role="radio" aria-checked="false" title="Dark Umber & Harvest Gold">🌾 Harvest</button>
-        <button class="flavour-pill liquid-glass-btn" data-set-flavour="cosmic-violet" role="radio" aria-checked="false" title="Abyssal Black & Cosmic Violet">✨ Cosmic</button>
+        <button class="flavour-pill liquid-glass-btn active" data-set-flavour="ember" role="radio" aria-checked="true" title="Ember Glow & Sunburst Amber">Ember</button>
+        <button class="flavour-pill liquid-glass-btn" data-set-flavour="cobalt" role="radio" aria-checked="false" title="Midnight Navy & Electric Cobalt">Cobalt</button>
+        <button class="flavour-pill liquid-glass-btn" data-set-flavour="harvest-gold" role="radio" aria-checked="false" title="Dark Umber & Harvest Gold">Harvest</button>
+        <button class="flavour-pill liquid-glass-btn" data-set-flavour="cosmic-violet" role="radio" aria-checked="false" title="Abyssal Black & Cosmic Violet">Cosmic</button>
       </div>
 
       <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer" class="tone-badge" aria-label="GitHub repository LeulTew/skills (opens in new tab)" style="text-decoration:none; color:var(--t-primary); background:rgba(255,255,255,0.06); cursor:pointer;">
-        <span>GitHub: <strong style="color:var(--c-amber);">LeulTew/skills (96 Skills)</strong></span>
+        <span>GitHub: <strong style="color:var(--t-primary);">LeulTew/skills (96 Skills)</strong></span>
         <span aria-hidden="true">&nearr;</span>
       </a>
     </header>
@@ -95,18 +71,17 @@
         <!-- Overlay Hero Content -->
         <div class="hero-overlay-content">
           <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.75rem; flex-wrap:wrap;">
-            <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">
+            <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">
               ● SIGNATURE VIEWPORT SPECIMEN
             </span>
             <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--t-muted);">
-              12,000+ DYNAMIC PARTICLES // Y-AXIS DESCENDING SORTING // LIVE THREE.JS r170+
+              12,000+ DYNAMIC PARTICLES &bull; Y-AXIS DESCENDING SORTING &bull; LIVE THREE.JS r170+
             </span>
           </div>
 
           <!-- Poster-Scale Cultural Typography: Ethiopic Script as Primary Art -->
           <h1 class="hero-title" style="margin-bottom:1rem;">
-            <span class="ethiopic-script" lang="am">የፈጠራ ምህንድስና</span>
-            <span class="latin-script">CREATIVE ENGINEERING // 2026</span>
+            <span class="latin-script" style="font-size:clamp(2.4rem, 2rem + 3.8vw, 5.2rem); font-weight:800; letter-spacing:-0.035em; line-height:1.02; color:var(--t-primary); display:block;">CREATIVE ENGINEERING &bull; 2026</span>
           </h1>
 
           <p style="font-size:clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem); color:var(--t-secondary); max-width:840px; margin-bottom:1.4rem; line-height:1.6;">
@@ -120,23 +95,23 @@
             </span>
             <div class="specimen-selector-bar">
               <button class="specimen-pill active" data-specimen="brackets"><code>&lt;/&gt;</code> Code Brackets</button>
-              <button class="specimen-pill" data-specimen="temple">🏛️ Sanctuary Temple</button>
-              <button class="specimen-pill" data-specimen="gears">⚙️ Mechanical Gears</button>
-              <button class="specimen-pill" data-specimen="dna">🧬 Double Helix DNA</button>
-              <button class="specimen-pill" data-specimen="eye">👁️ AGI Neural Eye</button>
+              <button class="specimen-pill" data-specimen="temple">Sanctuary Temple</button>
+              <button class="specimen-pill" data-specimen="gears">Mechanical Gears</button>
+              <button class="specimen-pill" data-specimen="dna">Double Helix DNA</button>
+              <button class="specimen-pill" data-specimen="eye">AGI Neural Eye</button>
             </div>
           </div>
 
           <!-- Apple Tahoe Liquid Glass Action CTAs -->
           <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
             <button id="hero-council-cta" class="liquid-glass-btn liquid-glass-btn-primary" data-nav-target="section-council">
-              <span>🏛️ Enter AI Council Chamber</span>
+              <span>Enter AI Council Chamber</span>
             </button>
             <button id="hero-blender-cta" class="liquid-glass-btn" data-nav-target="section-blender">
-              <span>🎨 Open Blender 5.2 Studio</span>
+              <span>Open Blender 5.2 Studio</span>
             </button>
             <button id="hero-deck-cta" class="liquid-glass-btn" title="Launch Fullscreen Presenter Mode (Hotkey: F)">
-              <span>🎓 Presenter Deck [F]</span>
+              <span>Presenter Deck [F]</span>
             </button>
           </div>
         </div>
@@ -144,13 +119,13 @@
 
       <!-- Navigation Tab Bar -->
       <nav class="nav-tab-bar" role="tablist" aria-label="Encyclopedia Sections" style="margin-bottom:2.5rem;">
-        <button id="tab-council" role="tab" aria-selected="true" aria-controls="section-council" class="nav-tab-btn active" data-target="section-council">🏛️ AI Council &amp; Democracy</button>
-        <button id="tab-blender" role="tab" aria-selected="false" aria-controls="section-blender" class="nav-tab-btn" data-target="section-blender">🎨 Blender 5.2 MCP Studio</button>
-        <button id="tab-syllabus" role="tab" aria-selected="false" aria-controls="section-syllabus" class="nav-tab-btn" data-target="section-syllabus">🎓 10-Module Syllabus</button>
-        <button id="tab-motion-lab" role="tab" aria-selected="false" aria-controls="section-motion-lab" class="nav-tab-btn" data-target="section-motion-lab">⚡ Motion &amp; ReactBits</button>
-        <button id="tab-3d-lab" role="tab" aria-selected="false" aria-controls="section-3d-lab" class="nav-tab-btn" data-target="section-3d-lab">📦 3D &amp; Tone Mapping</button>
-        <button id="tab-glass-lab" role="tab" aria-selected="false" aria-controls="section-glass-lab" class="nav-tab-btn" data-target="section-glass-lab">💎 Liquid Glass Lab</button>
-        <button id="tab-catalog" role="tab" aria-selected="false" aria-controls="section-catalog" class="nav-tab-btn" data-target="section-catalog">📚 Skills Catalog (96)</button>
+        <button id="tab-council" role="tab" aria-selected="true" aria-controls="section-council" class="nav-tab-btn active" data-target="section-council">AI Council &amp; Democracy</button>
+        <button id="tab-blender" role="tab" aria-selected="false" aria-controls="section-blender" class="nav-tab-btn" data-target="section-blender">Blender 5.2 MCP Studio</button>
+        <button id="tab-syllabus" role="tab" aria-selected="false" aria-controls="section-syllabus" class="nav-tab-btn" data-target="section-syllabus">10-Module Syllabus</button>
+        <button id="tab-motion-lab" role="tab" aria-selected="false" aria-controls="section-motion-lab" class="nav-tab-btn" data-target="section-motion-lab">Motion &amp; ReactBits</button>
+        <button id="tab-3d-lab" role="tab" aria-selected="false" aria-controls="section-3d-lab" class="nav-tab-btn" data-target="section-3d-lab">3D &amp; Tone Mapping</button>
+        <button id="tab-glass-lab" role="tab" aria-selected="false" aria-controls="section-glass-lab" class="nav-tab-btn" data-target="section-glass-lab">Liquid Glass Lab</button>
+        <button id="tab-catalog" role="tab" aria-selected="false" aria-controls="section-catalog" class="nav-tab-btn" data-target="section-catalog">Skills Catalog (96)</button>
       </nav>
 
       <!-- VIEW 1: AI COUNCIL CHAMBER & DEMOCRACY CONSOLE -->
@@ -161,14 +136,14 @@
           <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.8rem; flex-wrap:wrap; gap:1.2rem;">
             <div>
               <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem; flex-wrap:wrap;">
-                <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">
-                  ● VERIFIED MULTI-AGENT COUNCIL
+                <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">
+                  VERIFIED MULTI-AGENT COUNCIL
                 </span>
-                <span class="tone-badge" style="border-color:var(--c-cobalt-rim); color:var(--c-amber);">
-                  VERCEL SANDBOX MICROVM // DUAL-VIEWPORT (390PX / 1440PX)
+                <span class="tone-badge" style="border-color:var(--c-cobalt-rim); color:var(--t-primary);">
+                  VERCEL SANDBOX MICROVM &bull; DUAL-VIEWPORT (390PX | 1440PX)
                 </span>
                 <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
-                  THRESHOLD: &ge; 9.5 / 10.0 // ZERO JESTER VETOES
+                  THRESHOLD: &ge; <span id="threshold-header-display">9.5</span> / 10.0 &bull; ZERO JESTER VETOES
                 </span>
               </div>
               <h2 class="section-title">AI Council Chamber &amp; Democracy Console</h2>
@@ -185,13 +160,13 @@
                 <div class="council-size-pills" role="radiogroup" aria-label="Select Council Size">
                   <button type="button" class="council-size-pill" data-size="3" aria-checked="false" role="radio" title="3 Agents: Gemini, Opus, Astra (Lean / Fast)">3</button>
                   <button type="button" class="council-size-pill active" data-size="4" aria-checked="true" role="radio" title="4 Agents: Core + Adversarial Jester">4</button>
-                  <button type="button" class="council-size-pill" data-size="5" aria-checked="false" role="radio" title="5 Agents: Core + Jester + A11y Gatekeeper">5</button>
+                  <button type="button" class="council-size-pill" data-size="5" aria-checked="false" role="radio" title="5 Agents: Core + Jester + Mobile Parity Gate">5</button>
                   <button type="button" class="council-size-pill" data-size="6" aria-checked="false" role="radio" title="6 Agents: Full Gauntlet + 60 FPS Watchdog">6</button>
                 </div>
                 <select id="council-size-select" class="sr-only" aria-label="Council Model Roster Size">
                   <option value="3">3 Models (Lean / Fast)</option>
                   <option value="4" selected>4 Models (Standard Core + Jester)</option>
-                  <option value="5">5 Models (Specialist + A11y)</option>
+                  <option value="5">5 Models (Specialist + Mobile Parity)</option>
                   <option value="6">6 Models (Full Gauntlet)</option>
                 </select>
               </div>
@@ -207,7 +182,7 @@
 
               <!-- Action Button -->
               <button id="trigger-council-audit-btn" class="liquid-glass-btn liquid-glass-btn-primary audit-action-btn" aria-label="Initiate Visual Hill-Climbing Audit">
-                <span class="audit-btn-icon">⚡</span>
+                <span class="audit-btn-icon"></span>
                 <span class="audit-btn-text">Initiate Visual Hill-Climbing Audit</span>
               </button>
             </div>
@@ -222,10 +197,13 @@
                   CONVERGED (3/4 CONSENSUS + 1 JESTER DISSENT)
                 </span>
               </div>
-              <div style="display:flex; align-items:center; gap:0.8rem;">
-                <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-muted);">
-                  TARGET: <strong style="color:var(--c-amber);">&ge; 9.5 / 10.0</strong>
-                </span>
+              <div style="display:flex; align-items:center; gap:0.9rem; flex-wrap:wrap;">
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                  <label for="council-threshold-slider" style="font-family:var(--font-mono); font-size:0.78rem; color:var(--t-muted);">
+                    TARGET: <strong style="color:var(--t-primary);">&ge; <span id="threshold-val-display">9.5</span> / 10.0</strong>
+                  </label>
+                  <input type="range" id="council-threshold-slider" min="8.0" max="10.0" step="0.1" value="9.5" class="threshold-slider" aria-label="Consensus Quality Threshold Slider" style="width:110px;">
+                </div>
                 <span style="font-family:var(--font-mono); font-size:0.9rem; font-weight:800; color:var(--c-ember);">
                   COMPOSITE: <span id="council-composite-score">9.86</span> / 10.0
                 </span>
@@ -234,8 +212,8 @@
 
             <!-- Progress Track with Target Notch Marker -->
             <div class="threshold-track-container" aria-label="Hill-climbing convergence progress">
-              <div class="threshold-marker" style="left:95%;" title="Quality Threshold Target (&ge; 9.5 / 10)">
-                <span class="threshold-marker-label">&ge; 9.5 TARGET</span>
+              <div class="threshold-marker" id="council-threshold-marker" style="left:95%;" title="Quality Threshold Target (&ge; 9.5 / 10)">
+                <span class="threshold-marker-label" id="threshold-marker-text">&ge; 9.5 TARGET</span>
                 <div class="threshold-marker-line"></div>
               </div>
               <div class="threshold-progress-bar">
@@ -244,7 +222,7 @@
             </div>
             <div style="display:flex; justify-content:space-between; margin-top:0.4rem; font-family:var(--font-mono); font-size:0.74rem; color:var(--t-muted);">
               <span>Baseline: 8.2 / 10 (Theo Browne Floor)</span>
-              <span id="council-cycle-badge" style="color:var(--c-amber);">Cycle 2 / 5 — Converged in 2 Iterations</span>
+              <span id="council-cycle-badge" style="color:var(--t-primary);">Cycle 2 &bull; Converged via Visual Hill-Climbing</span>
               <span>10x Creative Standard: 10.0 / 10</span>
             </div>
           </div>
@@ -257,22 +235,22 @@
                 <div style="display:flex; align-items:center; gap:0.5rem;">
                   <span class="council-avatar-icon" style="background:rgba(249,115,22,0.15); color:var(--c-ember);">◆</span>
                   <div>
-                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:var(--c-amber); font-weight:700; margin:0;">GEMINI 3.8 FLASH</h4>
-                    <span style="font-size:0.7rem; color:var(--t-muted);">Fast Structural Architect</span>
+                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700; margin:0;">GEMINI 3.8 FLASH HIGH</h4>
+                    <span style="font-size:0.7rem; color:var(--t-muted);">Architectural Logic &amp; Deep Reasoning</span>
                   </div>
                 </div>
-                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem;">HIGH REASONING</span>
+                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem;">MAX REASONING</span>
               </div>
               <div class="score-dial-box">
-                <span class="score-number" id="score-gemini" style="color:var(--c-amber);">9.9</span>
+                <span class="score-number" id="score-gemini" style="color:var(--t-primary);">9.9</span>
                 <span class="score-denom">/ 10</span>
                 <span class="council-status-chip pass" id="status-gemini">APPROVED</span>
               </div>
               <p style="font-size:0.82rem; color:var(--t-secondary); margin-bottom:0.6rem; min-height:36px;">
-                Reviews AST purity, DOM nesting, WebGPU/TSL pipeline, and still-to-live registration delta.
+                AST hierarchy, token hygiene, DOM depth, WebGPU/TSL pipeline, and still-to-live registration delta.
               </p>
               <div class="council-verdict-box" id="verdict-gemini">
-                ✓ WebGPU registration delta &le; 0.4px. Concentric radii hierarchy strictly maintained.
+                PASS: WebGPU registration delta &le; 0.4px. Concentric radii hierarchy strictly maintained.
               </div>
             </div>
 
@@ -283,10 +261,10 @@
                   <span class="council-avatar-icon" style="background:rgba(167,139,250,0.15); color:#a78bfa;">◈</span>
                   <div>
                     <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#a78bfa; font-weight:700; margin:0;">CLAUDE OPUS 5.5</h4>
-                    <span style="font-size:0.7rem; color:var(--t-muted);">Editorial &amp; Spacing Judge</span>
+                    <span style="font-size:0.7rem; color:var(--t-muted);">Pedagogical Socratic Mentor &amp; Staff Reviewer</span>
                   </div>
                 </div>
-                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#a78bfa; color:#a78bfa;">MAX BUDGET</span>
+                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#a78bfa; color:#a78bfa;">STAFF REVIEW</span>
               </div>
               <div class="score-dial-box">
                 <span class="score-number" id="score-opus" style="color:#a78bfa;">9.8</span>
@@ -294,10 +272,10 @@
                 <span class="council-status-chip pass" id="status-opus">APPROVED</span>
               </div>
               <p style="font-size:0.82rem; color:var(--t-secondary); margin-bottom:0.6rem; min-height:36px;">
-                Evaluates poster typography clamp scaling, 150-word contract adherence, and concentric geometry.
+                10-module peer-quizzing syllabus, Socratic design critique, concentric geometry, and production review contract.
               </p>
               <div class="council-verdict-box" id="verdict-opus">
-                ✓ Inner radius verified: r_inner = r_card - p (20px - 6px = 14px). Tone steps calibrated.
+                PASS: Inner radius verified (r_inner = r_card - p). Pedagogical teaching drawer verified.
               </div>
             </div>
 
@@ -308,10 +286,10 @@
                   <span class="council-avatar-icon" style="background:rgba(56,189,248,0.15); color:#38bdf8;">▲</span>
                   <div>
                     <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#38bdf8; font-weight:700; margin:0;">GPT-6 ASTRA</h4>
-                    <span style="font-size:0.7rem; color:var(--t-muted);">Copy Truth &amp; Conversion Analyst</span>
+                    <span style="font-size:0.7rem; color:var(--t-muted);">Visual &amp; Motion Aesthetic Critique</span>
                   </div>
                 </div>
-                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#38bdf8; color:#38bdf8;">CONVERSION</span>
+                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#38bdf8; color:#38bdf8;">AESTHETICS</span>
               </div>
               <div class="score-dial-box">
                 <span class="score-number" id="score-astra" style="color:#38bdf8;">10.0</span>
@@ -319,10 +297,10 @@
                 <span class="council-status-chip pass" id="status-astra">APPROVED</span>
               </div>
               <p style="font-size:0.82rem; color:var(--t-secondary); margin-bottom:0.6rem; min-height:36px;">
-                Audits brand truth fidelity, word budgets (Hero &le; 6, Headline &le; 5, CTA &le; 3), and bans marketing slop.
+                Chromatic flavour world tokens, liquid glass refractions, kinetic motion curves, and strict word budgets.
               </p>
               <div class="council-verdict-box" id="verdict-astra">
-                ✓ Hero headline 5 words (&le;6 budget). Zero generic AI buzzwords or filler phrasing detected.
+                PASS: Hero headline within word budget. Zero AI filler copy. Specular reflection stack verified.
               </div>
             </div>
 
@@ -330,13 +308,13 @@
             <div class="council-card jester" id="card-jester">
               <div class="council-card-header">
                 <div style="display:flex; align-items:center; gap:0.5rem;">
-                  <span class="council-avatar-icon jester-icon" style="background:rgba(236,72,153,0.2); color:#ec4899;">⚠️</span>
+                  <span class="council-avatar-icon jester-icon" style="background:rgba(236,72,153,0.2); color:#ec4899;">!</span>
                   <div>
-                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#ec4899; font-weight:700; margin:0;">THE JESTER (CRITIC)</h4>
-                    <span style="font-size:0.7rem; color:#f472b6;">Ruthless Anti-Inflation Auditor</span>
+                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#ec4899; font-weight:700; margin:0;">ADVERSARIAL JESTER</h4>
+                    <span style="font-size:0.7rem; color:#f472b6;">Anti-Slop Strict Veto Gate</span>
                   </div>
                 </div>
-                <span class="tone-badge jester-veto-badge" id="jester-veto-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#ec4899; color:#ec4899;">VETO POWER</span>
+                <span class="tone-badge jester-veto-badge" id="jester-veto-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#ec4899; color:#ec4899;">STRICT VETO GATE</span>
               </div>
               <div class="score-dial-box">
                 <span class="score-number" id="score-jester" style="color:#ec4899;">9.6</span>
@@ -344,46 +322,46 @@
                 <span class="council-status-chip jester-chip" id="status-jester">CONCEDED</span>
               </div>
               <p style="font-size:0.82rem; color:var(--t-secondary); margin-bottom:0.6rem; min-height:36px;">
-                Adversarial seat. Penalizes polite consensus; hunts visual clipping, fake drop-shadows, and contrast breaches.
+                Ruthless contrarian. Vetoes polite consensus, banned emojis, double-slash slop, padding asymmetry, and fake glass.
               </p>
               <div class="council-verdict-box jester-verdict" id="verdict-jester">
-                ✓ Cycle 2: Mobile badge padding asymmetry resolved. Contrast certified 7.2:1. Veto retracted.
+                AUDIT: Zero slop detected. Hairline borders verified at 0.08 alpha. Contrast exceeds 7:1. Veto retracted.
               </div>
             </div>
 
-            <!-- Seat 5: Accessibility & Contrast Gatekeeper (Dynamic 5-6 Agents) -->
+            <!-- Seat 5: Mobile Parity Auditor (Dynamic 5-6 Agents) -->
             <div class="council-card" id="card-a11y" style="display:none;">
               <div class="council-card-header">
                 <div style="display:flex; align-items:center; gap:0.5rem;">
-                  <span class="council-avatar-icon" style="background:rgba(16,185,129,0.15); color:#10b981;">♿</span>
+                  <span class="council-avatar-icon" style="background:rgba(16,185,129,0.15); color:#10b981;">MOB</span>
                   <div>
-                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#10b981; font-weight:700; margin:0;">A11Y GATEKEEPER</h4>
-                    <span style="font-size:0.7rem; color:var(--t-muted);">Contrast &amp; Screen Reader Auditor</span>
+                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#10b981; font-weight:700; margin:0;">MOBILE PARITY AUDITOR</h4>
+                    <span style="font-size:0.7rem; color:var(--t-muted);">390px Viewport &amp; Touch Target Gate</span>
                   </div>
                 </div>
-                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#10b981; color:#10b981;">WCAG AA</span>
+                <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#10b981; color:#10b981;">390PX PARITY</span>
               </div>
               <div class="score-dial-box">
-                <span class="score-number" id="score-a11y" style="color:#10b981;">10.0</span>
+                <span class="score-number" id="score-a11y" style="color:#10b981;">9.8</span>
                 <span class="score-denom">/ 10</span>
                 <span class="council-status-chip pass" id="status-a11y">APPROVED</span>
               </div>
               <p style="font-size:0.82rem; color:var(--t-secondary); margin-bottom:0.6rem; min-height:36px;">
-                Enforces &ge; 4.5:1 text contrast on Obsidian foundations and un-split .sr-only semantic accessibility trees.
+                Guarantees 390px mobile parity, zero horizontal document scroll overflow, and &ge; 44px touch targets.
               </p>
               <div class="council-verdict-box" id="verdict-a11y">
-                ✓ 18.8:1 text contrast confirmed on #0a0b0e. Keyboard focus visible with 2px amber rings.
+                PASS: ScrollWidth matches clientWidth (0px overflow). All interactive targets meet 44px threshold.
               </div>
             </div>
 
-            <!-- Seat 6: Performance & 60 FPS Watchdog (Dynamic 6 Agents) -->
+            <!-- Seat 6: 60 FPS Performance Watchdog (Dynamic 6 Agents) -->
             <div class="council-card" id="card-perf" style="display:none;">
               <div class="council-card-header">
                 <div style="display:flex; align-items:center; gap:0.5rem;">
-                  <span class="council-avatar-icon" style="background:rgba(234,179,8,0.15); color:#eab308;">⚡</span>
+                  <span class="council-avatar-icon" style="background:rgba(234,179,8,0.15); color:#eab308;">60FPS</span>
                   <div>
-                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#eab308; font-weight:700; margin:0;">PERF WATCHDOG</h4>
-                    <span style="font-size:0.7rem; color:var(--t-muted);">Unified RAF Loop &amp; 60 FPS Gate</span>
+                    <h4 style="font-family:var(--font-mono); font-size:0.82rem; color:#eab308; font-weight:700; margin:0;">60 FPS PERF WATCHDOG</h4>
+                    <span style="font-size:0.7rem; color:var(--t-muted);">Unified RAF Loop &amp; Memory Gate</span>
                   </div>
                 </div>
                 <span class="tone-badge" style="font-size:0.65rem; min-height:26px; padding:0.2rem 0.55rem; border-color:#eab308; color:#eab308;">LOCKED 60 FPS</span>
@@ -394,10 +372,10 @@
                 <span class="council-status-chip pass" id="status-perf">APPROVED</span>
               </div>
               <p style="font-size:0.82rem; color:var(--t-secondary); margin-bottom:0.6rem; min-height:36px;">
-                Monitors single RAF loop synchronization (Lenis 1.1 + Anime.js/GSAP), CLS 0.000, and memory disposal.
+                Monitors 16.6ms frame budget, unified RAF synchronization, zero cumulative layout shift, and clean WebGL disposal.
               </p>
               <div class="council-verdict-box" id="verdict-perf">
-                ✓ 16.6ms frame budget locked; 0 dropped frames on 1440px desktop; 0 WebGL memory leaks.
+                PASS: Frame intervals locked at 16.6ms. Zero dropped frames on 1440px desktop. Zero WebGL memory leaks.
               </div>
             </div>
           </div>
@@ -414,7 +392,7 @@
                     <span style="display:inline-flex; align-items:center; gap:0.3rem; color:var(--t-muted);">
                       <span style="width:10px; height:2px; background:#64748b; display:inline-block; border:1px dashed #94a3b8;"></span> Theo's Baseline (8.2)
                     </span>
-                    <span style="display:inline-flex; align-items:center; gap:0.3rem; color:var(--c-amber); font-weight:700;">
+                    <span style="display:inline-flex; align-items:center; gap:0.3rem; color:var(--t-primary); font-weight:700;">
                       <span style="width:10px; height:10px; background:var(--c-ember); display:inline-block; border-radius:2px;"></span> 10x Standard (9.86)
                     </span>
                   </div>
@@ -423,7 +401,7 @@
                   Dual-Standard Multi-Vector Radar
                 </h3>
                 <p style="font-size:0.86rem; color:var(--t-secondary); margin-bottom:1rem;">
-                  Live geometric projection mapping the 5 key dimensions of creative engineering against Theo Browne's baseline and our production threshold.
+                  Dynamic geometric projection mapping the 5 key dimensions of creative engineering against Theo Browne's baseline and our production threshold.
                 </p>
 
                 <!-- SVG Radar Canvas -->
@@ -434,7 +412,7 @@
               
               <div style="border-top:1px solid var(--c-cobalt-rim); padding-top:0.8rem; margin-top:0.6rem; display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--t-muted);">
                 <span>Vercel Sandbox Headless Chromium</span>
-                <span style="color:var(--c-amber);">390px &bull; 1440px Parity</span>
+                <span style="color:var(--t-primary);">390px &bull; 1440px Parity</span>
               </div>
             </div>
 
@@ -442,86 +420,86 @@
             <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
               <div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-                  <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">CALIBRATED METRICS</span>
-                  <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--t-muted);">TARGET &ge; 9.5 / 10.0</span>
+                  <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">CALIBRATED METRICS</span>
+                  <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--t-muted);">TARGET &ge; <span id="metrics-threshold-readout">9.5</span> / 10.0</span>
                 </div>
                 <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.3rem;">
                   The 5 Pillars of 10x Creative Engineering
                 </h3>
                 <p style="font-size:0.86rem; color:var(--t-secondary); margin-bottom:1.4rem;">
-                  Individual sub-scores adjudicated by the council across optics, physics, typography, and anti-slop rules.
+                  Individual authentic sub-scores adjudicated live across optics, physics, typography, AST robustness, and anti-slop rules.
                 </p>
 
                 <!-- 5 Metric Rows -->
                 <div class="metric-bars-stack" style="display:flex; flex-direction:column; gap:1.1rem;">
                   
-                  <!-- Metric 1: First-Viewport Impact -->
+                  <!-- Metric 1: Aesthetic Craft -->
                   <div class="metric-bar-item">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">1. First-Viewport Impact</span>
-                      <span class="metric-score-pill" id="score-val-viewport" style="color:var(--c-amber);">9.8 / 10</span>
+                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">1. Aesthetic Craft</span>
+                      <span class="metric-score-pill" id="score-val-craft" style="color:var(--t-primary);">9.9 / 10</span>
                     </div>
                     <div class="metric-bar-track">
-                      <div class="metric-bar-fill" id="metric-fill-viewport" style="width:98%;"></div>
+                      <div class="metric-bar-fill" id="metric-fill-craft" style="width:99%;"></div>
                     </div>
                     <span style="font-size:0.75rem; color:var(--t-muted); display:block; margin-top:0.25rem;">
-                      Signature 3D canvas centerpiece with &le; 0.4px registration handoff and zero FOUC.
+                      Flavour world colorimetry, liquid glass refraction, and velvet obsidian hierarchy.
                     </span>
                   </div>
 
-                  <!-- Metric 2: Contrast & A11y -->
+                  <!-- Metric 2: Performance (60 FPS) -->
                   <div class="metric-bar-item">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">2. Contrast &amp; A11y</span>
-                      <span class="metric-score-pill" id="score-val-contrast" style="color:#10b981;">10.0 / 10</span>
+                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">2. Performance (60 FPS)</span>
+                      <span class="metric-score-pill" id="score-val-perf-bar" style="color:var(--t-primary);">9.9 / 10</span>
                     </div>
                     <div class="metric-bar-track">
-                      <div class="metric-bar-fill green" id="metric-fill-contrast" style="width:100%;"></div>
+                      <div class="metric-bar-fill" id="metric-fill-perf-bar" style="width:99%;"></div>
                     </div>
                     <span style="font-size:0.75rem; color:var(--t-muted); display:block; margin-top:0.25rem;">
-                      18.8:1 WCAG AA certified contrast; un-split .sr-only dual accessibility tree.
+                      Live RAF 16.6ms frame intervals, zero dropped frames, and leak-free WebGL disposal.
                     </span>
                   </div>
 
-                  <!-- Metric 3: Motion Physics & 60 FPS -->
+                  <!-- Metric 3: Pedagogical Clarity -->
                   <div class="metric-bar-item">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">3. Motion Physics &amp; 60 FPS</span>
-                      <span class="metric-score-pill" id="score-val-motion" style="color:var(--c-amber);">9.9 / 10</span>
+                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">3. Pedagogical Clarity</span>
+                      <span class="metric-score-pill" id="score-val-clarity" style="color:#10b981;">10.0 / 10</span>
                     </div>
                     <div class="metric-bar-track">
-                      <div class="metric-bar-fill" id="metric-fill-motion" style="width:99%;"></div>
+                      <div class="metric-bar-fill green" id="metric-fill-clarity" style="width:100%;"></div>
                     </div>
                     <span style="font-size:0.75rem; color:var(--t-muted); display:block; margin-top:0.25rem;">
-                      Unified RAF loop (Lenis 1.1 + Anime.js); 0 dropped frames and 0 cumulative layout shift.
+                      10-module peer-quizzing syllabus, Socratic interactive drawer, and [F]/[R] hotkeys.
                     </span>
                   </div>
 
-                  <!-- Metric 4: Anti-Slop Ban Compliance -->
+                  <!-- Metric 4: AST Robustness -->
                   <div class="metric-bar-item">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">4. Anti-Slop Ban Compliance</span>
-                      <span class="metric-score-pill" id="score-val-antislop" style="color:#10b981;">10.0 / 10</span>
+                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">4. AST Robustness</span>
+                      <span class="metric-score-pill" id="score-val-ast" style="color:var(--t-primary);">9.9 / 10</span>
                     </div>
                     <div class="metric-bar-track">
-                      <div class="metric-bar-fill green" id="metric-fill-antislop" style="width:100%;"></div>
+                      <div class="metric-bar-fill" id="metric-fill-ast" style="width:99%;"></div>
                     </div>
                     <span style="font-size:0.75rem; color:var(--t-muted); display:block; margin-top:0.25rem;">
-                      Zero generic CSS box-shadows; depth through calibrated tone steps &amp; concentric radii.
+                      Semantic DOM tree depth, valid ARIA attribute binding, and zero layout shifts.
                     </span>
                   </div>
 
-                  <!-- Metric 5: Optical Refraction Quality -->
+                  <!-- Metric 5: Mobile Parity -->
                   <div class="metric-bar-item">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">5. Optical Refraction Quality</span>
-                      <span class="metric-score-pill" id="score-val-optics" style="color:var(--c-amber);">9.6 / 10</span>
+                      <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">5. Mobile Parity</span>
+                      <span class="metric-score-pill" id="score-val-mobile" style="color:#10b981;">9.8 / 10</span>
                     </div>
                     <div class="metric-bar-track">
-                      <div class="metric-bar-fill" id="metric-fill-optics" style="width:96%;"></div>
+                      <div class="metric-bar-fill green" id="metric-fill-mobile" style="width:98%;"></div>
                     </div>
                     <span style="font-size:0.75rem; color:var(--t-muted); display:block; margin-top:0.25rem;">
-                      Apple Tahoe 10-layer specular reflection stack with procedural SVG normal displacement.
+                      390px vs 1440px viewport parity, zero document overflow, and &ge; 44px touch targets.
                     </span>
                   </div>
 
@@ -530,11 +508,14 @@
 
               <div style="border-top:1px solid var(--c-cobalt-rim); padding-top:0.8rem; margin-top:1rem; display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--t-muted);">
                 <span>Composite Score: <strong style="color:var(--c-ember);" id="metrics-composite-display">9.86 / 10.0</strong></span>
-                <span style="color:#10b981;" id="metrics-veto-display">✓ Zero Active Vetoes</span>
+                <span style="color:#10b981;" id="metrics-veto-display">ZERO ACTIVE VETOES</span>
               </div>
             </div>
 
           </div>
+
+          <!-- Real-Time Automated Anti-Slop Linter HUD & Jester Adversarial Gate Mount Point -->
+          <div id="anti-slop-linter-hud" style="margin-bottom:2rem;"></div>
 
           <!-- Real-Time Streaming Critique Terminal -->
           <div class="liquid-glass-card" style="padding:1.4rem;">
@@ -546,14 +527,14 @@
                   <span class="dot green"></span>
                 </div>
                 <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-primary); font-weight:700;">
-                  COUNCIL_DELIBERATION_BUS // REAL-TIME STREAMING CRITIQUE TERMINAL
+                  COUNCIL_DELIBERATION_BUS &bull; REAL-TIME STREAMING CRITIQUE TERMINAL
                 </span>
               </div>
               <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
                 <button id="terminal-filter-all" class="terminal-ctrl-btn active">All Logs</button>
                 <button id="terminal-filter-jester" class="terminal-ctrl-btn">Jester Only</button>
                 <button id="terminal-filter-system" class="terminal-ctrl-btn">Diffs &amp; AST</button>
-                <button id="terminal-fast-forward-btn" class="terminal-ctrl-btn" title="Fast forward simulation">⚡ Fast-Forward</button>
+                <button id="terminal-fast-forward-btn" class="terminal-ctrl-btn" title="Fast forward simulation">Fast-Forward</button>
                 <button id="clear-critique-log-btn" class="terminal-ctrl-btn">[Clear Console]</button>
               </div>
             </div>
@@ -565,7 +546,7 @@
 
             <div style="margin-top:0.7rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--t-muted);">
               <span>AST Bounded Crop Optimization: &lt; 450 tokens per iteration</span>
-              <span id="terminal-status-stream" style="color:var(--c-amber);">● Standby // Click 'Initiate Visual Hill-Climbing Audit' to run live simulation</span>
+              <span id="terminal-status-stream" style="color:var(--t-primary);">● Standby &bull; Click 'Initiate Visual Hill-Climbing Audit' to run live simulation</span>
             </div>
           </div>
 
@@ -579,10 +560,10 @@
             <div>
               <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem;">
                 <span class="tone-badge" style="border-color:#10b981; color:#10b981;">
-                  ● CONNECTED TO BLENDER 5.2 // RTX 5070 Ti OPTIX
+                  ● CONNECTED TO BLENDER 5.2 &bull; RTX 5070 Ti OPTIX
                 </span>
                 <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
-                  PORT 9876 // NVIDIA OPTIX CYCLES // HEADLESS BPY
+                  PORT 9876 &bull; NVIDIA OPTIX CYCLES &bull; HEADLESS BPY
                 </span>
               </div>
               <h2 class="section-title">Blender 5.2 MCP Parametric Studio</h2>
@@ -593,7 +574,10 @@
 
             <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
               <button id="simulate-bpy-render-btn" class="liquid-glass-btn liquid-glass-btn-primary">
-                <span>▶ Simulate Headless Cycles Render</span>
+                <span>Simulate Headless Cycles Render</span>
+              </button>
+                          <button id="download-glb-btn" class="liquid-glass-btn" style="min-height:46px;">
+                <span>Export 3D Asset (.GLB)</span>
               </button>
             </div>
           </div>
@@ -603,18 +587,38 @@
             <!-- 3D Interactive Workbench -->
             <div style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; gap:1rem;">
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-                <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--c-amber); font-weight:700;">PARAMETRIC WORKBENCH</span>
+                <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-primary); font-weight:700;">PARAMETRIC WORKBENCH</span>
                 <div style="display:flex; gap:0.4rem;">
-                  <button class="blender-mesh-btn active" data-mesh="torus" style="padding:0.3rem 0.6rem; font-size:0.75rem; border-radius:var(--r-round); border:1px solid var(--c-ember); background:var(--c-ember); color:#fff; cursor:pointer;">Torus Knot</button>
-                  <button class="blender-mesh-btn" data-mesh="canister" style="padding:0.3rem 0.6rem; font-size:0.75rem; border-radius:var(--r-round); border:1px solid var(--c-cobalt-rim); background:transparent; color:var(--t-secondary); cursor:pointer;">Canister</button>
-                  <button class="blender-mesh-btn" data-mesh="pack" style="padding:0.3rem 0.6rem; font-size:0.75rem; border-radius:var(--r-round); border:1px solid var(--c-cobalt-rim); background:transparent; color:var(--t-secondary); cursor:pointer;">Chip Pack</button>
+                  <button class="blender-mesh-btn active" data-mesh="torus">Torus Knot</button>
+                  <button class="blender-mesh-btn" data-mesh="canister">Canister</button>
+                  <button class="blender-mesh-btn" data-mesh="pack">Chip Pack</button>
+                  <button id="toggle-wireframe-btn" class="blender-wireframe-btn" title="Toggle quad wireframe view">Wireframe</button>
                 </div>
+              </div>
+
+                            <!-- Procedural Physics Animation Presets -->
+              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:var(--r-inner);">
+                <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+                  <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--t-muted); text-transform:uppercase;">Physics Preset:</span>
+                  <button class="blender-physics-btn active" data-physics="none">Turntable</button>
+                  <button class="blender-physics-btn" data-physics="ripple">Packaging Ripple</button>
+                  <button class="blender-physics-btn" data-physics="cloth-pop">Cloth Pop</button>
+                  <button class="blender-physics-btn" data-physics="flythrough">Camera 360</button>
+                </div>
+                <span id="physics-mode-label" style="font-family:var(--font-mono); font-size:0.7rem; color:#10b981; letter-spacing:0.04em;">TURNTABLE REST</span>
               </div>
 
               <!-- Real-Time 3D Parametric Workbench Viewport -->
               <div id="blender-3d-viewport" style="position:relative; width:100%; height:220px; border-radius:var(--r-inner); background:radial-gradient(circle at 50% 50%, #151a24 0%, #06070a 100%); border:1px solid var(--c-cobalt-rim); overflow:hidden;">
                 <div style="position:absolute; top:8px; left:10px; font-family:var(--font-mono); font-size:0.72rem; color:var(--t-muted); z-index:2; pointer-events:none;">
-                  <span id="workbench-mesh-label" style="color:var(--c-amber); font-weight:700;">TORUS KNOT SUPERQUADRIC</span> // PBR NEUTRAL
+                  <span id="workbench-mesh-label" style="color:var(--t-primary); font-weight:700;">TORUS KNOT SUPERQUADRIC</span> &bull; PBR NEUTRAL
+                </div>
+                              <!-- Real-Time Geometric Telemetry HUD Overlay -->
+                <div id="blender-telemetry-hud" class="blender-telemetry-hud" style="position:absolute; bottom:8px; right:10px; background:rgba(7,9,14,0.85); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:0.35rem 0.65rem; font-family:var(--font-mono); font-size:0.68rem; color:var(--t-secondary); display:flex; gap:0.75rem; z-index:5; pointer-events:none;">
+                  <div class="blender-telemetry-item"><span style="color:var(--t-muted);">V:</span> <strong id="telemetry-verts" style="color:#38bdf8;">0</strong></div>
+                  <div class="blender-telemetry-item"><span style="color:var(--t-muted);">T:</span> <strong id="telemetry-tris" style="color:#38bdf8;">0</strong></div>
+                  <div class="blender-telemetry-item"><span style="color:var(--t-muted);">MEM:</span> <strong id="telemetry-vram" style="color:#a78bfa;">0 KB</strong></div>
+                  <div class="blender-telemetry-item"><span style="color:var(--t-muted);">CALLS:</span> <strong id="telemetry-drawcalls" style="color:#34d399;">1</strong></div>
                 </div>
               </div>
 
@@ -623,7 +627,7 @@
                 <div>
                   <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-family:var(--font-mono); margin-bottom:0.25rem;">
                     <span>Mesh Segments (Resolution):</span>
-                    <strong id="bpy-val-segments" style="color:var(--c-amber);">64</strong>
+                    <strong id="bpy-val-segments" style="color:var(--t-primary);">64</strong>
                   </div>
                   <input type="range" id="bpy-slider-segments" min="16" max="128" step="8" value="64" style="width:100%;">
                 </div>
@@ -631,7 +635,7 @@
                 <div>
                   <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-family:var(--font-mono); margin-bottom:0.25rem;">
                     <span>Minor Radius / Bevel:</span>
-                    <strong id="bpy-val-radius" style="color:var(--c-amber);">0.35m</strong>
+                    <strong id="bpy-val-radius" style="color:var(--t-primary);">0.35m</strong>
                   </div>
                   <input type="range" id="bpy-slider-radius" min="0.1" max="0.8" step="0.05" value="0.35" style="width:100%;">
                 </div>
@@ -639,7 +643,7 @@
                 <div>
                   <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-family:var(--font-mono); margin-bottom:0.25rem;">
                     <span>Procedural Noise Scale:</span>
-                    <strong id="bpy-val-noise" style="color:var(--c-amber);">2.5x</strong>
+                    <strong id="bpy-val-noise" style="color:var(--t-primary);">2.5x</strong>
                   </div>
                   <input type="range" id="bpy-slider-noise" min="0.5" max="8.0" step="0.5" value="2.5" style="width:100%;">
                 </div>
@@ -647,7 +651,7 @@
                 <div>
                   <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-family:var(--font-mono); margin-bottom:0.25rem;">
                     <span>Cycles OptiX Samples:</span>
-                    <strong id="bpy-val-samples" style="color:var(--c-amber);">128</strong>
+                    <strong id="bpy-val-samples" style="color:var(--t-primary);">128</strong>
                   </div>
                   <input type="range" id="bpy-slider-samples" min="32" max="512" step="32" value="128" style="width:100%;">
                 </div>
@@ -706,24 +710,296 @@ bpy.ops.export_scene.gltf(
               </div>
             </div>
           </div>
+
+          <!-- FREE 3D CHARACTER RIGGING & ANIMATION PIPELINES -->
+          <div class="blender-rigging-section" style="margin-top:2.5rem; border-top:1px solid var(--c-cobalt-rim); padding-top:2rem;">
+            <!-- Section Header -->
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+              <div>
+                <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem; flex-wrap:wrap;">
+                  <span class="tone-badge" style="border-color:var(--c-sapphire); color:var(--c-sapphire);">
+                    Character Rigging Architecture
+                  </span>
+                  <span class="tone-badge" style="border-color:var(--c-phosphor); color:var(--c-phosphor);">
+                    Zero-License Cost
+                  </span>
+                  <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
+                    Blender 5.2 &bull; Three.js / WebGL &bull; Game Engine Ready
+                  </span>
+                </div>
+                <h3 style="font-family:var(--font-display); font-size:clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem); font-weight:700; color:var(--t-primary); letter-spacing:-0.02em; margin-bottom:0.4rem;">
+                  Free 3D Character Rigging &amp; Animation Pipelines
+                </h3>
+                <p style="color:var(--t-secondary); max-width:820px; font-size:0.92rem; line-height:1.6;">
+                  Professional production-grade character rigging, motion capture retargeting, and procedural armature pipelines with zero subscription costs. Compare auto-riggers, native Blender generation, and single-camera AI mocap solvers.
+                </p>
+              </div>
+
+              <!-- Quick Pipeline Selector Tabs -->
+              <div class="rigging-pipeline-tabs" role="tablist" aria-label="Rigging Pipelines">
+                <button class="rigging-nav-tab active" data-pipeline="mixamo" role="tab" aria-selected="true" aria-controls="rigging-detail-panel">
+                  <span>Mixamo</span>
+                </button>
+                <button class="rigging-nav-tab" data-pipeline="accurig" role="tab" aria-selected="false" aria-controls="rigging-detail-panel">
+                  <span>AccuRig</span>
+                </button>
+                <button class="rigging-nav-tab" data-pipeline="rigify" role="tab" aria-selected="false" aria-controls="rigging-detail-panel">
+                  <span>Rigify</span>
+                </button>
+                <button class="rigging-nav-tab" data-pipeline="rokoko" role="tab" aria-selected="false" aria-controls="rigging-detail-panel">
+                  <span>Rokoko</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Pipeline Cards Grid (Interactive Selection) -->
+            <div class="rigging-cards-grid">
+              <!-- Mixamo Card -->
+              <div class="rigging-card active" data-pipeline="mixamo" tabindex="0" role="button" aria-pressed="true">
+                <div class="rigging-card-header">
+                  <span class="rigging-card-tag">Adobe Free Web Cloud</span>
+                  <span class="rigging-card-badge">Auto-Rig</span>
+                </div>
+                <h4 class="rigging-card-title">Mixamo</h4>
+                <p class="rigging-card-desc">Humanoid auto-rigging with 5-point marker placement, 65/67-bone hierarchy, and 2,000+ free mocap clips.</p>
+                <div class="rigging-card-spec">
+                  <span>Input: OBJ / FBX</span>
+                  <span>Export: FBX / GLB</span>
+                </div>
+              </div>
+
+              <!-- AccuRig Card -->
+              <div class="rigging-card" data-pipeline="accurig" tabindex="0" role="button" aria-pressed="false">
+                <div class="rigging-card-header">
+                  <span class="rigging-card-tag">ActorCore Standalone</span>
+                  <span class="rigging-card-badge">5-Finger Precise</span>
+                </div>
+                <h4 class="rigging-card-title">AccuRig</h4>
+                <p class="rigging-card-desc">Accurate 5-finger knuckle detection, spine curve refinement, root motion lock, and ARKit facial blendshapes.</p>
+                <div class="rigging-card-spec">
+                  <span>Input: OBJ / FBX / USD</span>
+                  <span>Export: Blender FBX</span>
+                </div>
+              </div>
+
+              <!-- Rigify Card -->
+              <div class="rigging-card" data-pipeline="rigify" tabindex="0" role="button" aria-pressed="false">
+                <div class="rigging-card-header">
+                  <span class="rigging-card-tag">Blender 5.2 Built-In</span>
+                  <span class="rigging-card-badge">Procedural Meta-Rig</span>
+                </div>
+                <h4 class="rigging-card-title">Rigify</h4>
+                <p class="rigging-card-desc">Native procedural generator with FK/IK snapping, bone shape widgets (WGT-), squash &amp; stretch, and modular limb types.</p>
+                <div class="rigging-card-spec">
+                  <span>Input: Any Mesh Cage</span>
+                  <span>API: rigify_generate()</span>
+                </div>
+              </div>
+
+              <!-- Rokoko Card -->
+              <div class="rigging-card" data-pipeline="rokoko" tabindex="0" role="button" aria-pressed="false">
+                <div class="rigging-card-header">
+                  <span class="rigging-card-tag">Single-Cam Vision AI</span>
+                  <span class="rigging-card-badge">AI Video Mocap</span>
+                </div>
+                <h4 class="rigging-card-title">Rokoko</h4>
+                <p class="rigging-card-desc">Single-camera video motion capture retargeting to Blender armatures with foot-locking and Euler smoothing.</p>
+                <div class="rigging-card-spec">
+                  <span>Input: MP4 / Webcam</span>
+                  <span>Blender Addon: Retarget</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pipeline Detail Display Area (Dynamic Panel) -->
+            <div id="rigging-detail-panel" class="rigging-detail-panel" role="region" aria-live="polite">
+              <!-- Rendered via initBlenderRiggingPipeline in blender-mcp-studio.js -->
+            </div>
+
+            <!-- INTERACTIVE BONE MAPPING & HIERARCHY VISUALIZER -->
+            <div class="bone-mapping-container">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem; flex-wrap:wrap; gap:1rem;">
+                <div>
+                  <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
+                    <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">
+                      Interactive Visual Matrix
+                    </span>
+                    <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--t-muted);">
+                      Bone Retargeting &bull; Hierarchy Resolution &bull; Namespace Unification
+                    </span>
+                  </div>
+                  <h4 style="font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--t-primary); margin-bottom:0.25rem;">
+                    Interactive Bone Mapping &amp; Hierarchy Visualizer
+                  </h4>
+                  <p style="color:var(--t-secondary); font-size:0.88rem; max-width:720px; line-height:1.5;">
+                    Select an anatomical region to inspect exact naming conventions and hierarchy across Mixamo, Rigify, and the Humanoid (VRM/glTF) standard.
+                  </p>
+                </div>
+
+                <!-- Body Zone Selectors -->
+                <div class="body-zone-selector" role="group" aria-label="Body Zones">
+                  <button class="zone-btn active" data-zone="spine" type="button">Spine &amp; Torso</button>
+                  <button class="zone-btn" data-zone="arm" type="button">Arms &amp; Shoulders</button>
+                  <button class="zone-btn" data-zone="hand" type="button">Hands &amp; Fingers</button>
+                  <button class="zone-btn" data-zone="legs" type="button">Legs &amp; Feet</button>
+                </div>
+              </div>
+
+              <!-- Zone Visualizer Layout: Interactive Table + Anatomy Reference -->
+              <div class="bone-visualizer-grid">
+                <!-- Left: Bone Mapping Table -->
+                <div style="overflow-x:auto; background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:0.8rem;">
+                  <table class="bone-matrix-table" aria-label="Bone Mapping Comparison">
+                    <thead>
+                      <tr>
+                        <th scope="col" style="color:var(--t-muted);">Anatomy</th>
+                        <th scope="col" style="color:var(--t-primary);">Mixamo Skeleton</th>
+                        <th scope="col" style="color:var(--c-sapphire);">Rigify Bone</th>
+                        <th scope="col" style="color:var(--c-phosphor);">Humanoid Standard</th>
+                      </tr>
+                    </thead>
+                    <tbody id="bone-matrix-tbody">
+                      <!-- Rendered via JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Right: Visual Bone Hierarchy Card & Roll / Constraint Diagnostics -->
+                <div id="bone-zone-diagnostics" style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
+                  <!-- Rendered via JavaScript -->
+                </div>
+              </div>
+
+              <!-- Python Retargeting & Bone Renaming Automation Script -->
+              <div style="border-top:1px solid var(--c-cobalt-rim); padding-top:1.2rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.5rem;">
+                  <div>
+                    <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-primary); font-weight:700;">BATCH RETARGETING &amp; BONE RENAMER (BLENDER 5.2 BPY):</span>
+                    <span style="font-size:0.75rem; color:var(--t-muted); margin-left:0.5rem;">One-click Mixamo to Rigify / Humanoid normalization</span>
+                  </div>
+                  <button id="copy-rigging-script-btn" class="copy-btn" title="Copy BPY retargeting script" type="button">Copy Retargeting Script</button>
+                </div>
+                <div class="bpy-code-box" style="max-height:260px;">
+                  <pre><code id="bpy-rigging-script"># Blender 5.2 Batch Bone Renaming &amp; Retargeting Utility
+# Automatically normalizes Mixamo armature naming to Rigify / Humanoid standards
+import bpy
+
+def normalize_armature_bones(armature_obj, target_standard="RIGIFY"):
+    """
+    Renames bones from mixamorig: namespace to target standard (RIGIFY or HUMANOID).
+    Preserves parent relationships, edit bone roll vectors, and bone collections.
+    """
+    if armature_obj.type != 'ARMATURE':
+        print(f"Error: {armature_obj.name} is not an Armature.")
+        return False
+    
+    # Mapping Table: Mixamo -> (Rigify, Humanoid)
+    BONE_MAP = {
+        # Spine &amp; Head
+        "mixamorig:Hips": ("spine", "Hips"),
+        "mixamorig:Spine": ("spine.001", "Spine"),
+        "mixamorig:Spine1": ("spine.002", "Chest"),
+        "mixamorig:Spine2": ("spine.003", "UpperChest"),
+        "mixamorig:Neck": ("neck", "Neck"),
+        "mixamorig:Head": ("head", "Head"),
+        
+        # Left Arm
+        "mixamorig:LeftShoulder": ("shoulder.L", "LeftShoulder"),
+        "mixamorig:LeftArm": ("upper_arm.L", "LeftUpperArm"),
+        "mixamorig:LeftForeArm": ("forearm.L", "LeftLowerArm"),
+        "mixamorig:LeftHand": ("hand.L", "LeftHand"),
+        
+        # Right Arm
+        "mixamorig:RightShoulder": ("shoulder.R", "RightShoulder"),
+        "mixamorig:RightArm": ("upper_arm.R", "RightUpperArm"),
+        "mixamorig:RightForeArm": ("forearm.R", "RightLowerArm"),
+        "mixamorig:RightHand": ("hand.R", "RightHand"),
+        
+        # Left Leg
+        "mixamorig:LeftUpLeg": ("thigh.L", "LeftUpperLeg"),
+        "mixamorig:LeftLeg": ("shin.L", "LeftLowerLeg"),
+        "mixamorig:LeftFoot": ("foot.L", "LeftFoot"),
+        "mixamorig:LeftToeBase": ("toe.L", "LeftToes"),
+        
+        # Right Leg
+        "mixamorig:RightUpLeg": ("thigh.R", "RightUpperLeg"),
+        "mixamorig:RightLeg": ("shin.R", "RightLowerLeg"),
+        "mixamorig:RightFoot": ("foot.R", "RightFoot"),
+        "mixamorig:RightToeBase": ("toe.R", "RightToes"),
+        
+        # Hand Fingers (Left)
+        "mixamorig:LeftHandThumb1": ("thumb.01.L", "LeftThumbProximal"),
+        "mixamorig:LeftHandThumb2": ("thumb.02.L", "LeftThumbIntermediate"),
+        "mixamorig:LeftHandThumb3": ("thumb.03.L", "LeftThumbDistal"),
+        "mixamorig:LeftHandIndex1": ("f_index.01.L", "LeftIndexProximal"),
+        "mixamorig:LeftHandIndex2": ("f_index.02.L", "LeftIndexIntermediate"),
+        "mixamorig:LeftHandIndex3": ("f_index.03.L", "LeftIndexDistal"),
+        "mixamorig:LeftHandMiddle1": ("f_middle.01.L", "LeftMiddleProximal"),
+        "mixamorig:LeftHandMiddle2": ("f_middle.02.L", "LeftMiddleIntermediate"),
+        "mixamorig:LeftHandMiddle3": ("f_middle.03.L", "LeftMiddleDistal"),
+        "mixamorig:LeftHandRing1": ("f_ring.01.L", "LeftRingProximal"),
+        "mixamorig:LeftHandRing2": ("f_ring.02.L", "LeftRingIntermediate"),
+        "mixamorig:LeftHandRing3": ("f_ring.03.L", "LeftRingDistal"),
+        "mixamorig:LeftHandPinky1": ("f_pinky.01.L", "LeftLittleProximal"),
+        "mixamorig:LeftHandPinky2": ("f_pinky.02.L", "LeftLittleIntermediate"),
+        "mixamorig:LeftHandPinky3": ("f_pinky.03.L", "LeftLittleDistal"),
+    }
+    
+    target_idx = 0 if target_standard.upper() == "RIGIFY" else 1
+    renamed_count = 0
+    
+    bpy.context.view_layer.objects.active = armature_obj
+    bpy.ops.object.mode_set(mode='EDIT')
+    
+    for edit_bone in armature_obj.data.edit_bones:
+        orig_name = edit_bone.name
+        clean_name = orig_name.strip()
+        
+        # Handle prefix strip or direct dictionary lookup
+        if clean_name in BONE_MAP:
+            new_name = BONE_MAP[clean_name][target_idx]
+            edit_bone.name = new_name
+            renamed_count += 1
+        elif clean_name.startswith("mixamorig:"):
+            # Strip namespace prefix if not in table
+            suffix = clean_name.replace("mixamorig:", "")
+            edit_bone.name = suffix
+            renamed_count += 1
+            
+    bpy.ops.object.mode_set(mode='OBJECT')
+    print(f"Renamed {renamed_count} bones to {target_standard} standard.")
+    return True
+
+# Execute on active object in Blender 5.2
+if bpy.context.active_object and bpy.context.active_object.type == 'ARMATURE':
+    normalize_armature_bones(bpy.context.active_object, target_standard="RIGIFY")
+else:
+    print("Select an Armature object before executing this script.")</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
+      
+          <!-- Adobe CC Automation Hub (Photoshop UXP, Illustrator JSX, Texture Engine) -->
+          <div id="adobe-cc-automation-container" style="margin-top:2.5rem; border-top:1px solid var(--c-hairline); padding-top:2rem;"></div>
+        </section>
 
       <!-- VIEW 1: INTERACTIVE SYLLABUS & TEACHING MODE -->
       <section id="section-syllabus" class="view-section" role="tabpanel" aria-labelledby="tab-syllabus" tabindex="0" aria-live="polite" style="display:none;">
         <!-- Presenter Mode HUD (Visible in Fullscreen / Presenter Deck Mode) -->
         <div class="presenter-hud liquid-glass-card">
           <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
-            <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">
+            <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">
               ● PRESENTER DECK MODE
             </span>
             <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-muted);">
-              HOTKEYS: <strong style="color:var(--c-amber);">&larr; / &rarr;</strong> Slide &bull; <strong style="color:var(--c-amber);">Space</strong> Next &bull; <strong style="color:var(--c-amber);">R</strong> Reveal &bull; <strong style="color:var(--c-amber);">M</strong> Modules &bull; <strong style="color:var(--c-amber);">Esc</strong> Exit
+              HOTKEYS: <strong style="color:var(--t-primary);">&larr; / &rarr;</strong> Slide &bull; <strong style="color:var(--t-primary);">Space</strong> Next &bull; <strong style="color:var(--t-primary);">R</strong> Reveal &bull; <strong style="color:var(--t-primary);">M</strong> Modules &bull; <strong style="color:var(--t-primary);">Esc</strong> Exit
             </span>
           </div>
           <div style="display:flex; align-items:center; gap:0.6rem;">
-            <button id="hud-drawer-btn" class="deck-btn liquid-glass-btn" title="Module Selector Drawer (M)">☰ Modules [M]</button>
-            <button id="hud-exit-btn" class="deck-btn deck-btn-primary liquid-glass-btn" title="Exit Presenter Deck (Esc)">✕ Exit Deck [Esc]</button>
+            <button id="hud-drawer-btn" class="deck-btn liquid-glass-btn" title="Module Selector [M]"><span>Modules [M]</span></button>
+            <button id="hud-exit-btn" class="deck-btn deck-btn-primary liquid-glass-btn" title="Exit Presenter Mode [Esc]"><span>Exit Deck [Esc]</span></button>
           </div>
         </div>
 
@@ -732,7 +1008,7 @@ bpy.ops.export_scene.gltf(
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.8rem;">
             <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
               <span class="tone-badge" id="mod-number">Module 01 / 10</span>
-              <span class="tone-badge" id="mod-tag" style="border-color:var(--c-cobalt-rim); color:var(--c-amber);">UI Foundations</span>
+              <span class="tone-badge" id="mod-tag" style="border-color:var(--c-cobalt-rim); color:var(--t-primary);">UI Foundations</span>
               <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-muted);">
                 Slide <strong id="current-slide-num" style="color:var(--t-primary);">1</strong> of 10
               </span>
@@ -742,8 +1018,8 @@ bpy.ops.export_scene.gltf(
               <div role="progressbar" id="syllabus-progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="10" aria-label="Syllabus curriculum progress" style="width:160px; height:8px; background:var(--c-elevated-zinc); border-radius:4px; overflow:hidden;">
                 <div id="syllabus-progress" style="width:10%; height:100%; background:var(--c-ember); transition:width 0.3s ease;"></div>
               </div>
-              <button id="open-drawer-btn" class="deck-btn liquid-glass-btn" title="Open Module Selector Drawer (M)">☰ Modules [M]</button>
-              <button id="toggle-presenter-btn" class="deck-btn deck-btn-primary liquid-glass-btn" title="Toggle Fullscreen Presenter Deck (F)">⚡ Presenter Deck [F]</button>
+              <button id="open-drawer-btn" class="deck-btn liquid-glass-btn" title="Open Module Drawer [M]"><span>Module Index [M]</span></button>
+              <button id="toggle-presenter-btn" class="deck-btn deck-btn-primary liquid-glass-btn" title="Toggle Fullscreen Presenter Deck (F)">Presenter Deck [F]</button>
             </div>
           </div>
 
@@ -767,7 +1043,7 @@ bpy.ops.export_scene.gltf(
               <!-- Mentor Discussion Inquiry Card -->
               <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.4rem;">
                 <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.8rem;">
-                  <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--c-amber); font-weight:700;">[MENTOR DISCUSSION INQUIRY]</span>
+                  <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-primary); font-weight:700;">[MENTOR DISCUSSION INQUIRY]</span>
                 </div>
                 <p id="mod-mentor-prompt" style="font-size:0.95rem; color:var(--t-primary); font-style:italic; line-height:1.6;">
                   Look at this UI card. What makes it look like generic AI slop? How would you redesign it to feel like an expensive editorial object?
@@ -782,7 +1058,7 @@ bpy.ops.export_scene.gltf(
                     <div style="display:flex; align-items:center; gap:0.5rem;">
                       <span id="solution-status-badge" class="quiz-badge quiz-badge-masked">QUIZ: MASKED</span>
                       <button id="reveal-solution-btn" class="reveal-btn" title="Toggle Solution Visibility (Hotkey: R)">
-                        <span id="reveal-btn-icon">👁️</span>
+                        <span id="reveal-btn-icon"></span>
                         <span id="reveal-btn-text">Reveal Solution [R]</span>
                       </button>
                     </div>
@@ -790,7 +1066,7 @@ bpy.ops.export_scene.gltf(
 
                   <!-- Masked Placeholder View for Quiz Mode -->
                   <div id="solution-masked-view" class="solution-masked-box" title="Click or press [R] to reveal target solution">
-                    <p>🔒 <strong>Target solution concealed for quiz mode.</strong><br><span style="font-size:0.82rem; color:var(--t-muted);">Discuss the mentor inquiry with your peer, then click or press <kbd style="color:var(--c-amber);">[R]</kbd> to verify!</span></p>
+                    <p><strong>Target solution concealed for quiz mode.</strong><br><span style="font-size:0.82rem; color:var(--t-muted);">Discuss the mentor inquiry with your peer, then click or press <kbd style="color:var(--t-primary);">[R]</kbd> to verify!</span></p>
                   </div>
 
                   <!-- Revealed Solution View -->
@@ -807,11 +1083,11 @@ bpy.ops.export_scene.gltf(
             <div class="code-playground-card">
               <div class="playground-header">
                 <div style="display:flex; align-items:center; gap:0.6rem;">
-                  <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--c-amber); font-weight:700;">[LIVE CODE PLAYGROUND]</span>
+                  <span style="font-family:var(--font-mono); font-size:0.82rem; color:var(--t-primary); font-weight:700;">[LIVE CODE PLAYGROUND]</span>
                   <span id="code-lang-badge" class="tone-badge" style="font-size:0.72rem; padding:0.15rem 0.5rem;">CSS</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:0.5rem;">
-                  <button id="copy-code-btn" class="deck-btn" title="Copy code snippet to clipboard">📋 Copy Snippet</button>
+                  <button id="copy-code-btn" class="deck-btn" title="Copy code snippet to clipboard">Copy Snippet</button>
                   <button id="reset-code-btn" class="deck-btn" title="Reset code to original blueprint">↺ Reset</button>
                   <button id="run-code-btn" class="deck-btn deck-btn-ember" title="Execute / Compile and Live Preview">▶ Run / Preview</button>
                 </div>
@@ -858,7 +1134,7 @@ bpy.ops.export_scene.gltf(
           <!-- Viewport Header & Action Toolbar -->
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
             <div>
-              <span class="tone-badge" style="margin-bottom:0.5rem;">THREE.JS R170+ // COLORIMETRIC STAGE</span>
+              <span class="tone-badge" style="margin-bottom:0.5rem;">THREE.JS R170+ &bull; COLORIMETRIC STAGE</span>
               <h2 class="section-title" style="font-size:1.8rem;">Interactive WebGL/WebGPU 3D Viewport</h2>
             </div>
             <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
@@ -903,7 +1179,7 @@ bpy.ops.export_scene.gltf(
 
               <!-- Render Mode Selector -->
               <div class="control-slider-group">
-                <label for="render-mode-select"><span>Render Mode</span><span id="render-mode-badge" style="color:var(--c-amber);">Solid PBR</span></label>
+                <label for="render-mode-select"><span>Render Mode</span><span id="render-mode-badge" style="color:var(--t-primary);">Solid PBR</span></label>
                 <select id="render-mode-select" class="custom-select" aria-label="Render Mode Selection">
                   <option value="solid" selected>Solid PBR (Micro-facet Standard)</option>
                   <option value="wireframe">Wireframe Hologram (HUD CAD Mesh)</option>
@@ -923,7 +1199,7 @@ bpy.ops.export_scene.gltf(
 
               <!-- Tone Mapping Selector -->
               <div class="control-slider-group">
-                <label for="tone-mapping-select"><span>Tone Mapping Mode</span><span id="tonemap-badge" style="color:var(--c-amber);">Khronos Neutral</span></label>
+                <label for="tone-mapping-select"><span>Tone Mapping Mode</span><span id="tonemap-badge" style="color:var(--t-primary);">Khronos Neutral</span></label>
                 <select id="tone-mapping-select" class="custom-select" aria-label="Colorimetric Tone Mapping Selection">
                   <option value="neutral" selected>Khronos PBR Neutral (PBR 2026 Standard)</option>
                   <option value="aces">ACES Filmic (Cinematic S-Curve)</option>
@@ -999,7 +1275,7 @@ bpy.ops.export_scene.gltf(
           <!-- Educational Deep Dive Card: Live Colorimetric & Point Cloud Archaeology -->
           <div id="theory-deepdive-card" class="theory-deepdive-box" style="margin-top:1.8rem;" aria-live="polite">
             <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.8rem; flex-wrap:wrap;">
-              <span class="tone-badge" style="border-color:var(--c-amber); color:var(--c-amber);">ARCHITECTURAL ANALYSIS</span>
+              <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">ARCHITECTURAL ANALYSIS</span>
               <span id="deepdive-topic-title" style="font-weight:700; font-size:0.95rem; color:var(--t-primary);">Khronos PBR Neutral Colorimetry</span>
             </div>
             <p id="deepdive-topic-text" style="font-size:0.9rem; color:var(--t-secondary); line-height:1.6; margin-bottom:0.8rem;">
@@ -1032,7 +1308,7 @@ bpy.ops.export_scene.gltf(
             
             <!-- Liquid Glass Card Target -->
             <div id="demo-glass-card" class="liquid-glass-stack" style="position:relative; width:min(340px, 100%); max-width:100%; padding:2rem; background:rgba(18, 20, 26, 0.45); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:24px; text-align:center;">
-              <span style="font-family:var(--font-mono); font-size:0.75rem; color:#ffb35c; text-transform:uppercase;">[PHYSICAL OPTICAL LENS]</span>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:rgba(255,255,255,0.85); text-transform:uppercase;">[PHYSICAL OPTICAL LENS]</span>
               <h3 style="font-family:var(--font-display); font-size:1.4rem; color:#fff; margin:0.6rem 0;">Liquid Glass</h3>
               <p style="font-size:0.85rem; color:rgba(255,255,255,0.85);">Zero text ghosting with 10-layer specular reflection.</p>
             </div>
@@ -1060,13 +1336,13 @@ bpy.ops.export_scene.gltf(
         <div class="liquid-glass-card" style="margin-bottom:2rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
             <div>
-              <span class="tone-badge" style="margin-bottom:0.5rem; border-color:var(--c-ember); color:var(--c-ember);">
-                ● REACTBITS + ANIME.JS // KINETIC ENGINE
+              <span class="tone-badge" style="margin-bottom:0.5rem; border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">
+                ● REACTBITS + ANIME.JS &bull; KINETIC ENGINE
               </span>
               <h2 class="section-title" style="font-size:1.8rem;">Motion &amp; Kinetic Playground</h2>
             </div>
             <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
-              TEXT-MOTION-REACTBITS // ANIMEJS-CANVAS-SPRINGS
+              TEXT-MOTION-REACTBITS &bull; ANIMEJS-CANVAS-SPRINGS
             </span>
           </div>
           <p style="color:var(--t-secondary); max-width:920px; font-size:1rem; line-height:1.6;">
@@ -1081,7 +1357,7 @@ bpy.ops.export_scene.gltf(
           <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-                <span class="tone-badge">REACTBITS // BLURTEXT</span>
+                <span class="tone-badge">REACTBITS &bull; BLURTEXT</span>
                 <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-ember);">GAUSSIAN STAGGER</span>
               </div>
               <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
@@ -1126,8 +1402,8 @@ bpy.ops.export_scene.gltf(
           <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-                <span class="tone-badge">REACTBITS // DECRYPTEDTEXT</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-amber);">SCRAMBLE LOCK</span>
+                <span class="tone-badge">REACTBITS &bull; DECRYPTEDTEXT</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--t-primary);">SCRAMBLE LOCK</span>
               </div>
               <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
                 Decrypted Cryptographic Scramble
@@ -1138,7 +1414,7 @@ bpy.ops.export_scene.gltf(
 
               <!-- DecryptedText Stage -->
               <div id="decrypt-card-trigger" class="motion-stage-box" style="margin-bottom:1.4rem; min-height:110px; display:flex; align-items:center; justify-content:center; text-align:center; cursor:pointer;" title="Hover or click to scramble">
-                <span id="decrypt-text-sr" class="sr-only">LEUL-5070TI // QUANTUM_ENCRYPTED_2026</span>
+                <span id="decrypt-text-sr" class="sr-only">LEUL-5070TI &bull; QUANTUM_ENCRYPTED_2026</span>
                 <div id="decrypt-text-stage" class="decrypt-text-display"></div>
               </div>
             </div>
@@ -1147,7 +1423,7 @@ bpy.ops.export_scene.gltf(
             <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1rem; display:flex; flex-direction:column; gap:0.9rem;">
               <div>
                 <label for="decrypt-input" style="display:block; font-size:0.78rem; font-family:var(--font-mono); color:var(--t-secondary); margin-bottom:0.3rem;">TARGET TEXT</label>
-                <input type="text" id="decrypt-input" value="LEUL-5070TI // QUANTUM_ENCRYPTED_2026" aria-label="Target text for DecryptedText scramble" style="width:100%; min-height:44px; padding:0.6rem 0.8rem; background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-ctl); color:var(--t-primary); font-family:var(--font-mono); font-size:0.82rem; outline:none;">
+                <input type="text" id="decrypt-input" value="LEUL-5070TI &bull; QUANTUM_ENCRYPTED_2026" aria-label="Target text for DecryptedText scramble" style="width:100%; min-height:44px; padding:0.6rem 0.8rem; background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-ctl); color:var(--t-primary); font-family:var(--font-mono); font-size:0.82rem; outline:none;">
               </div>
 
               <div class="grid-3col" style="gap:0.6rem;">
@@ -1170,8 +1446,8 @@ bpy.ops.export_scene.gltf(
                 </div>
               </div>
 
-              <button id="decrypt-trigger-btn" class="nav-tab-btn" aria-label="Trigger DecryptedText Scramble" style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); color:var(--c-amber); width:100%; min-height:44px; padding:0.65rem; font-size:0.85rem; border-radius:var(--r-ctl); font-weight:600; cursor:pointer;">
-                &#9881; Scramble Again
+              <button id="decrypt-trigger-btn" class="nav-tab-btn" aria-label="Trigger DecryptedText Scramble" style="background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); color:var(--t-primary); width:100%; min-height:44px; padding:0.65rem; font-size:0.85rem; border-radius:var(--r-ctl); font-weight:600; cursor:pointer;">
+                Scramble Again
               </button>
             </div>
           </div>
@@ -1185,7 +1461,7 @@ bpy.ops.export_scene.gltf(
           <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-                <span class="tone-badge">REACTBITS // VARIABLEPROXIMITY</span>
+                <span class="tone-badge">REACTBITS &bull; VARIABLEPROXIMITY</span>
                 <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-ember);">EUCLIDEAN AXIS WARP</span>
               </div>
               <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
@@ -1217,7 +1493,7 @@ bpy.ops.export_scene.gltf(
 
               <div style="display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--t-secondary);">
                 <span>Pointer Target: <strong id="prox-pointer-readout" style="color:var(--c-ember);">Waiting for hover...</strong></span>
-                <span>Falloff: <strong style="color:var(--c-amber);">Quadratic Distance</strong></span>
+                <span>Falloff: <strong style="color:var(--t-primary);">Quadratic Distance</strong></span>
               </div>
             </div>
           </div>
@@ -1226,8 +1502,8 @@ bpy.ops.export_scene.gltf(
           <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-                <span class="tone-badge">REACTBITS // SHINYTEXT</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-amber);">SPECULAR GRADIENT</span>
+                <span class="tone-badge">REACTBITS &bull; SHINYTEXT</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--t-primary);">SPECULAR GRADIENT</span>
               </div>
               <h3 style="font-family:var(--font-display); font-size:1.35rem; color:var(--t-primary); margin-bottom:0.4rem;">
                 ShinyText Specular Shimmer
@@ -1277,8 +1553,8 @@ bpy.ops.export_scene.gltf(
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.2rem;">
             <div>
               <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.4rem;">
-                <span class="tone-badge">ANIME.JS // SPRING PARTICLE ENGINE</span>
-                <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">CLICK / DRAG STAGE</span>
+                <span class="tone-badge">ANIME.JS &bull; SPRING PARTICLE ENGINE</span>
+                <span class="tone-badge" style="border-color:rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); color:var(--t-primary);">CLICK &bull; DRAG STAGE</span>
               </div>
               <h3 style="font-family:var(--font-display); font-size:1.6rem; color:var(--t-primary);">
                 Anime.js Canvas Particle Burst Sandbox
@@ -1288,7 +1564,7 @@ bpy.ops.export_scene.gltf(
             <!-- Live Particle HUD -->
             <div style="display:flex; align-items:center; gap:0.8rem; font-family:var(--font-mono); font-size:0.82rem;">
               <span class="tone-badge" style="background:var(--c-obsidian);">Active: <strong id="hud-particle-count" style="color:var(--c-ember);">0</strong></span>
-              <span class="tone-badge" style="background:var(--c-obsidian);">Bursts: <strong id="hud-burst-count" style="color:var(--c-amber);">0</strong></span>
+              <span class="tone-badge" style="background:var(--c-obsidian);">Bursts: <strong id="hud-burst-count" style="color:var(--t-primary);">0</strong></span>
               <span class="tone-badge" style="background:var(--c-obsidian);">FPS: <strong id="hud-fps-count" style="color:#38bdf8;">60</strong></span>
             </div>
           </div>
@@ -1302,7 +1578,7 @@ bpy.ops.export_scene.gltf(
             <p class="sr-only">Interactive canvas simulating high-speed spring physics particles and elastic shockwaves with customizable damping and color palettes.</p>
             <canvas id="anime-particle-canvas" style="width:100%; height:100%; display:block; touch-action:none;"></canvas>
             <div id="particle-canvas-hint" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; transition:opacity 0.5s ease;">
-              <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--c-amber); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">[INTERACTIVE PHYSICS STAGE]</span>
+              <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--t-primary); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">[INTERACTIVE PHYSICS STAGE]</span>
               <span style="font-family:var(--font-display); font-size:1.2rem; color:var(--t-secondary);">Click or drag anywhere to ignite kinetic particle bursts</span>
             </div>
           </div>
@@ -1392,7 +1668,7 @@ bpy.ops.export_scene.gltf(
         <span>RTX 5070 Ti &bull; Blender 5.2.2 LTS</span>
       </div>
       <div>
-        <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository LeulTew/skills (opens in new tab)" style="color:var(--c-amber); text-decoration:none; min-height:44px; display:inline-flex; align-items:center;">
+        <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository LeulTew/skills (opens in new tab)" style="color:var(--t-primary); text-decoration:none; min-height:44px; display:inline-flex; align-items:center;">
           github.com/LeulTew/skills
         </a>
       </div>

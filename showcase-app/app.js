@@ -12,6 +12,13 @@ import { initFlavourWorlds, setFlavourWorld, FLAVOUR_WORLDS } from './modules/fl
 import { initLiquidGlass } from './modules/liquid-glass.js';
 import { initCouncilChamber, initCouncilDemocracy } from './modules/council-democracy.js';
 import { initBlenderStudio } from './modules/blender-mcp-studio.js';
+import { initAdobeCCAutomationHub } from './modules/component-adobe-cc.js';
+import { initReactBitsPlayground } from './modules/component-reactbits.js';
+import { initMagicUIPlayground } from './modules/component-magicui.js';
+import { initShaderCanvasPlayground } from './modules/component-canvas.js';
+import { initMicroUIPlayground } from './modules/component-microui.js';
+import { initAntiSlopLinter, runAntiSlopAudit } from './modules/anti-slop-linter.js';
+import { initPresenterDeck } from './modules/presenter-deck.js';
 
 const SKILLS_DATA = (typeof window !== 'undefined' && window.SKILLS_DATA && window.SKILLS_DATA.length) 
   ? window.SKILLS_DATA 
@@ -20,6 +27,13 @@ const SKILLS_DATA = (typeof window !== 'undefined' && window.SKILLS_DATA && wind
 const TEACHING_MODULES = (typeof window !== 'undefined' && window.TEACHING_MODULES && window.TEACHING_MODULES.length) 
   ? window.TEACHING_MODULES 
   : (IMPORTED_MODULES || []);
+
+const GLYPH_SETS = {
+  crypto: '!@#$%^&*()_+-=[]{}|;:,.<>?/0123456789',
+  matrix: 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789',
+  hex: '0123456789ABCDEFabcdef',
+  binary: '01'
+};
 
 // ============================================================================
 // THREE.JS 3D INTERACTIVE STAGE & SHADER PIPELINE
@@ -98,7 +112,7 @@ function createPackagingTexture() {
 
   ctx.fillStyle = '#ffffff';
   ctx.font = 'bold 18px monospace';
-  ctx.fillText('COLORIMETRIC TEST CHART // 2026', 48, 242);
+  ctx.fillText('COLORIMETRIC TEST CHART &bull; 2026', 48, 242);
 
   // Outer framing hairline
   ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
@@ -773,10 +787,10 @@ export function revealSolution() {
   if (maskedView) maskedView.style.display = 'none';
   if (revealedView) revealedView.style.display = 'block';
   if (badge) {
-    badge.textContent = '✓ TARGET VERIFIED';
+    badge.textContent = 'TARGET VERIFIED';
     badge.className = 'quiz-badge quiz-badge-revealed';
   }
-  if (btnIcon) btnIcon.textContent = '✕';
+  if (btnIcon) btnIcon.textContent = 'Close [Esc]';
   if (btnText) btnText.textContent = 'Hide Solution [R]';
 
   const mod = TEACHING_MODULES[currentModuleIdx];
@@ -797,7 +811,7 @@ export function hideSolution() {
     badge.textContent = 'QUIZ: MASKED';
     badge.className = 'quiz-badge quiz-badge-masked';
   }
-  if (btnIcon) btnIcon.textContent = '👁️';
+  if (btnIcon) btnIcon.textContent = '◎';
   if (btnText) btnText.textContent = 'Reveal Solution [R]';
 }
 
@@ -809,7 +823,7 @@ export function togglePresenterMode() {
 
   if (isPresenterMode) {
     body.classList.add('presenter-active');
-    if (toggleBtn) toggleBtn.textContent = '⚡ Exit Presenter Deck [F]';
+    if (toggleBtn) toggleBtn.textContent = 'Exit Presenter Deck [F]';
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {
         // Fallback gracefully in case browser restricts fullscreen API
@@ -818,7 +832,7 @@ export function togglePresenterMode() {
     logToTerminal('Entered Presenter / Teaching Deck mode (Fullscreen)', 'success');
   } else {
     body.classList.remove('presenter-active');
-    if (toggleBtn) toggleBtn.textContent = '⚡ Presenter Deck [F]';
+    if (toggleBtn) toggleBtn.textContent = 'Presenter Deck [F]';
     if (document.fullscreenElement) {
       document.exitFullscreen().catch(() => {});
     }
@@ -840,7 +854,7 @@ export function setupModuleDrawer() {
   drawerList.innerHTML = TEACHING_MODULES.map((mod, idx) => `
     <div class="drawer-module-card ${idx === currentModuleIdx ? 'active' : ''}" data-idx="${idx}">
       <div style="display:flex; align-items:center; gap:0.8rem;">
-        <span class="tone-badge" style="font-size:0.75rem; padding:0.2rem 0.5rem; ${idx === currentModuleIdx ? 'border-color:var(--c-ember); color:var(--c-ember);' : ''}">
+        <span class="tone-badge" style="font-size:0.75rem; padding:0.2rem 0.5rem; ${idx === currentModuleIdx ? 'border-color:rgba(255,255,255,0.35); color:#ffffff;' : ''}">
           ${mod.number}
         </span>
         <div>
@@ -1045,7 +1059,7 @@ export function setupKeyboardNavigation() {
       isPresenterMode = false;
       document.body.classList.remove('presenter-active');
       const toggleBtn = document.getElementById('toggle-presenter-btn');
-      if (toggleBtn) toggleBtn.textContent = '⚡ Presenter Deck [F]';
+      if (toggleBtn) toggleBtn.textContent = 'Presenter Deck [F]';
       logToTerminal('Fullscreen exited by user', 'info');
     }
   });
@@ -1063,7 +1077,7 @@ export function setupCodePlayground() {
       try {
         await navigator.clipboard.writeText(codeEditor.value);
         const originalText = copyBtn.textContent;
-        copyBtn.textContent = '✓ Copied!';
+        copyBtn.textContent = 'Copied!';
         copyBtn.style.color = '#34d399';
         setTimeout(() => {
           copyBtn.textContent = originalText;
@@ -1125,9 +1139,9 @@ export function renderModulePreview(mod, code) {
           </div>
           <div style="font-family:var(--font-mono); font-size:0.78rem;">
             ${hasDropShadow 
-              ? '<span class="log-warn">⚠️ Slop Alert: Heavy drop-shadow detected! Strip fuzzy blur and rely on calibrated tone steps.</span>'
+              ? '<span class="log-warn">Slop Alert: Heavy drop-shadow detected! Strip fuzzy blur and rely on calibrated tone steps.</span>'
               : isCraft
-              ? '<span class="log-success">✓ Pure Craft: Calibrated tone steps and 1px hairlines verified!</span>'
+              ? '<span class="log-success">[OK] Pure Craft: Calibrated tone steps and 1px hairlines verified!</span>'
               : '<span style="color:var(--t-muted);">Custom styles applied to specimen card above.</span>'
             }
           </div>
@@ -1334,7 +1348,7 @@ export function renderModulePreview(mod, code) {
           <div style="background:#050608; border:1px solid var(--c-cobalt-rim); padding:0.6rem 0.8rem; border-radius:6px; color:#38bdf8;">
             &gt; bpy.ops.mesh.primitive_cylinder_add(radius=1.0, depth=2.0)<br>
             &gt; bpy.ops.export_scene.gltf(filepath="specimen.glb", export_format='GLB')<br>
-            <span style="color:#34d399;">✓ Command dispatched to main thread via bpy.app.timers. (1,420 tris)</span>
+            <span style="color:#34d399;">Command dispatched to main thread via bpy.app.timers. (1,420 tris)</span>
           </div>
         </div>
       `;
@@ -1353,7 +1367,7 @@ export function renderModulePreview(mod, code) {
           <span style="color:var(--t-muted);">&rarr;</span>
           <span class="tone-badge" style="border-color:#34d399; color:#34d399;">4. Mixamo Mocap</span>
           <span style="color:var(--t-muted);">&rarr;</span>
-          <span class="tone-badge" style="border-color:var(--c-ember); color:var(--c-ember);">5. Meshopt GLB</span>
+          <span class="tone-badge" style="border-color:rgba(255,255,255,0.25); color:#ffffff;">5. Meshopt GLB</span>
         </div>
       `;
       break;
@@ -1503,7 +1517,7 @@ export function renderSkills(filterCategory = 'All', searchQuery = '') {
       <div class="code-block-wrapper" style="margin-bottom:1.2rem;">
         <div class="code-header">
           <span>Implementation Blueprint</span>
-          <button class="copy-btn" aria-label="Copy code snippet for ${skill.name}" aria-label="Copy code snippet for " + skill.name onclick="navigator.clipboard.writeText(\`${skill.codeSnippet.replace(/`/g, '\\`')}\`); this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy', 1500);" style="background:none; border:none; color:var(--t-secondary); cursor:pointer; font-size:0.75rem;">Copy</button>
+          <button class="copy-btn" data-skill-id="${skill.id}" aria-label="Copy code snippet for ${skill.name}" style="background:none; border:none; color:var(--t-secondary); cursor:pointer; font-size:0.75rem;">Copy</button>
         </div>
         <pre class="code-content" style="max-height:140px;"><code>${escapeHtml(skill.codeSnippet)}</code></pre>
       </div>
@@ -1534,6 +1548,28 @@ export function setupSkillFilters() {
       renderSkills(currentCat, e.target.value);
     });
   }
+
+  // Copy code snippet event delegation
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    const skillId = btn.getAttribute('data-skill-id');
+    const skill = (window.SKILLS_DATA || []).find(s => s.id === skillId);
+    if (skill && skill.codeSnippet) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(skill.codeSnippet).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+        }).catch(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+        });
+      } else {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+      }
+    }
+  });
 }
 
 // Navigation Tabs Switching (Interactive Syllabus / 3D Lab / Glass Lab / Catalog)
@@ -1653,8 +1689,7 @@ function escapeHtml(str) {
 }
 
 // Application Bootstrapper
-if (typeof document !== 'undefined') {
-  document.addEventListener('DOMContentLoaded', () => {
+function bootstrapApp() {
     setupNavigationTabs();
     setupSlideDots();
     setupModuleDrawer();
@@ -1712,14 +1747,61 @@ if (typeof document !== 'undefined') {
       console.warn("initCouncilChamber initialization error:", err);
     }
 
+    // 4b. Real-Time Anti-Slop Linter HUD & Adversarial Jester Gate (MMCY Zero-Slop Architecture)
+    try {
+      if (typeof initAntiSlopLinter === 'function') {
+        initAntiSlopLinter();
+      }
+    } catch (err) {
+      console.warn("initAntiSlopLinter initialization error:", err);
+    }
+
     // 5. Blender 5.2 MCP Parametric Studio (Headless bpy generator & OptiX Cycles GPU simulation)
     try {
       if (typeof initBlenderStudio === 'function') initBlenderStudio();
     } catch (err) {
       console.warn("initBlenderStudio initialization error:", err);
     }
-  });
 
+    // 6. React Bits Kinetic Typography Playground (BlurText, DecryptedText, VariableProximity, ShinyText)
+    try {
+      if (typeof initReactBitsPlayground === 'function') initReactBitsPlayground();
+    } catch (err) {
+      console.warn("initReactBitsPlayground initialization error:", err);
+    }
+
+    // 7. Magic UI & Aceternity Stage (AnimatedBeam, RippleEffect, SpotlightBento, PinContainer3D)
+    try {
+      if (typeof initMagicUIPlayground === 'function') initMagicUIPlayground();
+    } catch (err) {
+      console.warn("initMagicUIPlayground initialization error:", err);
+    }
+
+    // 8. ShaderGradient & Cobe 3D Globe Stage (ShaderGradientFluidCanvas & CobeGlobe3D)
+    try {
+      if (typeof initShaderCanvasPlayground === 'function') initShaderCanvasPlayground();
+    } catch (err) {
+      console.warn("initShaderCanvasPlayground initialization error:", err);
+    }
+
+    // 9. Precision Micro-UI Stage (Hover.dev 3D Tilt Card, NumberFlow Odometer, Magnetic Button)
+    try {
+      if (typeof initMicroUIPlayground === 'function') initMicroUIPlayground();
+    } catch (err) {
+      console.warn("initMicroUIPlayground initialization error:", err);
+    }
+
+    // 10. Presenter Deck & Global Hotkeys (Fullscreen presentation mode, timer, Socratic cues)
+    try {
+      if (typeof initPresenterDeck === 'function') initPresenterDeck();
+    } catch (err) {
+      console.warn("initPresenterDeck initialization error:", err);
+    }
+}
+
+// Bootstrapper execution relocated to bottom of file
+
+if (typeof window !== 'undefined') {
   window.renderTeachingModule = renderTeachingModule;
   window.togglePresenterMode = togglePresenterMode;
   window.toggleSolution = toggleSolution;
@@ -1739,6 +1821,12 @@ if (typeof document !== 'undefined') {
   window.initCouncilChamber = initCouncilChamber;
   window.initCouncilDemocracy = initCouncilDemocracy;
   window.initBlenderStudio = initBlenderStudio;
+  window.initReactBitsPlayground = initReactBitsPlayground;
+  window.initMagicUIPlayground = initMagicUIPlayground;
+  window.initShaderCanvasPlayground = initShaderCanvasPlayground;
+  window.initMicroUIPlayground = initMicroUIPlayground;
+  window.initAntiSlopLinter = initAntiSlopLinter;
+  window.runAntiSlopAudit = runAntiSlopAudit;
   window.TEACHING_MODULES = TEACHING_MODULES;
   window.SKILLS_DATA = SKILLS_DATA;
 }
@@ -1826,12 +1914,7 @@ export function initBlurTextDemo() {
 }
 
 // 2. DecryptedText Interactive Scramble (ReactBits Port)
-const GLYPH_SETS = {
-  crypto: '!@#$%^&*()_+-=[]{}|;:,.<>?/0123456789',
-  matrix: 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789',
-  hex: '0123456789ABCDEFabcdef',
-  binary: '01'
-};
+// GLYPH_SETS hoisted to top of file
 
 export function initDecryptedTextDemo() {
   const input = document.getElementById('decrypt-input');
@@ -1855,7 +1938,7 @@ export function initDecryptedTextDemo() {
       animationInterval = null;
     }
 
-    const targetText = input && input.value.trim() ? input.value.trim() : "LEUL-5070TI // QUANTUM_ENCRYPTED_2026";
+    const targetText = input && input.value.trim() ? input.value.trim() : "LEUL-5070TI &bull; QUANTUM_ENCRYPTED_2026";
     if (srEl) srEl.textContent = targetText;
     const glyphKey = glyphSelect ? glyphSelect.value : 'crypto';
     const glyphs = GLYPH_SETS[glyphKey] || GLYPH_SETS.crypto;
@@ -2406,4 +2489,13 @@ export function initParticleBurstSandbox() {
   }
 
   requestAnimationFrame(renderLoop);
+}
+
+// Application Auto-Bootstrapper
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrapApp);
+  } else {
+    bootstrapApp();
+  }
 }
