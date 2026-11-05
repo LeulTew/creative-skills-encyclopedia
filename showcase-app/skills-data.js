@@ -21,12 +21,12 @@ const SKILLS_DATA = [
     name: "vercel-browser-council",
     category: "AI & Tooling",
     badge: "Grill-Me + Sandbox",
-    description: "Orchestrates an isolated Vercel Sandbox browser microVM session evaluated by a 3-6 agent council (builders or pragmatic reviewers). Initiates an upfront Grilling protocol asking the user for council sizing, role assignment, and bespoke rating parameters beyond standard web benchmarks.",
+    description: "Orchestrates an isolated Vercel Sandbox browser microVM session for visual regression evaluation and automated QA. Initiates an upfront verification protocol for browser sizing, interaction flows, and bespoke rating parameters beyond standard web benchmarks.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/vercel-browser-council/SKILL.md",
-    codeSnippet: `// 1. Grill-Me Pre-Flight Interview:
-// - Council Size: 3 to 6 agents (Gemini 3.8 Flash High, Claude Opus 5.5, GPT-6 Astra)
-// - Operating Mode: [Active Builders] vs [Pragmatic Reviewers]
-// - Bespoke Rating Rubrics: Brand truth, physical refraction, edge-case stress
+    codeSnippet: `// 1. Sandbox Pre-Flight Setup:
+// - Viewport Matrix: Desktop (1440px), Tablet (768px), Mobile (390px)
+// - Operating Mode: Automated Visual Regression & DOM Audit
+// - Verification Rubrics: Brand truth, physical refraction, edge-case stress
 // 2. Vercel Sandbox MicroVM:
 const sandbox = await Sandbox.create({ ports: [3000] });
 await sandbox.exec('agent-browser', ['--url', url, '--dump-dom', '--record-har']);`
@@ -923,7 +923,7 @@ const VECTORS = [
   "Zero-Console-Error & Memory Clean"
 ];
 
-// Both Astra & Opus must score 10/10 on identical SHA`,
+// All independent evaluators must verify 10/10 on identical commit SHA`,
     interactiveChallenge: "Write an automated visual hill-climbing verification script that captures mobile (390px) and desktop (1440px) viewports, compares them against a baseline, and triggers a surgical patch if layout shift or clipping is detected.",
     antiSlopPitfalls: [
       "Letting cooperative models self-approve without visual proof",

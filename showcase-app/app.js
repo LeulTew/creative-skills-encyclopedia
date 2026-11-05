@@ -1,13 +1,14 @@
 /**
  * Master Application Orchestration Engine (2026 Edition)
- * Creative Skills & Engineering Encyclopedia
+ * Creative Skills & Engineering Encyclopedia · Leul Tewelde
  *
  * Unifies:
  * 1. Fixed WebGL 3D stage with Three.js r170+ PBR Neutral tone mapping
  * 2. Lenis 1.1+ and GSAP ScrollTrigger single-RAF choreography
  * 3. Whole-canvas chromatic flavour worlds (WCAG AA calibrated)
- * 4. Headless Blender 5.2 interactive inspection workbench
- * 5. Adversarial Council Chamber & Visual Hill-Climbing evaluations
+ * 4. Headless 3D Studio & Specimen Gallery (Blender 5.2 OptiX GLB assets)
+ * 5. Interactive Skills Encyclopedia (Directory with search & category filters)
+ * 6. Socratic Teaching & Lecture Deck (10 interactive slides with 3D model sync)
  */
 
 import {
@@ -33,6 +34,9 @@ import {
   SKILLS_DATA,
   TEACHING_MODULES
 } from './skills-data.js';
+
+import { initSkillsCatalog } from './modules/skills-catalog.js';
+import { initPresenterDeck } from './modules/presenter-deck.js';
 
 // Syllabus to 3D Specimen Mapping
 const SYLLABUS_SPECIMENS = {
@@ -99,7 +103,7 @@ function setupScrollEngine() {
 }
 
 /**
- * 3. Wire Whole-Canvas SunChips Flavour World Switcher
+ * 3. Wire Whole-Canvas Flavour World Switcher
  */
 function setupFlavourWorlds() {
   const flavourPills = document.querySelectorAll('[data-set-flavour]');
@@ -135,9 +139,9 @@ function setupFlavourWorlds() {
 }
 
 /**
- * 4. Wire Blender Lab Interactive Inspection Controls
+ * 4. Wire 3D Studio & Specimen Gallery Interactive Controls
  */
-function setupBlenderLabControls() {
+function setupSpecimenControls() {
   // Specimen Selector Buttons
   const specimenButtons = document.querySelectorAll('[data-specimen]');
   specimenButtons.forEach((btn) => {
@@ -244,7 +248,7 @@ function setupSyllabusInteractivity() {
         } catch (err) {}
       }
 
-      // 3. Update Blender lab active button state to match
+      // 3. Update lab active button state to match
       const labButtons = document.querySelectorAll('.specimen-btn[data-specimen]');
       labButtons.forEach((b) => {
         const isMatch = b.getAttribute('data-specimen') === targetSpecimen;
@@ -252,57 +256,17 @@ function setupSyllabusInteractivity() {
         b.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
       });
 
-      // 4. Smooth scroll to chapter using Lenis if available
-      if (window.lenis && typeof window.lenis.scrollTo === 'function') {
-        window.lenis.scrollTo(card, { offset: -90, duration: 1.0 });
-      } else {
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // 4. Smooth scroll to specimen gallery chapter using Lenis if available
+      const galleryChapter = document.getElementById('specimen-gallery');
+      if (galleryChapter && window.lenis && typeof window.lenis.scrollTo === 'function') {
+        window.lenis.scrollTo(galleryChapter, { offset: -40, duration: 1.2 });
       }
     });
   });
 }
 
 /**
- * 6. Wire Council Chamber Radar Chart & Evaluation Metrics
- */
-function setupCouncilChamber() {
-  const memberCards = document.querySelectorAll('.member-card');
-  const radarRows = document.querySelectorAll('.radar-row');
-
-  // Interactive Member Cards
-  memberCards.forEach((card) => {
-    card.addEventListener('mouseenter', () => {
-      card.classList.add('highlighted');
-    });
-    card.addEventListener('mouseleave', () => {
-      card.classList.remove('highlighted');
-    });
-  });
-
-  // Animated Radar Bars on Viewport Intersection
-  if ('IntersectionObserver' in window && radarRows.length) {
-    const radarObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const fills = entry.target.querySelectorAll('.radar-bar-fill');
-          fills.forEach((fill) => {
-            fill.style.transition = 'width 1.2s cubic-bezier(0.16, 1, 0.3, 1)';
-            fill.style.width = '100%';
-          });
-          radarObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-
-    const councilSection = document.getElementById('council');
-    if (councilSection) {
-      radarObserver.observe(councilSection);
-    }
-  }
-}
-
-/**
- * 7. Header Navigation Smooth Scroll Anchor Interception
+ * 6. Header Navigation Smooth Scroll Anchor Interception
  */
 function setupHeaderNavigation() {
   const navLinks = document.querySelectorAll('.site-header a[href^="#"], .footer-links a[href^="#"]');
@@ -337,16 +301,19 @@ export function bootstrapApp() {
     // 3. Wire Whole-Canvas Flavour Worlds
     setupFlavourWorlds();
 
-    // 4. Wire Blender Lab Controls
-    setupBlenderLabControls();
+    // 4. Wire 3D Specimen Gallery Controls
+    setupSpecimenControls();
 
     // 5. Wire Teachable Syllabus Cards
     setupSyllabusInteractivity();
 
-    // 6. Wire Council Chamber Evaluations
-    setupCouncilChamber();
+    // 6. Wire Interactive Skills Catalog Directory
+    initSkillsCatalog();
 
-    // 7. Wire Site Header Navigation
+    // 7. Wire Socratic Teaching Presentation Deck
+    initPresenterDeck();
+
+    // 8. Wire Site Header Navigation
     setupHeaderNavigation();
   } catch (err) {
     // Defensive error boundary

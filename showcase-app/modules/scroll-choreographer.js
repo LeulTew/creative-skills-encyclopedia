@@ -68,8 +68,9 @@ export class ScrollChoreographer {
       this.setupChapter1Hero();
       this.setupChapter2Manifesto();
       this.setupChapter3Syllabus();
-      this.setupChapter4BlenderLab();
-      this.setupChapter5Council();
+      this.setupChapter4Catalog();
+      this.setupChapter5SpecimenGallery();
+      this.setupChapter6TeachingDeck();
     } else {
       this.setupAccessibleStaticFallback();
     }
@@ -318,29 +319,47 @@ export class ScrollChoreographer {
   }
 
   /**
-   * 5. CHAPTER 4 (HEADLESS BLENDER & SHADER LAB): 3D PARAMETERS CONTROLS
+   * 5. CHAPTER 4 (CATALOG): SKILLS DIRECTORY REVEAL
    */
-  setupChapter4BlenderLab() {
-    const labEl = document.getElementById('blender-lab');
-    if (!labEl || !this.gsap) return;
+  setupChapter4Catalog() {
+    const catalogEl = document.getElementById('skills-catalog');
+    if (!catalogEl || !this.gsap) return;
 
-    const controlGroup = labEl.querySelector('.control-group');
-    const slidersGrid = labEl.querySelector('.sliders-grid');
-    const terminalLog = labEl.querySelector('.terminal-log');
+    this.gsap.fromTo(catalogEl.querySelector('.catalog-controls') || catalogEl,
+      { opacity: 0, y: 24 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: catalogEl,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+  }
 
-    // Staggered reveal of parameters and terminal
-    const targets = [controlGroup, slidersGrid, terminalLog].filter(Boolean);
-    if (targets.length) {
-      this.gsap.fromTo(targets, 
-        { opacity: 0, y: 30 },
+  /**
+   * 6. CHAPTER 5 (3D SPECIMEN BENCH): STUDIO CONTROLS ENTRANCE
+   */
+  setupChapter5SpecimenGallery() {
+    const galleryEl = document.getElementById('specimen-gallery');
+    if (!galleryEl || !this.gsap) return;
+
+    const panel = galleryEl.querySelector('.lab-controls-panel');
+    if (panel) {
+      this.gsap.fromTo(panel,
+        { opacity: 0, y: 32, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.15,
+          scale: 1,
+          duration: 0.85,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: labEl,
+            trigger: galleryEl,
             start: 'top 75%',
             toggleActions: 'play none none reverse'
           }
@@ -350,49 +369,25 @@ export class ScrollChoreographer {
   }
 
   /**
-   * 6. CHAPTER 5 (COUNCIL CHAMBER): VISUAL RADAR & SPRING PHYSICS EVALUATION
+   * 7. CHAPTER 6 (TEACHING DECK): PRESENTATION DECK ENTRANCE
    */
-  setupChapter5Council() {
-    const councilEl = document.getElementById('council');
-    if (!councilEl || !this.gsap) return;
+  setupChapter6TeachingDeck() {
+    const deckEl = document.getElementById('teaching-deck');
+    if (!deckEl || !this.gsap) return;
 
-    const memberCards = councilEl.querySelectorAll('.member-card');
-    const radarRows = councilEl.querySelectorAll('.radar-row');
-    const radarFills = councilEl.querySelectorAll('.radar-bar-fill');
-
-    // Staggered Council Member Cards with Subtle Spring Physics (back.out)
-    if (memberCards.length) {
-      this.gsap.fromTo(memberCards,
-        { opacity: 0, y: 36, scale: 0.94 },
+    const deckBox = deckEl.querySelector('.presentation-deck-box');
+    if (deckBox) {
+      this.gsap.fromTo(deckBox,
+        { opacity: 0, y: 36, scale: 0.97 },
         {
           opacity: 1,
           y: 0,
-          scale: 1.0,
+          scale: 1,
           duration: 0.9,
-          stagger: 0.12,
-          ease: 'back.out(1.5)',
+          ease: 'power2.out',
           scrollTrigger: {
-            trigger: councilEl,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-    }
-
-    // Visual Radar Metrics Growth Animation
-    if (radarFills.length) {
-      this.gsap.fromTo(radarFills,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 1.1,
-          stagger: 0.08,
-          ease: 'power3.out',
-          transformOrigin: 'left',
-          scrollTrigger: {
-            trigger: councilEl.querySelector('.radar-box') || councilEl,
-            start: 'top 85%',
+            trigger: deckEl,
+            start: 'top 75%',
             toggleActions: 'play none none reverse'
           }
         }
@@ -406,6 +401,8 @@ export class ScrollChoreographer {
   setupInteractiveControls() {
     // 1. Specimen Buttons
     this.specimenButtons.forEach((btn) => {
+      if (btn.dataset.scrollBound) return;
+      btn.dataset.scrollBound = 'true';
       btn.addEventListener('click', () => {
         const specimen = btn.dataset.specimen;
         this.specimenButtons.forEach((b) => b.classList.remove('active'));
@@ -419,7 +416,8 @@ export class ScrollChoreographer {
 
     // 2. Wireframe Toggle
     const wireframeToggle = document.getElementById('wireframe-toggle');
-    if (wireframeToggle) {
+    if (wireframeToggle && !wireframeToggle.dataset.scrollBound) {
+      wireframeToggle.dataset.scrollBound = 'true';
       wireframeToggle.addEventListener('change', (e) => {
         if (window.stage3D && typeof window.stage3D.setWireframe === 'function') {
           window.stage3D.setWireframe(e.target.checked);
@@ -430,7 +428,8 @@ export class ScrollChoreographer {
     // 3. Roughness Slider
     const roughnessSlider = document.getElementById('roughness-slider');
     const roughnessVal = document.getElementById('roughness-val');
-    if (roughnessSlider && roughnessVal) {
+    if (roughnessSlider && roughnessVal && !roughnessSlider.dataset.scrollBound) {
+      roughnessSlider.dataset.scrollBound = 'true';
       roughnessSlider.addEventListener('input', (e) => {
         const val = parseFloat(e.target.value);
         roughnessVal.textContent = val.toFixed(2);
@@ -443,7 +442,8 @@ export class ScrollChoreographer {
     // 4. Metalness Slider
     const metalnessSlider = document.getElementById('metalness-slider');
     const metalnessVal = document.getElementById('metalness-val');
-    if (metalnessSlider && metalnessVal) {
+    if (metalnessSlider && metalnessVal && !metalnessSlider.dataset.scrollBound) {
+      metalnessSlider.dataset.scrollBound = 'true';
       metalnessSlider.addEventListener('input', (e) => {
         const val = parseFloat(e.target.value);
         metalnessVal.textContent = val.toFixed(2);
@@ -456,7 +456,8 @@ export class ScrollChoreographer {
     // 5. Key Light Yaw Slider
     const lightSlider = document.getElementById('light-slider');
     const lightVal = document.getElementById('light-val');
-    if (lightSlider && lightVal) {
+    if (lightSlider && lightVal && !lightSlider.dataset.scrollBound) {
+      lightSlider.dataset.scrollBound = 'true';
       lightSlider.addEventListener('input', (e) => {
         const deg = parseInt(e.target.value, 10);
         lightVal.innerHTML = `${deg}&deg;`;
@@ -473,6 +474,8 @@ export class ScrollChoreographer {
   setupFlavourSwitcher() {
     const pills = document.querySelectorAll('.flavour-pill[data-set-flavour]');
     pills.forEach((pill) => {
+      if (pill.dataset.scrollBound) return;
+      pill.dataset.scrollBound = 'true';
       pill.addEventListener('click', () => {
         const flavour = pill.dataset.setFlavour;
         pills.forEach((p) => {

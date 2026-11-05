@@ -1,342 +1,266 @@
 /* ==========================================================================
-   Creative Engineering Design System (2026 Awwwards / SunChips Architecture)
-   Pure Chromatic Dark Foundations, Kinetic Typography & Lenis Stage Layout
+   Creative Engineering Encyclopedia & Digital Monograph
+   Architecture: Leul Tewelde · Awwwards SOTD / SunChips Physical Precision
+   Zero AI Slop: 0 Emojis · 0 Double Slashes · 0 Monospace Badges · 0 Nested Cards
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. Whole-Canvas Flavour Worlds (Calibrated WCAG AA / AAA Tokens)
+   -------------------------------------------------------------------------- */
 :root {
-  /* Chromatic Dark Foundations - Deep Velvet Obsidian System */
-  --c-obsidian: #050507;
-  --c-bg-canvas: #050507;
-  --c-deep-zinc: #0b0d13;
-  --c-elevated-zinc: #121520;
-  --c-surface-base: #0b0d13;
-  --c-surface-elevated: #121520;
-  --c-surface-zinc: #0b0d13;
-  --c-hairline: rgba(255, 255, 255, 0.08);
-  --c-hairline-bright: rgba(255, 255, 255, 0.16);
-  --border-hairline: rgba(255, 255, 255, 0.08);
-  --c-cobalt-rim: rgba(255, 255, 255, 0.08);
+  /* Typography Tokens */
+  --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Luminous Accents */
-  --c-ember: #f97316;
-  --c-amber: #f59e0b;
-  --c-sapphire: #38bdf8;
-  --c-violet: #a855f7;
-  --c-phosphor: #10b981;
-  --c-accent-glow: rgba(249, 115, 22, 0.22);
+  /* Concentric Radius Hierarchy */
+  --r-frame: 24px;
+  --r-card: 16px;
+  --r-inner: 10px;
+  --r-ctl: 8px;
+  --r-pill: 9999px;
 
-  /* Contrast-Calibrated Typography (WCAG AAA >= 7:1) */
-  --t-primary: #f8fafc;    /* 19.4:1 on #050507 */
-  --t-secondary: #94a3b8;  /* 7.9:1 on #050507 */
-  --t-muted: #8090a7;      /* 6.1:1 on #050507 */
-  --t-accent: #f59e0b;     /* 9.5:1 on #050507 */
-
-  /* Concentric Radius Hierarchy: inner = outer - padding */
-  --r-pane: 36px;
-  --r-frame: 28px;
-  --r-card: 20px;
-  --r-inner: 14px;
-  --r-ctl: 10px;
-  --r-round: 9999px;
-
-  /* Typography Stacks */
-  --font-display: 'Bricolage Grotesque', sans-serif;
-  --font-fidel: 'Bricolage Grotesque', sans-serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Core Transitions */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-transition: 320ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ==========================================================================
-   SunChips Product Site Architecture: Whole-Canvas Flavour World Theming
-   Tokens calibrated for WCAG AA contrast (>= 4.5:1 text, >= 3:1 graphical)
-   ========================================================================== */
-body[data-flavour="ember"], body:not([data-flavour]) {
-  --c-obsidian: #050507;
-  --c-bg-canvas: #050507;
-  --c-deep-zinc: #0b0d13;
-  --c-elevated-zinc: #121520;
-  --c-surface-base: #0b0d13;
-  --c-surface-elevated: #121520;
-  --c-surface-zinc: #0b0d13;
-  --c-cobalt-rim: rgba(255, 255, 255, 0.08);
+/* Flavour: Ember (Warm Charcoal, Obsidian & Ember Gold) */
+body[data-flavour="ember"], :root {
+  --bg-deep: #06070a;
+  --bg-canvas: #090b10;
+  --bg-card: rgba(14, 17, 24, 0.82);
+  --bg-card-hover: rgba(22, 27, 38, 0.92);
+  --bg-input: rgba(255, 255, 255, 0.04);
+
+  --c-hairline: rgba(255, 255, 255, 0.09);
+  --c-hairline-bright: rgba(255, 255, 255, 0.18);
+  --c-hairline-accent: rgba(249, 115, 22, 0.45);
+
+  --c-accent: #f97316;
+  --c-accent-glow: rgba(249, 115, 22, 0.28);
   --c-ember: #f97316;
-  --c-ember-soft: rgba(249, 115, 22, 0.14);
-  --c-amber: #f59e0b;
-  --c-accent-glow: rgba(249, 115, 22, 0.22);
+
   --t-primary: #f8fafc;
-  --t-secondary: #94a3b8;
-  --t-muted: #8090a7;
-  --t-accent: #f59e0b;
+  --t-secondary: #cbd5e1;
+  --t-muted: #94a3b8;
 }
 
+/* Flavour: Cobalt (Deep Abyss, Midnight Slate & Precision Cyan) */
 body[data-flavour="cobalt"] {
-  --c-obsidian: #050811;
-  --c-bg-canvas: #050811;
-  --c-deep-zinc: #0a1120;
-  --c-elevated-zinc: #101c34;
-  --c-surface-base: #0a1120;
-  --c-surface-elevated: #101c34;
-  --c-surface-zinc: #0a1120;
-  --c-cobalt-rim: rgba(56, 189, 248, 0.14);
-  --c-ember: #0284c7;
-  --c-ember-soft: rgba(2, 132, 199, 0.16);
-  --c-amber: #38bdf8;
-  --c-accent-glow: rgba(56, 189, 248, 0.28);
+  --bg-deep: #03060f;
+  --bg-canvas: #050a17;
+  --bg-card: rgba(10, 18, 36, 0.82);
+  --bg-card-hover: rgba(16, 28, 54, 0.92);
+  --bg-input: rgba(255, 255, 255, 0.04);
+
+  --c-hairline: rgba(255, 255, 255, 0.09);
+  --c-hairline-bright: rgba(56, 189, 248, 0.35);
+  --c-hairline-accent: rgba(56, 189, 248, 0.5);
+
+  --c-accent: #38bdf8;
+  --c-accent-glow: rgba(56, 189, 248, 0.3);
+  --c-ember: #38bdf8;
+
   --t-primary: #f0f9ff;
-  --t-secondary: #93c5fd;
-  --t-muted: #7899c4;
-  --t-accent: #38bdf8;
+  --t-secondary: #bae6fd;
+  --t-muted: #7dd3fc;
 }
 
-body[data-flavour="harvest"], body[data-flavour="harvest-gold"] {
-  --c-obsidian: #0a0805;
-  --c-bg-canvas: #0a0805;
-  --c-deep-zinc: #141009;
-  --c-elevated-zinc: #201a10;
-  --c-surface-base: #141009;
-  --c-surface-elevated: #201a10;
-  --c-surface-zinc: #141009;
-  --c-cobalt-rim: rgba(234, 179, 8, 0.14);
-  --c-ember: #ca8a04;
-  --c-ember-soft: rgba(234, 179, 8, 0.15);
-  --c-amber: #fef08a;
-  --c-accent-glow: rgba(234, 179, 8, 0.26);
+/* Flavour: Harvest (Rich Soil, Organic Olive & Harvest Wheat) */
+body[data-flavour="harvest"] {
+  --bg-deep: #080906;
+  --bg-canvas: #0c0e09;
+  --bg-card: rgba(18, 21, 14, 0.82);
+  --bg-card-hover: rgba(26, 31, 20, 0.92);
+  --bg-input: rgba(255, 255, 255, 0.04);
+
+  --c-hairline: rgba(255, 255, 255, 0.09);
+  --c-hairline-bright: rgba(234, 179, 8, 0.35);
+  --c-hairline-accent: rgba(234, 179, 8, 0.5);
+
+  --c-accent: #eab308;
+  --c-accent-glow: rgba(234, 179, 8, 0.28);
+  --c-ember: #eab308;
+
   --t-primary: #fefce8;
   --t-secondary: #fef08a;
-  --t-muted: #a3967d;
-  --t-accent: #eab308;
+  --t-muted: #ca8a04;
 }
 
-body[data-flavour="cosmic"], body[data-flavour="cosmic-violet"] {
-  --c-obsidian: #08050e;
-  --c-bg-canvas: #08050e;
-  --c-deep-zinc: #120b1e;
-  --c-elevated-zinc: #1c122e;
-  --c-surface-base: #120b1e;
-  --c-surface-elevated: #1c122e;
-  --c-surface-zinc: #120b1e;
-  --c-cobalt-rim: rgba(168, 85, 247, 0.14);
-  --c-ember: #8b5cf6;
-  --c-ember-soft: rgba(139, 92, 246, 0.16);
-  --c-amber: #a855f7;
-  --c-accent-glow: rgba(168, 85, 247, 0.28);
+/* Flavour: Cosmic (Singularity Violet, Starlight & Magenta Resonance) */
+body[data-flavour="cosmic"] {
+  --bg-deep: #09050f;
+  --bg-canvas: #0d0716;
+  --bg-card: rgba(21, 12, 34, 0.82);
+  --bg-card-hover: rgba(31, 18, 51, 0.92);
+  --bg-input: rgba(255, 255, 255, 0.04);
+
+  --c-hairline: rgba(255, 255, 255, 0.09);
+  --c-hairline-bright: rgba(192, 132, 252, 0.35);
+  --c-hairline-accent: rgba(192, 132, 252, 0.5);
+
+  --c-accent: #c084fc;
+  --c-accent-glow: rgba(192, 132, 252, 0.28);
+  --c-ember: #c084fc;
+
   --t-primary: #faf5ff;
-  --t-secondary: #d8b4fe;
-  --t-muted: #8d78b0;
-  --t-accent: #c084fc;
+  --t-secondary: #e9d5ff;
+  --t-muted: #a855f7;
 }
 
-/* Reset & Global Canvas */
+/* --------------------------------------------------------------------------
+   2. Reset & Global Standards
+   -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html, body {
-  width: 100%;
-  min-height: 100%;
-  background-color: var(--c-bg-canvas);
-  color: var(--t-primary);
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.5;
-  overflow-x: hidden;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-left: env(safe-area-inset-left, 0px);
-  padding-right: env(safe-area-inset-right, 0px);
 }
 
-/* Global Keyboard Focus Visible Indicator (WCAG 2.4.7 / 2.4.11 Compliant) */
-:focus-visible {
-  outline: 2px solid var(--c-amber) !important;
-  outline-offset: 3px !important;
-  box-shadow: 0 0 0 4px var(--c-accent-glow) !important;
+html {
+  font-size: 16px;
+  background-color: var(--bg-deep);
+  color: var(--t-primary);
+  scroll-behavior: auto; /* Managed by Lenis */
 }
 
-/* Minimal Hairline Scroll Progress Bar */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--t-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color var(--t-transition), color var(--t-transition);
+}
+
+::selection {
+  background: var(--c-accent);
+  color: #030406;
+}
+
+/* Hairline Scroll Progress Bar */
 .scroll-progress-line {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 0%;
   height: 2px;
-  background: var(--c-ember);
-  transform-origin: left;
-  transform: scaleX(0);
+  background: var(--c-accent);
   z-index: 1000;
-  transition: transform 0.05s linear;
+  pointer-events: none;
+  transition: width 0.08s linear, background-color var(--t-transition);
+  box-shadow: 0 0 8px var(--c-accent-glow);
 }
 
-/* ==========================================================================
-   1. FULL-CANVAS ARCHITECTURE: Fixed Background Canvas & Chapters
-   ========================================================================== */
-#webgl-stage,
+/* Fixed Edge-to-Edge WebGL 3D Canvas Stage */
 .webgl-stage {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  pointer-events: none;
-  z-index: 0;
-  display: block;
+  z-index: 1;
+  pointer-events: auto; /* Permits orbit drag interactions */
+  touch-action: none;
 }
 
-#webgl-stage canvas,
-.webgl-stage canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Edge-to-Edge Container: Zero Artificial Constraints */
-.app-container,
-.stage-container,
-#stage-container {
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  padding: 0 clamp(1.5rem, 5vw, 6rem);
-  box-sizing: border-box;
-  position: relative;
-  z-index: 10;
-}
-
-/* Each Scroll Chapter */
-.chapter {
-  min-height: 100vh;
-  min-height: 100svh;
-  position: relative;
-  z-index: 10;
-  padding: clamp(4rem, 8vh, 8rem) clamp(1.5rem, 5vw, 6rem);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-}
-
-/* ==========================================================================
-   2. POSTER-SCALE EDITORIAL TYPOGRAPHY & KINETIC TEXT MOTION
-   ========================================================================== */
-.hero-display {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 9vw, 9.5rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 0.92;
-  text-transform: uppercase;
-  color: var(--t-primary);
-  word-break: break-word;
-  overflow-wrap: break-word;
-  margin: 0.8rem 0 1.4rem;
-}
-
-.kinetic-text {
-  max-width: 960px;
-  font-size: clamp(1.5rem, 3.2vw, 2.8rem);
-  line-height: 1.35;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--t-primary);
-  word-break: break-word;
-}
-
-.kinetic-sentence {
-  display: inline;
-  opacity: 0.2;
-  transition: opacity 0.3s ease, color 0.3s ease;
-}
-
-.kinetic-sentence.active {
-  opacity: 1.0;
-  color: var(--t-primary);
-  text-shadow: 0 0 24px rgba(255, 255, 255, 0.12);
-}
-
-/* Cultural Script & Variable Optical Tuning */
-:lang(am) .hero-display,
-.fidel-display {
-  font-family: var(--font-fidel);
-  letter-spacing: -0.01em;
-  line-height: 1.02;
-  text-transform: none;
-}
-
-@supports (font-variation-settings: normal) {
-  .hero-display {
-    font-variation-settings: 'opsz' 96, 'wght' 800;
-  }
-  .kinetic-text {
-    font-variation-settings: 'opsz' 36, 'wght' 500;
-  }
-}
-
-/* ==========================================================================
-   Fixed Minimal Top Header & Tactile Controls
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   3. Site Header & Fixed Navigation
+   -------------------------------------------------------------------------- */
 .site-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 64px;
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(1.2rem, 4vw, 3.5rem);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(5, 5, 7, 0.72);
-  border-bottom: 1px solid var(--c-hairline);
   z-index: 100;
-  box-sizing: border-box;
+  background: rgba(6, 7, 10, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--c-hairline);
+  transition: background-color var(--t-transition), border-color var(--t-transition);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .brand-wordmark {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   text-decoration: none;
   color: var(--t-primary);
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: -0.02em;
-  min-height: 44px;
 }
 
 .status-indicator {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--c-ember);
-  box-shadow: 0 0 8px var(--c-ember);
+  background: var(--c-accent);
+  box-shadow: 0 0 8px var(--c-accent-glow);
+  transition: background-color var(--t-transition);
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  color: var(--t-primary);
+}
+
+.brand-subtext {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--t-muted);
+  text-transform: uppercase;
+  margin-left: 0.25rem;
 }
 
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 1.8rem;
+  gap: 1.5rem;
 }
 
 .nav-link {
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--t-secondary);
   text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 500;
   transition: color 0.2s ease;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
+  position: relative;
+  padding: 0.25rem 0;
 }
 
 .nav-link:hover, .nav-link:focus-visible {
   color: var(--t-primary);
+}
+
+.nav-link.active {
+  color: var(--t-primary);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--c-accent);
 }
 
 .header-right {
@@ -345,12 +269,13 @@ html, body {
   gap: 1rem;
 }
 
+/* Flavour Switcher */
 .flavour-switcher {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--c-hairline);
-  border-radius: var(--r-round);
+  border-radius: var(--r-pill);
   padding: 3px;
   gap: 2px;
 }
@@ -360,29 +285,25 @@ html, body {
   border: none;
   color: var(--t-muted);
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 0.32rem 0.75rem;
-  border-radius: var(--r-round);
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--r-pill);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 44px;
+  transition: all 0.2s ease;
+  min-height: 36px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
 }
 
 .flavour-pill:hover {
   color: var(--t-primary);
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .flavour-pill.active {
   background: rgba(255, 255, 255, 0.12);
   color: var(--t-primary);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .repo-badge {
@@ -391,100 +312,180 @@ html, body {
   gap: 0.4rem;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--c-hairline);
-  border-radius: var(--r-ctl);
-  padding: 0.36rem 0.8rem;
-  font-size: 0.78rem;
-  font-family: var(--font-sans);
-  font-weight: 600;
   color: var(--t-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--r-pill);
   text-decoration: none;
   transition: all 0.2s ease;
-  min-height: 44px;
+  min-height: 40px;
 }
 
-.repo-badge:hover {
+.repo-badge:hover, .repo-badge:focus-visible {
   color: var(--t-primary);
   border-color: var(--c-hairline-bright);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* ==========================================================================
-   Chapter 1: Hero Viewport
-   ========================================================================== */
-.chapter-hero {
+/* --------------------------------------------------------------------------
+   4. Scroll Stage Container & Chapter Sections
+   -------------------------------------------------------------------------- */
+.stage-container {
+  position: relative;
+  z-index: 10;
+  pointer-events: none; /* Allows canvas behind to receive touch/mouse drag */
+  width: 100%;
+}
+
+.chapter {
   min-height: 100vh;
+  padding: clamp(5rem, 10vh, 8rem) clamp(1.5rem, 6vw, 5rem);
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   justify-content: center;
+  pointer-events: auto; /* Re-enables interaction on content */
+  position: relative;
+}
+
+/* Chapter Eyebrow */
+.chapter-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  color: var(--t-muted);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--c-accent);
+  border-bottom: 1px solid var(--c-accent);
+  padding-bottom: 1px;
+}
+
+.eyebrow-title {
+  color: var(--t-secondary);
+  font-weight: 500;
+}
+
+/* Section Typography */
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--t-primary);
+  margin-bottom: 0.6rem;
+}
+
+.section-desc {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: var(--t-secondary);
+  max-width: 680px;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Chapter 1: Hero Viewport
+   -------------------------------------------------------------------------- */
+.chapter-hero {
+  height: 100vh;
+  justify-content: flex-end;
+  padding-bottom: 6vh;
 }
 
 .hero-content {
   max-width: 900px;
   width: 100%;
-  margin-top: 5vh;
 }
 
-.meta-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
-  color: var(--t-muted);
-  margin-bottom: 1rem;
-}
-
-.meta-label .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--c-ember);
-  box-shadow: 0 0 8px var(--c-ember);
+.hero-display {
+  font-family: var(--font-display);
+  font-size: clamp(3.6rem, 9.5vw, 9.2rem);
+  font-weight: 800;
+  line-height: 0.90;
+  letter-spacing: -0.04em;
+  color: var(--t-primary);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
 }
 
 .hero-thesis {
   font-size: clamp(1.1rem, 1.8vw, 1.35rem);
   line-height: 1.6;
   color: var(--t-secondary);
-  max-width: 760px;
-  margin-bottom: 3rem;
+  max-width: 720px;
+  margin-bottom: 2.5rem;
 }
 
 .scroll-prompt {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  color: var(--t-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--t-muted);
 }
 
 .scroll-stem {
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, var(--c-ember), transparent);
+  width: 48px;
+  height: 1px;
+  background: var(--c-hairline-bright);
 }
 
-/* ==========================================================================
-   Chapter 2: Manifesto (Kinetic Scrub)
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Chapter 2: Manifesto & Kinetic Text
+   -------------------------------------------------------------------------- */
 .chapter-manifesto {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+  background: transparent;
 }
 
 .manifesto-content {
-  max-width: 1100px;
+  max-width: 960px;
   width: 100%;
 }
 
-/* ==========================================================================
-   Chapter 3: Curriculum Grid (Apple-Style Liquid Glass Bento)
-   ========================================================================== */
+.kinetic-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.8vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-top: 1rem;
+}
+
+.kinetic-sentence {
+  color: var(--t-primary);
+  opacity: 0.18;
+  filter: blur(1px);
+  transform: translateY(6px);
+  transition: opacity 0.5s var(--ease-spring), filter 0.5s var(--ease-spring), transform 0.5s var(--ease-spring);
+  will-change: opacity, filter, transform;
+}
+
+.kinetic-sentence.active {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+  color: var(--t-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Chapter 3: Foundational Curriculum (The Ten Modules)
+   -------------------------------------------------------------------------- */
 .chapter-syllabus {
   min-height: 100vh;
 }
@@ -494,106 +495,318 @@ html, body {
   max-width: 800px;
 }
 
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: var(--t-primary);
-  margin: 0.5rem 0 0.8rem;
-}
-
-.section-desc {
-  font-size: 1.05rem;
-  color: var(--t-secondary);
-}
-
 .curriculum-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.4rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  max-width: 1160px;
   width: 100%;
 }
 
 .curriculum-card {
-  background: rgba(18, 20, 26, 0.72);
+  background: var(--bg-card);
   border: 1px solid var(--c-hairline);
   border-radius: var(--r-card);
-  padding: 1.8rem;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 1.6rem;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: border-color 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
-  box-shadow: 
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-    0px 8px 24px 0px rgba(0, 0, 0, 0.14);
+  min-height: 220px;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-spring), border-color 0.25s var(--ease-spring), box-shadow 0.25s var(--ease-spring);
 }
 
 .curriculum-card:hover {
+  transform: translateY(-4px);
   border-color: var(--c-hairline-bright);
-  background: rgba(255, 255, 255, 0.06);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.curriculum-card.selected {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 24px var(--c-accent-glow);
 }
 
 .card-num {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--t-muted);
+  font-size: 0.74rem;
   letter-spacing: 0.08em;
-  margin-bottom: 0.8rem;
+  color: var(--c-accent);
+  margin-bottom: 0.6rem;
+  font-weight: 600;
 }
 
 .card-title {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
+  letter-spacing: -0.015em;
   color: var(--t-primary);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-desc {
-  font-size: 0.92rem;
+  font-size: 0.86rem;
   color: var(--t-secondary);
-  line-height: 1.55;
-  margin-bottom: 1.4rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
 .card-footer {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
   border-top: 1px solid var(--c-hairline);
   padding-top: 0.8rem;
+  margin-top: auto;
 }
 
 .card-tag {
-  font-family: var(--font-sans);
-  font-weight: 600;
   font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--c-ember);
+  color: var(--t-muted);
 }
 
 .card-cmd {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid var(--c-hairline);
-  padding: 0.35rem 0.6rem;
-  border-radius: var(--r-ctl);
+  font-size: 0.72rem;
   color: var(--t-secondary);
-  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--r-ctl);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* ==========================================================================
-   Chapter 4: Blender 5.2 Lab (OptiX / Khronos PBR Controls)
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Chapter 4: Interactive Skills Encyclopedia
+   -------------------------------------------------------------------------- */
+.chapter-catalog {
+  min-height: 100vh;
+}
+
+.catalog-header {
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.catalog-controls {
+  max-width: 1160px;
+  width: 100%;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.search-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-pill);
+  padding: 0.85rem 1.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  color: var(--t-primary);
+  outline: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 16px var(--c-accent-glow);
+}
+
+.search-count {
+  position: absolute;
+  right: 1.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--t-muted);
+  pointer-events: none;
+}
+
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-tab {
+  background: var(--bg-card);
+  border: 1px solid var(--c-hairline);
+  color: var(--t-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.80rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 40px;
+}
+
+.filter-tab:hover {
+  color: var(--t-primary);
+  border-color: var(--c-hairline-bright);
+}
+
+.filter-tab.active {
+  background: var(--c-accent);
+  color: #030406;
+  border-color: var(--c-accent);
+  font-weight: 700;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+  max-width: 1160px;
+  width: 100%;
+}
+
+.skill-catalog-card {
+  background: var(--bg-card);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-card);
+  padding: 1.5rem;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s var(--ease-spring), border-color 0.2s var(--ease-spring);
+}
+
+.skill-catalog-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--c-hairline-bright);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.card-domain-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--c-accent);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.card-idx {
+  font-family: var(--font-mono);
+  font-size: 0.70rem;
+  color: var(--t-muted);
+}
+
+.skill-card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--t-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.skill-card-desc {
+  font-size: 0.86rem;
+  color: var(--t-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.skill-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  border-top: 1px solid var(--c-hairline);
+  padding-top: 0.8rem;
+}
+
+.action-inspect-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--c-hairline);
+  color: var(--t-primary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--r-ctl);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 36px;
+}
+
+.action-inspect-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--c-hairline-bright);
+}
+
+.action-github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--t-secondary);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--r-ctl);
+  transition: color 0.2s ease;
+  min-height: 36px;
+}
+
+.action-github-link:hover {
+  color: var(--t-primary);
+}
+
+.empty-catalog-state {
+  grid-column: 1 / -1;
+  background: var(--bg-card);
+  border: 1px dashed var(--c-hairline);
+  border-radius: var(--r-card);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.empty-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--t-primary);
+  margin-bottom: 0.4rem;
+}
+
+.empty-sub {
+  font-size: 0.88rem;
+  color: var(--t-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Chapter 5: Headless 3D Studio & Specimen Gallery
+   -------------------------------------------------------------------------- */
 .chapter-blender {
   min-height: 100vh;
 }
@@ -604,7 +817,7 @@ html, body {
 }
 
 .lab-controls-panel {
-  background: rgba(11, 13, 19, 0.85);
+  background: var(--bg-card);
   border: 1px solid var(--c-hairline);
   border-radius: var(--r-frame);
   padding: clamp(1.5rem, 3.5vw, 2.5rem);
@@ -612,9 +825,6 @@ html, body {
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   max-width: 1080px;
   width: 100%;
-  box-shadow: 
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-    0px 8px 32px 0px rgba(0, 0, 0, 0.2);
 }
 
 .control-group {
@@ -624,8 +834,8 @@ html, body {
 .control-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
   color: var(--t-muted);
   text-transform: uppercase;
   margin-bottom: 0.6rem;
@@ -647,7 +857,7 @@ html, body {
   padding: 0.55rem 1.1rem;
   border-radius: var(--r-ctl);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s var(--ease-spring);
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -661,9 +871,9 @@ html, body {
 }
 
 .specimen-btn.active {
-  background: var(--c-ember);
-  color: #050507;
-  border-color: var(--c-ember);
+  background: var(--c-accent);
+  color: #030406;
+  border-color: var(--c-accent);
   font-weight: 700;
   box-shadow: 0 0 16px var(--c-accent-glow);
 }
@@ -695,11 +905,12 @@ html, body {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--t-primary);
+  font-weight: 600;
 }
 
 .toggle-input {
   cursor: pointer;
-  accent-color: var(--c-ember);
+  accent-color: var(--c-accent);
   width: 20px;
   height: 20px;
 }
@@ -707,166 +918,250 @@ html, body {
 .range-slider {
   width: 100%;
   cursor: pointer;
-  accent-color: var(--c-ember);
+  accent-color: var(--c-accent);
   height: 6px;
 }
 
-.terminal-log {
-  background: #030406;
+.specimen-info-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-inner);
+  padding: 1.2rem;
+}
+
+.specimen-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.meta-item {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--t-secondary);
+}
+
+.meta-item strong {
+  color: var(--t-muted);
+}
+
+.specimen-tip {
+  font-size: 0.82rem;
+  color: var(--t-muted);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Chapter 6: Socratic Teaching Deck
+   -------------------------------------------------------------------------- */
+.chapter-deck {
+  min-height: 100vh;
+}
+
+.deck-header {
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.presentation-deck-box {
+  background: var(--bg-card);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-frame);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  max-width: 1080px;
+  width: 100%;
+}
+
+.slide-viewport {
+  min-height: 380px;
+  margin-bottom: 2rem;
+}
+
+.active-slide-card {
+  display: flex;
+  flex-direction: column;
+  animation: fadeInSlide 0.35s var(--ease-spring);
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.slide-badge {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--c-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.slide-specimen-tag {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--t-muted);
+}
+
+.slide-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--t-primary);
+  margin-bottom: 0.8rem;
+}
+
+.slide-thesis {
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  color: var(--t-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.slide-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.slide-section-heading {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--t-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.slide-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.slide-bullets li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.88rem;
+  color: var(--t-secondary);
+  line-height: 1.5;
+}
+
+.slide-bullets li::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--c-accent);
+}
+
+.slide-code-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-code {
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid var(--c-hairline);
   border-radius: var(--r-inner);
   padding: 1.2rem;
   font-family: var(--font-mono);
-}
-
-.terminal-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.8rem;
-}
-
-.term-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #22c55e;
-}
-
-.term-title {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  color: var(--t-muted);
-}
-
-.term-code {
   font-size: 0.78rem;
   line-height: 1.5;
   color: var(--t-secondary);
   overflow-x: auto;
   white-space: pre-wrap;
+  flex: 1;
 }
 
-/* ==========================================================================
-   Chapter 5: AI Reviewer Council Chamber
-   ========================================================================== */
-.chapter-council {
-  min-height: 100vh;
-}
-
-.council-header {
-  margin-bottom: 2rem;
-  max-width: 800px;
-}
-
-.council-matrix {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.2rem;
-  max-width: 1080px;
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
-.member-card {
-  background: rgba(18, 20, 26, 0.72);
-  border: 1px solid var(--c-hairline);
-  border-radius: var(--r-card);
-  padding: 1.5rem;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+.deck-controls-bar {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  border-top: 1px solid var(--c-hairline);
+  padding-top: 1.2rem;
+  gap: 1rem;
 }
 
-.member-card.jester-card {
-  border-color: rgba(249, 115, 22, 0.4);
-  box-shadow: inset 0 0 12px rgba(249, 115, 22, 0.06);
-}
-
-.member-head {
-  margin-bottom: 0.8rem;
-}
-
-.member-name {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
+.deck-nav-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--c-hairline);
   color: var(--t-primary);
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--r-ctl);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
 }
 
-.member-role {
-  font-size: 0.76rem;
+.deck-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--c-hairline-bright);
+}
+
+.deck-indicators {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.slide-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.slide-indicator-dot.active {
+  width: 24px;
+  border-radius: 4px;
+  background: var(--c-accent);
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   color: var(--t-muted);
 }
 
-.member-score {
+.deck-keyboard-hint {
+  margin-top: 0.8rem;
+  text-align: center;
   font-family: var(--font-mono);
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--c-ember);
-  margin-bottom: 0.8rem;
+  font-size: 0.70rem;
+  color: var(--t-muted);
 }
 
-.member-quote {
-  font-size: 0.84rem;
-  color: var(--t-secondary);
-  line-height: 1.5;
-}
-
-.radar-box {
-  background: rgba(11, 13, 19, 0.85);
-  border: 1px solid var(--c-hairline);
-  border-radius: var(--r-frame);
-  padding: 1.8rem;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  max-width: 1080px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.radar-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.radar-label {
-  font-size: 0.84rem;
-  color: var(--t-secondary);
-  width: 220px;
-  flex-shrink: 0;
-}
-
-.radar-bar-bg {
-  flex: 1;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.radar-bar-fill {
-  height: 100%;
-  background: var(--c-ember);
-  border-radius: 3px;
-}
-
-.radar-val {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--t-primary);
-  width: 48px;
-  text-align: right;
-}
-
-/* ==========================================================================
-   Chapter 6: Colophon / Footer
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   Chapter 7: Colophon & Footer
+   -------------------------------------------------------------------------- */
 .chapter-footer {
   min-height: 40vh;
   border-top: 1px solid var(--c-hairline);
@@ -928,10 +1223,165 @@ html, body {
   border-width: 0;
 }
 
-/* ==========================================================================
-   5. MOBILE PARITY PRE-FLIGHT (390px Viewport Parity)
+/* --------------------------------------------------------------------------
+   Skill Code Inspection Modal Dialog
+   -------------------------------------------------------------------------- */
+.skill-modal {
+  border: 1px solid var(--c-hairline-bright);
+  background: rgba(10, 12, 18, 0.96);
+  border-radius: var(--r-frame);
+  max-width: 720px;
+  width: 90%;
+  margin: auto;
+  padding: 0;
+  color: var(--t-primary);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.skill-modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.modal-inner {
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.modal-cat {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--c-accent);
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.modal-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--c-hairline);
+  color: var(--t-secondary);
+  font-size: 1.4rem;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--t-primary);
+}
+
+.modal-desc {
+  font-size: 0.92rem;
+  color: var(--t-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.modal-code-wrap {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--c-hairline);
+  border-radius: var(--r-inner);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.modal-code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--c-hairline);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--t-muted);
+}
+
+.modal-copy-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--c-hairline);
+  color: var(--t-primary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--r-ctl);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.modal-copy-btn.copied {
+  background: var(--c-accent);
+  color: #030406;
+}
+
+.modal-pre {
+  padding: 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--t-secondary);
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--c-accent);
+  color: #030406;
+  font-weight: 700;
+  font-size: 0.84rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--r-ctl);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.modal-github-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* --------------------------------------------------------------------------
+   5. Mobile Parity Pre-Flight (390px Viewport Standard)
    Zero Horizontal Overflow, Fluid Clamp Typography, >= 44px Touch Targets
-   ========================================================================== */
+   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   html, body {
     overflow-x: hidden !important;
@@ -957,9 +1407,7 @@ html, body {
     display: none !important;
   }
 
-  .app-container,
-  .stage-container,
-  #stage-container {
+  .stage-container, #stage-container {
     padding: 0 clamp(1rem, 4vw, 1.5rem) !important;
     overflow-x: hidden !important;
     width: 100% !important;
@@ -1019,22 +1467,8 @@ html, body {
     grid-template-columns: 1fr !important;
   }
 
-  .council-matrix {
+  .skills-grid {
     grid-template-columns: 1fr !important;
-  }
-
-  .radar-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 0.35rem !important;
-  }
-
-  .radar-label {
-    width: 100% !important;
-  }
-
-  .radar-val {
-    align-self: flex-end !important;
   }
 
   .specimen-btn-group {
@@ -1046,5 +1480,28 @@ html, body {
     min-height: 44px !important;
     justify-content: center !important;
     font-size: 0.8rem !important;
+  }
+
+  .deck-controls-bar {
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+    justify-content: center !important;
+  }
+
+  .slide-counter {
+    order: -1;
+    width: 100%;
+    text-align: center;
+  }
+
+  .deck-nav-btn {
+    flex: 1 1 40% !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .deck-indicators {
+    display: none !important;
   }
 }
