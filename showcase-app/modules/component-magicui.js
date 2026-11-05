@@ -857,7 +857,7 @@ function ensureStageDOM() {
         <div class="pin-3d-card" id="magic-pin-card" tabindex="0" role="region" aria-label="3D Perspective Pin Card">
           <div class="pin-3d-content">
             <div class="pin-badge-row">
-              <span class="meta-tag" style="color:var(--c-ember); border-color:rgba(249,115,22,0.3);">3D PIN HOVER</span>
+              <span class="meta-tag" style="color:var(--t-secondary); border-color:var(--c-hairline);">3D PIN HOVER</span>
               <span id="pin-tilt-readout" style="font-family:var(--font-mono); font-size:0.72rem; color:var(--t-muted);">0.0°, 0.0°</span>
             </div>
             <h4 style="font-family:var(--font-display); font-size:1.35rem; color:#fff; margin-bottom:0.5rem;">

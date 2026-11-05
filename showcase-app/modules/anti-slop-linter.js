@@ -658,8 +658,10 @@ export function initAntiSlopLinter() {
   updateAntiSlopHUD(initialReport);
 
   // Expose to window for external automated testing and audits
-  window.runAntiSlopAudit = runAntiSlopAudit;
-  window.updateAntiSlopHUD = updateAntiSlopHUD;
+  if (typeof window !== 'undefined') {
+    window.runAntiSlopAudit = runAntiSlopAudit;
+    window.updateAntiSlopHUD = updateAntiSlopHUD;
+  }
 }
 
 if (typeof window !== 'undefined') {

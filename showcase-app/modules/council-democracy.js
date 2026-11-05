@@ -493,29 +493,28 @@ export function initCouncilDemocracy() {
     terminalLog.scrollTop = terminalLog.scrollHeight;
   }
 
-  if (filterAllBtn) {
-    filterAllBtn.addEventListener('click', () => {
-      [filterAllBtn, filterJesterBtn, filterSystemBtn].forEach(b => b.classList.remove('active'));
-      filterAllBtn.classList.add('active');
-      currentFilter = 'all';
-      refilterTerminal();
+  function updateFilterButtons(activeBtn, filter) {
+    [filterAllBtn, filterJesterBtn, filterSystemBtn].forEach(b => {
+      if (!b) return;
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed', 'false');
     });
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+      activeBtn.setAttribute('aria-pressed', 'true');
+    }
+    currentFilter = filter;
+    refilterTerminal();
+  }
+
+  if (filterAllBtn) {
+    filterAllBtn.addEventListener('click', () => updateFilterButtons(filterAllBtn, 'all'));
   }
   if (filterJesterBtn) {
-    filterJesterBtn.addEventListener('click', () => {
-      [filterAllBtn, filterJesterBtn, filterSystemBtn].forEach(b => b.classList.remove('active'));
-      filterJesterBtn.classList.add('active');
-      currentFilter = 'jester';
-      refilterTerminal();
-    });
+    filterJesterBtn.addEventListener('click', () => updateFilterButtons(filterJesterBtn, 'jester'));
   }
   if (filterSystemBtn) {
-    filterSystemBtn.addEventListener('click', () => {
-      [filterAllBtn, filterJesterBtn, filterSystemBtn].forEach(b => b.classList.remove('active'));
-      filterSystemBtn.classList.add('active');
-      currentFilter = 'system';
-      refilterTerminal();
-    });
+    filterSystemBtn.addEventListener('click', () => updateFilterButtons(filterSystemBtn, 'system'));
   }
   if (clearTerminalBtn) {
     clearTerminalBtn.addEventListener('click', () => {
@@ -1000,10 +999,12 @@ export function initCouncilDemocracy() {
   });
 
   // Expose global methods
-  window.refreshCouncilStage = () => {
-    renderRadarChart(currentScores, baselineScores);
-  };
-  window.runCouncilAudit = runVisualHillClimbingAudit;
+  if (typeof window !== 'undefined') {
+    window.refreshCouncilStage = () => {
+      renderRadarChart(currentScores, baselineScores);
+    };
+    window.runCouncilAudit = runVisualHillClimbingAudit;
+  }
 }
 
 export { initCouncilDemocracy as initCouncilChamber };

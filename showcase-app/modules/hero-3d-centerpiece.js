@@ -228,6 +228,11 @@ function handlePointerMove(e) {
   targetRotationX = -ndcY * 0.65;
 }
 
+function handlePointerEnter() {
+  isPointerOver = true;
+  lastPointerTime = performance.now();
+}
+
 function handlePointerLeave() {
   isPointerOver = false;
 }
@@ -254,7 +259,7 @@ function setupEventListeners() {
   const heroSection = document.getElementById('hero-viewport') || containerEl;
   if (heroSection) {
     heroSection.addEventListener('pointermove', handlePointerMove, { passive: true });
-    heroSection.addEventListener('pointerenter', () => { isPointerOver = true; }, { passive: true });
+    heroSection.addEventListener('pointerenter', handlePointerEnter, { passive: true });
     heroSection.addEventListener('pointerleave', handlePointerLeave, { passive: true });
     heroSection.addEventListener('touchmove', handlePointerMove, { passive: true });
   }
@@ -269,10 +274,14 @@ function removeEventListeners() {
   const heroSection = document.getElementById('hero-viewport') || containerEl;
   if (heroSection) {
     heroSection.removeEventListener('pointermove', handlePointerMove);
+    heroSection.removeEventListener('pointerenter', handlePointerEnter);
     heroSection.removeEventListener('pointerleave', handlePointerLeave);
     heroSection.removeEventListener('touchmove', handlePointerMove);
   }
   document.removeEventListener('click', handlePillClick);
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-reduced-motion: reduce)').removeEventListener('change', checkReducedMotion);
+  }
 }
 
 // ============================================================================
@@ -299,6 +308,7 @@ export function switchGeometry(key) {
   }
 
   // Trigger smooth scale down -> swap -> scale up transition
+  lastPointerTime = performance.now();
   pendingGeometryKey = normalizedKey;
   isSwitchingGeometry = true;
   switchStartTime = performance.now();
@@ -326,9 +336,11 @@ function updatePillUI(activeKey) {
     if (isMatch) {
       pill.classList.add('active');
       pill.setAttribute('aria-selected', 'true');
+      pill.setAttribute('aria-pressed', 'true');
     } else {
       pill.classList.remove('active');
       pill.removeAttribute('aria-selected');
+      pill.setAttribute('aria-pressed', 'false');
     }
   });
 
@@ -416,14 +428,20 @@ function renderLoop(time) {
 
   const now = performance.now();
 
-  // 1. Damped Mouse/Pointer Tracking & Inertia (lerp 0.05)
+  // 1. Damped Mouse/Pointer Tracking & Inertia (lerp 0.05) with WCAG 2.2.2 Idle Rest
+  // Continuous ambient drift automatically pauses after 2,500ms of user inactivity
+  const isIdle = !isPointerOver && !isSwitchingGeometry && (now - lastPointerTime > 2500);
+  const driftVelocityFactor = (prefersReducedMotion || isIdle)
+    ? Math.max(0, 1.0 - (now - lastPointerTime - 2500) / 1000)
+    : 1.0;
+
   if (!prefersReducedMotion) {
     currentRotationX += (targetRotationX - currentRotationX) * 0.05;
     currentRotationY += (targetRotationY - currentRotationY) * 0.05;
 
-    // Ambient Continuous Rotation
-    ambientRotationY += AMBIENT_SPEED_Y;
-    ambientRotationX += AMBIENT_SPEED_X;
+    // Ambient Continuous Rotation with smooth idle rest
+    ambientRotationY += AMBIENT_SPEED_Y * driftVelocityFactor;
+    ambientRotationX += AMBIENT_SPEED_X * driftVelocityFactor;
 
     // Gradual decay of interactive pointer offset when idle for > 2.0s
     if (!isPointerOver && (now - lastPointerTime > 2000)) {
@@ -434,7 +452,7 @@ function renderLoop(time) {
 
   sculptureGroup.rotation.x = currentRotationX + ambientRotationX;
   sculptureGroup.rotation.y = currentRotationY + ambientRotationY;
-  sculptureGroup.rotation.z = Math.sin(time * 0.0006) * 0.05;
+  sculptureGroup.rotation.z = Math.sin(time * 0.0006) * 0.05 * driftVelocityFactor;
 
   // 2. Geometry Switch Scale Animation
   if (isSwitchingGeometry) {
@@ -501,9 +519,9 @@ function renderLoop(time) {
     coreMaterial.emissive.copy(currentCoreColor);
   }
   if (coreMesh) {
-    // Reverse counter-rotation for internal jewel core
-    coreMesh.rotation.y -= 0.015;
-    coreMesh.rotation.x += 0.008;
+    // Reverse counter-rotation for internal jewel core with WCAG 2.2.2 idle rest
+    coreMesh.rotation.y -= 0.015 * driftVelocityFactor;
+    coreMesh.rotation.x += 0.008 * driftVelocityFactor;
   }
 
   // 4. Render Scene with Khronos PBR Neutral Tone Mapping
@@ -544,13 +562,14 @@ export function initHero3DStage() {
   camera.position.set(0, 0, 4.4);
 
   // 2. High-Performance WebGL Renderer with Khronos Neutral Tone Mapping
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   renderer = new _THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
     powerPreference: 'high-performance'
   });
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.75 : 2.0));
 
   // Strict Tone Mapping & Color Space Configuration
   renderer.toneMapping = _THREE.NeutralToneMapping || _THREE.ACESFilmicToneMapping;
@@ -669,17 +688,24 @@ export function initHero3DStage() {
     heroIntersectionObserver.observe(containerEl);
   }
 
-  if (typeof document !== 'undefined') {
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) pauseHero3D();
-      else if (containerEl) {
-        const rect = containerEl.getBoundingClientRect();
-        if (rect.bottom > 0 && rect.top < window.innerHeight) resumeHero3D();
+  function handleHeroVisibilityChange() {
+    if (typeof document === 'undefined') return;
+    if (document.hidden) {
+      pauseHero3D();
+    } else if (containerEl) {
+      const rect = containerEl.getBoundingClientRect();
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        resumeHero3D();
       }
-    });
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', handleHeroVisibilityChange);
   }
 
   isPaused = false;
+  lastPointerTime = performance.now();
   if (animFrameId) cancelAnimationFrame(animFrameId);
   animFrameId = requestAnimationFrame(renderLoop);
 }
@@ -698,6 +724,10 @@ export function disposeHero3DStage() {
   }
 
   removeEventListeners();
+
+  if (typeof document !== 'undefined') {
+    document.removeEventListener('visibilitychange', handleHeroVisibilityChange);
+  }
 
   if (resizeObserver && containerEl) {
     resizeObserver.unobserve(containerEl);
@@ -737,6 +767,11 @@ export function disposeHero3DStage() {
   if (renderer) {
     if (renderer.domElement && renderer.domElement.parentNode) {
       renderer.domElement.parentNode.removeChild(renderer.domElement);
+    }
+    const gl = renderer.getContext();
+    if (gl) {
+      const ext = gl.getExtension('WEBGL_lose_context');
+      if (ext) ext.loseContext();
     }
     renderer.dispose();
     renderer = null;

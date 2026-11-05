@@ -446,6 +446,16 @@ export function setupPresenterKeyboardNavigation() {
       Boolean(activeEl.closest && activeEl.closest('.code-editor-wrapper'))
     );
 
+    const isInteractive = activeEl && (
+      isInputFocused ||
+      activeEl.tagName === 'BUTTON' ||
+      activeEl.tagName === 'A' ||
+      activeEl.getAttribute('role') === 'button' ||
+      activeEl.getAttribute('role') === 'tab' ||
+      activeEl.getAttribute('role') === 'radio' ||
+      activeEl.getAttribute('role') === 'checkbox'
+    );
+
     // If focused inside an input/textarea/editable
     if (isInputFocused) {
       // Escape blurs the active text field and safely returns
@@ -480,6 +490,9 @@ export function setupPresenterKeyboardNavigation() {
     }
 
     // Space / ArrowRight / PageDown: Next module / slide
+    if (isInteractive && (e.key === ' ' || e.code === 'Space')) {
+      return; // Allow focused button/control to be operated via Space
+    }
     if (e.key === ' ' || e.code === 'Space' || e.key === 'ArrowRight' || e.key === 'PageDown') {
       e.preventDefault();
       nextSlide();
@@ -676,11 +689,11 @@ export function mountPresenterDOM() {
               <p id="notes-socratic-cue" style="font-size:0.88rem; color:var(--t-primary); margin:0; line-height:1.5; font-style:italic;"></p>
             </div>
             <div style="background:var(--c-obsidian); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1rem;">
-              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-ember); font-weight:700; display:block; margin-bottom:0.3rem;">[LIVE CODING DEMO]</span>
+              <span style="font-family:var(--font-sans); font-size:0.75rem; color:var(--t-secondary); font-weight:700; display:block; margin-bottom:0.3rem;">LIVE CODING DEMO</span>
               <p id="notes-demo-cue" style="font-size:0.88rem; color:var(--t-primary); margin:0; line-height:1.5;"></p>
             </div>
           </div>
-          <div style="background:rgba(249, 115, 22, 0.08); border-left:3px solid var(--c-ember); padding:0.8rem 1rem; border-radius:0 var(--r-inner) var(--r-inner) 0;">
+          <div style="background:rgba(255, 255, 255, 0.03); border-left:3px solid var(--c-hairline-bright); padding:0.8rem 1rem; border-radius:0 var(--r-inner) var(--r-inner) 0;">
             <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-amber); font-weight:700;">KEY TAKEAWAY: </span>
             <span id="notes-takeaway" style="font-size:0.9rem; color:var(--t-primary);"></span>
           </div>

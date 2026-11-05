@@ -46,7 +46,7 @@ let lightRim, lightKey, lightAmbient;
 let renderMode = 'solid'; // 'solid' | 'wireframe' | 'particles'
 let geometryType = 'torus'; // 'torus' | 'box' | 'sphere'
 let toneMappingType = 'neutral'; // 'neutral' | 'aces' | 'agx' | 'none'
-let isRotating = true;
+let isRotating = !(typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 let spinSpeed = 1.0;
 let currentRoughness = 0.18;
 let currentMetalness = 0.88;
@@ -618,7 +618,7 @@ export function setup3DControls() {
     rotateBtn.addEventListener('click', () => {
       isRotating = !isRotating;
       if (rotateBtnText) rotateBtnText.textContent = isRotating ? "Pause Spin" : "Resume Spin";
-      if (rotateBtnIcon) rotateBtnIcon.textContent = isRotating ? "⏸" : "▶";
+      if (rotateBtnIcon) rotateBtnIcon.textContent = isRotating ? "||" : "▷";
     });
   }
 
@@ -852,7 +852,7 @@ export function setupModuleDrawer() {
   if (!drawerList) return;
 
   drawerList.innerHTML = TEACHING_MODULES.map((mod, idx) => `
-    <div class="drawer-module-card ${idx === currentModuleIdx ? 'active' : ''}" data-idx="${idx}">
+    <div class="drawer-module-card ${idx === currentModuleIdx ? 'active' : ''}" data-idx="${idx}" tabindex="0" role="button" aria-pressed="${idx === currentModuleIdx ? 'true' : 'false'}" aria-label="Module ${mod.number}: ${mod.title}">
       <div style="display:flex; align-items:center; gap:0.8rem;">
         <span class="tone-badge" style="font-size:0.75rem; padding:0.2rem 0.5rem; ${idx === currentModuleIdx ? 'border-color:rgba(255,255,255,0.35); color:#ffffff;' : ''}">
           ${mod.number}
@@ -873,10 +873,17 @@ export function setupModuleDrawer() {
   `).join('');
 
   drawerList.querySelectorAll('.drawer-module-card').forEach(card => {
-    card.addEventListener('click', () => {
+    const activateCard = () => {
       const idx = parseInt(card.getAttribute('data-idx'), 10);
       renderTeachingModule(idx);
       closeDrawer();
+    };
+    card.addEventListener('click', activateCard);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateCard();
+      }
     });
   });
 
@@ -901,6 +908,7 @@ function updateDrawerHighlight(currentIdx) {
   cards.forEach((card, idx) => {
     if (idx === currentIdx) {
       card.classList.add('active');
+      card.setAttribute('aria-pressed', 'true');
       const statusSpan = card.querySelector('span:last-child');
       if (statusSpan) {
         statusSpan.style.color = 'var(--c-ember)';
@@ -908,6 +916,7 @@ function updateDrawerHighlight(currentIdx) {
       }
     } else {
       card.classList.remove('active');
+      card.setAttribute('aria-pressed', 'false');
       const statusSpan = card.querySelector('span:last-child');
       if (statusSpan) {
         statusSpan.style.color = 'var(--t-muted)';
@@ -949,17 +958,29 @@ function updateSlideDots(currentIdx) {
 export function setupKeyboardNavigation() {
   window.addEventListener('keydown', (e) => {
     const activeEl = document.activeElement;
-    const isTyping = activeEl && (
+    const isInteractive = activeEl && (
       activeEl.tagName === 'INPUT' || 
       activeEl.tagName === 'TEXTAREA' || 
+      activeEl.tagName === 'SELECT' || 
+      activeEl.tagName === 'BUTTON' || 
+      activeEl.tagName === 'A' || 
+      activeEl.getAttribute('role') === 'button' ||
+      activeEl.getAttribute('role') === 'tab' ||
+      activeEl.getAttribute('role') === 'radio' ||
+      activeEl.getAttribute('role') === 'checkbox' ||
       activeEl.isContentEditable
     );
 
-    // If typing in editor, only handle Esc to blur
-    if (isTyping) {
+    // If typing in input/textarea, only handle Esc to blur
+    if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
       if (e.key === 'Escape') {
         activeEl.blur();
       }
+      return;
+    }
+
+    // Spacebar on an interactive element should operate that control, not jump slides
+    if (isInteractive && (e.key === ' ' || e.code === 'Space')) {
       return;
     }
 
@@ -1324,8 +1345,8 @@ export function renderModulePreview(mod, code) {
       // Module 6: Three.js r170+ WebGPU & TSL
       mount.innerHTML = `
         <div style="width:100%; max-width:480px; display:flex; align-items:center; justify-content:space-around; gap:1rem;">
-          <div style="width:72px; height:72px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #181b24 0%, #0a0b0e 70%); border:2px solid var(--c-ember); box-shadow:0 0 20px rgba(249,115,22,0.6); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:var(--font-mono); font-size:0.65rem; color:#ffb35c;">TSL RIM</span>
+          <div style="width:72px; height:72px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #181b24 0%, #0a0b0e 70%); border:1px solid var(--c-hairline-bright); box-shadow:none; display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:var(--font-sans); font-size:0.68rem; color:var(--t-secondary); letter-spacing:0.04em;">TSL RIM</span>
           </div>
           <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--t-secondary);">
             <div>Node: <span style="color:#38bdf8;">MeshStandardNodeMaterial</span></div>
@@ -1404,7 +1425,7 @@ export function renderModulePreview(mod, code) {
             <div style="font-family:var(--font-mono); font-size:0.95rem; color:#34d399; font-weight:800; margin-top:0.2rem;">10.0 / 10</div>
           </div>
           <div style="font-family:var(--font-mono); font-size:1.2rem; color:var(--c-ember); font-weight:700;">+</div>
-          <div style="text-align:center; padding:0.8rem 1.4rem; background:var(--c-deep-zinc); border:1px solid rgba(249,115,22,0.3); border-radius:10px;">
+          <div style="text-align:center; padding:0.8rem 1.4rem; background:var(--c-deep-zinc); border:1px solid var(--c-hairline); border-radius:10px;">
             <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--t-muted);">MODEL B</div>
             <div style="font-family:var(--font-display); font-size:1.1rem; color:#fff; font-weight:700;">Claude Opus 5.5</div>
             <div style="font-family:var(--font-mono); font-size:0.95rem; color:#34d399; font-weight:800; margin-top:0.2rem;">10.0 / 10</div>
@@ -1509,7 +1530,7 @@ export function renderSkills(filterCategory = 'All', searchQuery = '') {
     <div class="liquid-glass-card">
       <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem;">
         <span class="tone-badge">${skill.category}</span>
-        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--c-ember);">${skill.badge}</span>
+        <span style="font-family:var(--font-sans); font-size:0.75rem; color:var(--t-muted); letter-spacing:0.02em;">${skill.badge}</span>
       </div>
       <h3 style="font-family:var(--font-display); font-size:1.25rem; margin-bottom:0.6rem; color:var(--t-primary);">${skill.name}</h3>
       <p style="font-size:0.88rem; color:var(--t-secondary); margin-bottom:1.2rem; min-height:60px;">${skill.description}</p>
@@ -1536,8 +1557,12 @@ export function setupSkillFilters() {
 
   categoryButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      categoryButtons.forEach(b => b.classList.remove('active'));
+      categoryButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       currentCat = btn.getAttribute('data-category');
       renderSkills(currentCat, searchInput ? searchInput.value : '');
     });
@@ -1940,6 +1965,17 @@ export function initDecryptedTextDemo() {
 
     const targetText = input && input.value.trim() ? input.value.trim() : "LEUL-5070TI &bull; QUANTUM_ENCRYPTED_2026";
     if (srEl) srEl.textContent = targetText;
+    stage.setAttribute('aria-hidden', 'true');
+
+    const isReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReducedMotion) {
+      stage.innerHTML = targetText
+        .split('')
+        .map(c => `<span class="decrypt-char locked">${escapeHtml(c)}</span>`)
+        .join('');
+      return;
+    }
+
     const glyphKey = glyphSelect ? glyphSelect.value : 'crypto';
     const glyphs = GLYPH_SETS[glyphKey] || GLYPH_SETS.crypto;
     const speed = speedSlider ? parseInt(speedSlider.value, 10) : 30;

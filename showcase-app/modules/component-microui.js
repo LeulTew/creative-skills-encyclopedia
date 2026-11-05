@@ -321,7 +321,7 @@ function mountMicroUIStageIfNeeded() {
             <button id="tilt-reset-btn" class="nav-tab-btn" aria-label="Reset Tilt Card Orientation" style="flex:1; min-height:38px; padding:0.4rem 0.8rem; font-size:0.8rem; background:rgba(255,255,255,0.05); border:1px solid var(--c-cobalt-rim); color:var(--t-secondary); border-radius:var(--r-ctl); cursor:pointer;">
               Reset Orientation
             </button>
-            <button id="tilt-glare-toggle-btn" class="nav-tab-btn" aria-label="Toggle Specular Glare Layer" style="flex:1; min-height:38px; padding:0.4rem 0.8rem; font-size:0.8rem; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.3); color:var(--c-ember); border-radius:var(--r-ctl); cursor:pointer;">
+            <button id="tilt-glare-toggle-btn" class="nav-tab-btn" aria-label="Toggle Specular Glare Layer" style="flex:1; min-height:38px; padding:0.4rem 0.8rem; font-size:0.8rem; background:rgba(255,255,255,0.04); border:1px solid var(--c-hairline); color:var(--t-primary); border-radius:var(--r-ctl); cursor:pointer;">
               Glare: ON
             </button>
           </div>
@@ -750,9 +750,11 @@ function initNumberFlowOdometer() {
   }
 
   // Export helper on window for external triggers
-  window.setNumberFlowValue = (val, prefix = '') => {
-    updateOdometerDisplay(val, prefix);
-  };
+  if (typeof window !== 'undefined') {
+    window.setNumberFlowValue = (val, prefix = '') => {
+      updateOdometerDisplay(val, prefix);
+    };
+  }
 }
 
 /**
@@ -964,7 +966,9 @@ function initMagneticButton() {
   });
 
   // Window refresh hook
-  window.refreshMicroUI = () => {
-    onPointerLeave();
-  };
+  if (typeof window !== 'undefined') {
+    window.refreshMicroUI = () => {
+      onPointerLeave();
+    };
+  }
 }

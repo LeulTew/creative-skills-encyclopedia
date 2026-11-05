@@ -922,8 +922,10 @@ export function initReactBitsPlayground() {
   };
 
   // Expose on global window object for console inspection & tab synchronization
-  window.initReactBitsPlayground = initReactBitsPlayground;
-  window.reactBitsPlayground = playground;
+  if (typeof window !== 'undefined') {
+    window.initReactBitsPlayground = initReactBitsPlayground;
+    window.reactBitsPlayground = playground;
+  }
 
   return playground;
 }

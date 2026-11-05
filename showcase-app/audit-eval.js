@@ -29,20 +29,32 @@ export async function runAudit() {
     riggingPipeline: null
   };
 
-  // Check all elements in DOM for horizontal overflow
+  // Check all elements in DOM for horizontal overflow (excluding safe overflow-x: auto containers)
   const allElements = document.querySelectorAll('#section-blender, #section-blender *');
   allElements.forEach(el => {
     const rect = el.getBoundingClientRect();
     if (rect.right > docWidth + 0.5) {
-      report.overflowingElements.push({
-        tag: el.tagName,
-        id: el.id,
-        className: el.className,
-        rectRight: Math.round(rect.right),
-        rectWidth: Math.round(rect.width),
-        docWidth: docWidth,
-        overflowPx: Math.round(rect.right - docWidth)
-      });
+      let parent = el.parentElement;
+      let isInsideScrollable = false;
+      while (parent && parent !== document.body) {
+        const pStyle = window.getComputedStyle(parent);
+        if (pStyle.overflowX === 'auto' || pStyle.overflowX === 'scroll') {
+          isInsideScrollable = true;
+          break;
+        }
+        parent = parent.parentElement;
+      }
+      if (!isInsideScrollable) {
+        report.overflowingElements.push({
+          tag: el.tagName,
+          id: el.id,
+          className: el.className,
+          rectRight: Math.round(rect.right),
+          rectWidth: Math.round(rect.width),
+          docWidth: docWidth,
+          overflowPx: Math.round(rect.right - docWidth)
+        });
+      }
     }
   });
 

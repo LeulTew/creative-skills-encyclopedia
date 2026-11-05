@@ -260,13 +260,13 @@ export class ShaderGradientFluidCanvas {
     const gl = this.gl;
 
     // Compile Shaders
-    const vs = this.compileShader(gl.VERTEX_SHADER, VERTEX_SHADER_SRC);
-    const fs = this.compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER_SRC);
-    if (!vs || !fs) return;
+    this.vs = this.compileShader(gl.VERTEX_SHADER, VERTEX_SHADER_SRC);
+    this.fs = this.compileShader(gl.FRAGMENT_SHADER, FRAGMENT_SHADER_SRC);
+    if (!this.vs || !this.fs) return;
 
     this.program = gl.createProgram();
-    gl.attachShader(this.program, vs);
-    gl.attachShader(this.program, fs);
+    gl.attachShader(this.program, this.vs);
+    gl.attachShader(this.program, this.fs);
     gl.linkProgram(this.program);
 
     if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
@@ -386,7 +386,8 @@ export class ShaderGradientFluidCanvas {
     const rect = this.canvas.getBoundingClientRect();
     const width = rect.width || this.canvas.clientWidth || 600;
     const height = rect.height || this.canvas.clientHeight || 380;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.75 : 2);
 
     const pixelWidth = Math.max(1, Math.floor(width * dpr));
     const pixelHeight = Math.max(1, Math.floor(height * dpr));
@@ -472,11 +473,27 @@ export class ShaderGradientFluidCanvas {
       this.canvas.removeEventListener('mouseleave', this.onMouseLeave);
       this.canvas.removeEventListener('touchmove', this.onTouchMove);
     }
-    if (this.gl && this.program) {
-      this.gl.deleteProgram(this.program);
-    }
-    if (this.gl && this.buffer) {
-      this.gl.deleteBuffer(this.buffer);
+    if (this.gl) {
+      if (this.vs) {
+        this.gl.deleteShader(this.vs);
+        this.vs = null;
+      }
+      if (this.fs) {
+        this.gl.deleteShader(this.fs);
+        this.fs = null;
+      }
+      if (this.program) {
+        this.gl.deleteProgram(this.program);
+        this.program = null;
+      }
+      if (this.buffer) {
+        this.gl.deleteBuffer(this.buffer);
+        this.buffer = null;
+      }
+      const ext = this.gl.getExtension('WEBGL_lose_context');
+      if (ext) {
+        ext.loseContext();
+      }
     }
     this.gl = null;
     this.program = null;
@@ -520,6 +537,7 @@ export class CobeGlobe3D {
     this.velocityX = 0;
     this.velocityY = 0;
     this.friction = 0.94;
+    this.lastInteractionTime = performance.now();
 
     this.animationFrameId = null;
     this.isRunning = false;
@@ -622,6 +640,7 @@ export class CobeGlobe3D {
     if (!this.canvas) return;
 
     this.onPointerDown = (e) => {
+      this.lastInteractionTime = performance.now();
       this.isDragging = true;
       this.pointerDown = true;
       this.lastPointerX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
@@ -632,6 +651,7 @@ export class CobeGlobe3D {
 
     this.onPointerMove = (e) => {
       if (!this.pointerDown) return;
+      this.lastInteractionTime = performance.now();
       const curX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
       const curY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
 
@@ -672,6 +692,7 @@ export class CobeGlobe3D {
   }
 
   toggleAutoSpin() {
+    this.lastInteractionTime = performance.now();
     this.autoSpin = !this.autoSpin;
     return this.autoSpin;
   }
@@ -681,6 +702,7 @@ export class CobeGlobe3D {
   }
 
   focusMarker(indexOrId) {
+    this.lastInteractionTime = performance.now();
     let targetIndex = 0;
     if (typeof indexOrId === 'number') {
       targetIndex = (indexOrId + this.markers.length) % this.markers.length;
@@ -717,7 +739,8 @@ export class CobeGlobe3D {
     const rect = this.canvas.getBoundingClientRect();
     const width = rect.width || this.canvas.clientWidth || 500;
     const height = rect.height || this.canvas.clientHeight || 380;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.75 : 2);
 
     const pixelWidth = Math.max(1, Math.floor(width * dpr));
     const pixelHeight = Math.max(1, Math.floor(height * dpr));
@@ -754,9 +777,13 @@ export class CobeGlobe3D {
       // Elastic vertical tilt recentering
       this.theta += (this.targetTheta - this.theta) * 0.02;
 
-      // Auto-spin when velocity drops
+      // WCAG 2.2.2: Idle rest after 2,500ms of inactivity
+      const isIdle = (timestamp - this.lastInteractionTime > 2500) && !this.pointerDown;
+      const autoSpinFactor = isIdle ? Math.max(0, 1.0 - (timestamp - this.lastInteractionTime - 2500) / 1000) : 1.0;
+
+      // Auto-spin when velocity drops (modulated by WCAG 2.2.2 idle rest factor)
       if (this.autoSpin && Math.abs(this.velocityX) < 0.003) {
-        this.phi += 0.004 * this.spinSpeed;
+        this.phi += 0.004 * this.spinSpeed * autoSpinFactor;
       }
     }
 
@@ -1092,7 +1119,7 @@ export function initShaderCanvasPlayground() {
   if (cobeSpinBtn) {
     cobeSpinBtn.addEventListener('click', () => {
       const isSpinning = cobeGlobeStage.toggleAutoSpin();
-      if (cobeSpinIcon) cobeSpinIcon.textContent = isSpinning ? '⏸' : '▶';
+      if (cobeSpinIcon) cobeSpinIcon.textContent = isSpinning ? '||' : '▷';
       if (cobeSpinText) cobeSpinText.textContent = isSpinning ? 'Pause Spin' : 'Resume Spin';
     });
   }
@@ -1152,7 +1179,7 @@ export function initShaderCanvasPlayground() {
   }
 
   // Page Visibility State listener
-  document.addEventListener('visibilitychange', () => {
+  const handleCanvasVisibility = () => {
     if (document.hidden) {
       shaderFluidStage.pause();
       cobeGlobeStage.pause();
@@ -1160,7 +1187,8 @@ export function initShaderCanvasPlayground() {
       shaderFluidStage.resume();
       cobeGlobeStage.resume();
     }
-  });
+  };
+  document.addEventListener('visibilitychange', handleCanvasVisibility);
 
   // Handle Window & Container Resizing
   const handleAllResizes = () => {
@@ -1187,13 +1215,16 @@ export function initShaderCanvasPlayground() {
   cobeGlobeStage.resume();
 
   // Expose to window for external console diagnostics & curriculum exercises
-  window.shaderGradientStage = shaderFluidStage;
+  if (typeof window !== 'undefined') {
+    window.shaderGradientStage = shaderFluidStage;
+    }
   window.cobeGlobeStage = cobeGlobeStage;
 
   return {
     shaderGradient: shaderFluidStage,
     cobeGlobe: cobeGlobeStage,
     destroy: () => {
+      document.removeEventListener('visibilitychange', handleCanvasVisibility);
       window.removeEventListener('resize', handleAllResizes);
       shaderFluidStage.destroy();
       cobeGlobeStage.destroy();
@@ -1277,7 +1308,7 @@ function generatePlaygroundMarkup() {
         <div style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-              <span class="meta-tag" style="font-size:0.72rem; border-color:rgba(249,115,22,0.3); color:var(--c-ember);">Cobe Globe · 3D Canvas</span>
+              <span class="meta-tag" style="font-size:0.72rem; border-color:var(--c-hairline); color:var(--t-secondary);">Cobe Globe · 3D Canvas</span>
               <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--t-muted);">
                 FPS: <strong id="hud-globe-fps" style="color:var(--c-ember);">60</strong>
               </div>
@@ -1306,10 +1337,10 @@ function generatePlaygroundMarkup() {
             <!-- Action Toolbar -->
             <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
               <button type="button" id="cobe-spin-btn" class="nav-tab-btn" aria-label="Pause or resume auto-rotation" style="flex:1; min-height:36px; padding:0.4rem 0.8rem; font-size:0.8rem; background:var(--c-elevated-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-ctl); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:0.4rem;">
-                <span id="cobe-spin-icon" aria-hidden="true">⏸</span>
+                <span id="cobe-spin-icon" aria-hidden="true" style="font-size:0.75rem;">||</span>
                 <span id="cobe-spin-text">Pause Spin</span>
               </button>
-              <button type="button" id="cobe-marker-cycle-btn" class="nav-tab-btn" aria-label="Cycle to next global hub marker" style="flex:1; min-height:36px; padding:0.4rem 0.8rem; font-size:0.8rem; background:var(--c-elevated-zinc); border:1px solid var(--c-ember); color:var(--c-ember); border-radius:var(--r-ctl); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:0.4rem;">
+              <button type="button" id="cobe-marker-cycle-btn" class="nav-tab-btn" aria-label="Cycle to next global hub marker" style="flex:1; min-height:36px; padding:0.4rem 0.8rem; font-size:0.8rem; background:var(--c-elevated-zinc); border:1px solid var(--c-hairline); color:var(--t-primary); border-radius:var(--r-ctl); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:0.4rem;">
                 <span>◎ Cycle Hub Pin</span>
               </button>
             </div>

@@ -67,6 +67,8 @@ export function initBlenderStudio() {
   let samples = sliderSamples ? parseInt(sliderSamples.value, 10) || 128 : 128;
   let isRendering = false;
   let isWireframe = false;
+  let lastWorkbenchInteractionTime = performance.now();
+  let handleWbVisibilityChange = null;
 
   // --------------------------------------------------------------------------
   // 1. THREE.JS 3D INTERACTIVE WORKBENCH
@@ -206,13 +208,17 @@ export function initBlenderStudio() {
           wbMesh.position.set(0, 0, 0);
         }
       } else {
-        // Default Static / Idle Rotation Mode
+        // Default Static / Idle Rotation Mode with WCAG 2.2.2 idle rest (drift pausing after 2,500ms without input)
+        const isReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isWbIdle = (now - lastWorkbenchInteractionTime > 2500) || isReducedMotion;
+        const idleRotationFactor = isReducedMotion ? 0 : (isWbIdle ? Math.max(0, 1.0 - (now - lastWorkbenchInteractionTime - 2500) / 1000) : 1.0);
+
         if (wbMesh) {
-          wbMesh.rotation.y += 0.012;
+          wbMesh.rotation.y += 0.012 * idleRotationFactor;
           if (currentMesh === 'pack') {
-            wbMesh.rotation.x = -Math.PI / 6 + Math.sin(now * 0.001) * 0.08;
+            wbMesh.rotation.x = -Math.PI / 6 + Math.sin(now * 0.001) * 0.08 * idleRotationFactor;
           } else {
-            wbMesh.rotation.x = Math.sin(now * 0.0008) * 0.15;
+            wbMesh.rotation.x = Math.sin(now * 0.0008) * 0.15 * idleRotationFactor;
           }
           wbMesh.scale.set(1.0, 1.0, 1.0);
           wbMesh.position.set(0, 0, 0);
@@ -252,12 +258,14 @@ export function initBlenderStudio() {
     wbCamera.position.set(0, 0.5, 3.8);
 
     try {
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
       wbRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
       wbRenderer.setSize(width, height);
-      wbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      wbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.75 : 2));
       wbRenderer.toneMapping = THREE.NeutralToneMapping || THREE.ACESFilmicToneMapping;
       wbRenderer.toneMappingExposure = 1.0;
       viewportContainer.appendChild(wbRenderer.domElement);
+      wbRenderer.domElement.setAttribute('aria-hidden', 'true');
       wbRenderer.domElement.style.display = 'block';
       wbRenderer.domElement.style.width = '100%';
       wbRenderer.domElement.style.height = '100%';
@@ -299,18 +307,24 @@ export function initBlenderStudio() {
       wbObserver.observe(viewportContainer);
     }
 
+    // Interaction tracking on viewport container for WCAG 2.2.2 idle wake
+    viewportContainer.addEventListener('pointermove', () => {
+      lastWorkbenchInteractionTime = performance.now();
+    }, { passive: true });
+
     // Visibility Listener to pause when browser tab is inactive
-    if (typeof document !== 'undefined') {
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          pauseWorkbench();
-        } else if (viewportContainer && viewportContainer.offsetParent !== null) {
-          const rect = viewportContainer.getBoundingClientRect();
-          if (rect.bottom > 0 && rect.top < window.innerHeight) {
-            resumeWorkbench();
-          }
+    handleWbVisibilityChange = () => {
+      if (document.hidden) {
+        pauseWorkbench();
+      } else if (viewportContainer && viewportContainer.offsetParent !== null) {
+        const rect = viewportContainer.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          resumeWorkbench();
         }
-      });
+      }
+    };
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', handleWbVisibilityChange);
     }
   }
 
@@ -365,6 +379,7 @@ export function initBlenderStudio() {
   }
 
   function updateWorkbenchMesh() {
+    lastWorkbenchInteractionTime = performance.now();
     const THREE = window.THREE;
     if (!THREE || !wbScene) return;
 
@@ -447,7 +462,9 @@ export function initBlenderStudio() {
     }
   }
 
-  window.resizeBlenderStudio = resizeWorkbench;
+  if (typeof window !== 'undefined') {
+    window.resizeBlenderStudio = resizeWorkbench;
+  }
 
   // --------------------------------------------------------------------------
   // 2. REAL-TIME PYTHON CODE GENERATOR (HEADLESS BPY WITH PROCEDURAL PHYSICS)
@@ -1005,12 +1022,14 @@ ${renderExecution}`;
 
       meshButtons.forEach((b) => {
         b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
         b.style.background = '';
         b.style.borderColor = '';
         b.style.color = '';
       });
 
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       btn.style.background = '';
       btn.style.borderColor = '';
       btn.style.color = '';
@@ -1597,7 +1616,9 @@ ${renderExecution}`;
     downloadGlbBtn.addEventListener('click', exportActive3DAsset);
   }
 
-  window.exportBlenderMesh = exportActive3DAsset;
+  if (typeof window !== 'undefined') {
+    window.exportBlenderMesh = exportActive3DAsset;
+  }
 
   // Teardown / Cleanup Hook for pristine lifecycle management
   function disposeStudio() {
@@ -1615,7 +1636,16 @@ ${renderExecution}`;
       }
       wbMesh = null;
     }
+    if (typeof document !== 'undefined' && handleWbVisibilityChange) {
+      document.removeEventListener('visibilitychange', handleWbVisibilityChange);
+      handleWbVisibilityChange = null;
+    }
     if (wbRenderer) {
+      const gl = wbRenderer.getContext();
+      if (gl) {
+        const ext = gl.getExtension('WEBGL_lose_context');
+        if (ext) ext.loseContext();
+      }
       wbRenderer.dispose();
       if (wbRenderer.domElement && wbRenderer.domElement.parentElement) {
         wbRenderer.domElement.parentElement.removeChild(wbRenderer.domElement);
@@ -1629,7 +1659,9 @@ ${renderExecution}`;
     }
   }
 
-  window.disposeBlenderStudio = disposeStudio;
+  if (typeof window !== 'undefined') {
+    window.disposeBlenderStudio = disposeStudio;
+  }
 
   // Initialize 3D Workbench and Python Script
   init3DWorkbench();

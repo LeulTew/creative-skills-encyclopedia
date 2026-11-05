@@ -404,10 +404,13 @@ export function morphToSpecimen(specimenKey) {
   // Update UI Pills
   const pills = document.querySelectorAll('.specimen-pill[data-specimen]');
   pills.forEach(pill => {
-    if (pill.getAttribute('data-specimen') === specimenKey) {
+    const isMatch = pill.getAttribute('data-specimen') === specimenKey;
+    if (isMatch) {
       pill.classList.add('active');
+      pill.setAttribute('aria-pressed', 'true');
     } else {
       pill.classList.remove('active');
+      pill.setAttribute('aria-pressed', 'false');
     }
   });
 }
@@ -562,10 +565,12 @@ export function initHero3DSpecimens() {
   }
 
   // 8. Flavour Synchronization Registration
-  window.updateParticlePalette = (flavourKey) => {
-    currentFlavourKey = flavourKey;
-    updateColorsForPalette(flavourKey);
-  };
+  if (typeof window !== 'undefined') {
+    window.updateParticlePalette = (flavourKey) => {
+      currentFlavourKey = flavourKey;
+      updateColorsForPalette(flavourKey);
+    };
+  }
 
   // 9. Window Resize Handling (Desktop 1440px+ High-DPI Adaptation)
   function onResize() {

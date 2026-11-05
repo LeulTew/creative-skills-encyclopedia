@@ -62,7 +62,7 @@ body[data-flavour="ember"], body:not([data-flavour]) {
   --c-accent-glow: rgba(245, 158, 11, 0.25);
   --t-primary: #f8fafc;
   --t-secondary: #94a3b8;
-  --t-muted: #64748b;
+  --t-muted: #8fa0b5;
   --t-accent: #f59e0b;
 }
 
@@ -78,7 +78,7 @@ body[data-flavour="cobalt"] {
   --c-accent-glow: rgba(56, 189, 248, 0.28);
   --t-primary: #f0f9ff;
   --t-secondary: #93c5fd;
-  --t-muted: #6282a8;
+  --t-muted: #7899c4;
   --t-accent: #38bdf8;
 }
 
@@ -693,19 +693,32 @@ input[type="checkbox"] {
 }
 
 .custom-switch {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
+  min-width: 44px;
+  min-height: 44px;
   accent-color: var(--c-ember);
   cursor: pointer;
   flex-shrink: 0;
+  margin: 0;
+}
+
+#chromatic-toggle {
+  width: 24px;
+  height: 24px;
+  min-width: 44px;
+  min-height: 44px;
+  accent-color: var(--c-ember);
+  cursor: pointer;
+  margin: 0;
 }
 
 .theory-deepdive-box {
   background: rgba(18, 20, 26, 0.95);
-  border: 1px solid rgba(249, 115, 22, 0.3);
+  border: 1px solid var(--c-hairline);
   border-radius: var(--r-inner);
   padding: 1.35rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: none;
   transition: all 0.3s ease;
 }
 
@@ -1308,9 +1321,9 @@ input[type="checkbox"] {
 }
 
 .deck-btn-primary {
-  background: var(--c-ember);
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
-  border-color: var(--c-ember);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .deck-btn-primary:hover {
@@ -1319,9 +1332,9 @@ input[type="checkbox"] {
 }
 
 .deck-btn-ember {
-  background: var(--c-ember);
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
-  border-color: var(--c-ember);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .deck-btn-ember:hover {
@@ -1422,7 +1435,7 @@ body.presenter-active .presenter-hud {
 
 /* Interactive Solution Accordion / Quiz Mode */
 .quiz-badge {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.72rem;
   padding: 0.2rem 0.6rem;
   border-radius: var(--r-round);
@@ -1432,15 +1445,15 @@ body.presenter-active .presenter-hud {
 }
 
 .quiz-badge-masked {
-  background: rgba(255, 179, 92, 0.15);
-  color: var(--c-amber);
-  border: 1px solid rgba(255, 179, 92, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--t-secondary);
+  border: 1px solid var(--c-hairline);
 }
 
 .quiz-badge-revealed {
-  background: rgba(249, 115, 22, 0.2);
-  color: var(--c-ember);
-  border: 1px solid var(--c-ember);
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--c-sapphire);
+  border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .reveal-btn {
@@ -1470,7 +1483,7 @@ body.presenter-active .presenter-hud {
   padding: 1.4rem;
   border-radius: var(--r-ctl);
   background: rgba(6, 7, 9, 0.65);
-  border: 1px dashed rgba(249, 115, 22, 0.35);
+  border: 1px dashed var(--c-hairline-bright);
   text-align: center;
   color: var(--t-secondary);
   font-size: 0.92rem;
@@ -1620,35 +1633,41 @@ body.presenter-active .presenter-hud {
 
 .slide-dot {
   position: relative;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  background: transparent !important;
+  border: none !important;
+  padding: 18px 4px !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.slide-dot::before {
+  content: "";
+  display: block;
   width: 24px;
   height: 8px;
   background: var(--c-elevated-zinc);
   border: 1px solid var(--c-cobalt-rim);
   border-radius: 4px;
-  cursor: pointer;
   transition: all 0.25s ease;
 }
 
-.slide-dot::after {
-  content: "";
-  position: absolute;
-  top: -18px;
-  bottom: -18px;
-  left: -6px;
-  right: -6px;
-  min-height: 44px;
-  min-width: 36px;
-}
-
-.slide-dot:hover {
+.slide-dot:hover::before {
   background: rgba(255, 255, 255, 0.2);
 }
 
-.slide-dot.active {
-  background: var(--c-ember);
-  border-color: var(--c-ember);
-  width: 38px;
-  box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+.slide-dot.active::before {
+  width: 36px;
+  background: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Module Thumbnail Selector Drawer */
@@ -1752,9 +1771,9 @@ body.presenter-active .presenter-hud {
 }
 
 .drawer-module-card.active {
-  border-color: var(--c-ember);
-  background: rgba(249, 115, 22, 0.12);
-  box-shadow: 0 0 16px rgba(249, 115, 22, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
 }
 
 /* ==========================================================================
@@ -2059,6 +2078,12 @@ body.presenter-active .presenter-hud {
 
 /* Reduced Motion & Low-Power Accessibility Fallback */
 @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
   .liquid-glass-btn,
   .liquid-glass-card,
   .liquid-glass-stack,
@@ -2247,8 +2272,8 @@ body.glass-reduced-motion #demo-glass-card {
 }
 
 .outcome-pill-auditing {
-  background: rgba(249, 115, 22, 0.15);
-  border: 1px solid var(--c-ember);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   color: var(--c-amber);
   box-shadow: 0 0 14px rgba(249, 115, 22, 0.25);
   animation: pill-pulse 0.8s infinite alternate;
@@ -2279,6 +2304,7 @@ body.glass-reduced-motion #demo-glass-card {
   height: 100%;
   background: linear-gradient(90deg, #f97316 0%, #ffb35c 70%, #10b981 100%);
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width;
   box-shadow: 0 0 12px rgba(249, 115, 22, 0.45);
 }
 
@@ -2472,7 +2498,7 @@ body.glass-reduced-motion #demo-glass-card {
 .council-status-chip.deliberating {
   background: rgba(249, 115, 22, 0.15);
   color: var(--c-amber);
-  border: 1px solid var(--c-ember);
+  border: 1px solid var(--c-hairline);
 }
 
 @keyframes veto-flash {
@@ -2549,6 +2575,7 @@ body.glass-reduced-motion #demo-glass-card {
   background: linear-gradient(90deg, #f97316 0%, #ffb35c 100%);
   border-radius: 4px;
   transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width;
   box-shadow: 0 0 8px rgba(249, 115, 22, 0.35);
 }
 
@@ -2601,10 +2628,10 @@ body.glass-reduced-motion #demo-glass-card {
 }
 
 .terminal-ctrl-btn.active {
-  background: rgba(249, 115, 22, 0.15);
-  border-color: var(--c-ember);
-  color: var(--c-amber);
-  font-weight: 700;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .critique-terminal {
@@ -2756,8 +2783,8 @@ body.glass-reduced-motion #demo-glass-card {
 }
 
 .blender-physics-btn {
-  min-height: 40px;
-  padding: 0.45rem 0.6rem;
+  min-height: 44px;
+  padding: 0.5rem 0.85rem;
   font-family: var(--font-mono);
   font-size: 0.76rem;
   font-weight: 600;
@@ -2787,8 +2814,8 @@ body.glass-reduced-motion #demo-glass-card {
 }
 
 .blender-wireframe-btn {
-  min-height: 32px;
-  padding: 0.3rem 0.65rem;
+  min-height: 44px;
+  padding: 0.45rem 0.85rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   border-radius: var(--r-round);
@@ -2969,7 +2996,8 @@ body.glass-reduced-motion #demo-glass-card {
   font-family: var(--font-display);
   font-size: 2.2rem;
   font-weight: 800;
-  color: rgba(255, 255, 255, 0.15);
+  color: var(--t-muted);
+  opacity: 0.7;
   line-height: 1;
 }
 
@@ -3091,8 +3119,8 @@ header a.tone-badge {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 600;
-  padding: 0.5rem 1rem;
-  min-height: 40px;
+  padding: 0.6rem 1rem;
+  min-height: 44px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -3140,9 +3168,9 @@ header a.tone-badge {
 }
 
 .rigging-card.active {
-  border-color: var(--c-ember);
-  background: rgba(249, 115, 22, 0.06);
-  box-shadow: 0 0 16px rgba(249, 115, 22, 0.16);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
 }
 
 .rigging-card-header {
@@ -3220,8 +3248,8 @@ header a.tone-badge {
 }
 
 .zone-btn {
-  min-height: 38px;
-  padding: 0.45rem 0.85rem;
+  min-height: 44px;
+  padding: 0.55rem 0.95rem;
   border-radius: var(--r-round);
   border: 1px solid var(--c-cobalt-rim);
   background: var(--c-surface-base);
@@ -3230,6 +3258,9 @@ header a.tone-badge {
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
 }
 
@@ -3239,10 +3270,10 @@ header a.tone-badge {
 }
 
 .zone-btn.active {
-  background: var(--c-ember);
-  border-color: var(--c-ember);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
   color: #ffffff;
-  box-shadow: 0 0 10px rgba(249, 115, 22, 0.25);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .bone-visualizer-grid {
@@ -3403,11 +3434,15 @@ header a.tone-badge {
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--r-round);
-  padding: 0.4rem 0.85rem;
+  min-height: 44px;
+  padding: 0.5rem 0.95rem;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--t-secondary);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -3497,7 +3532,8 @@ header a.tone-badge {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px;
-  padding: 0.45rem 0.7rem;
+  min-height: 44px;
+  padding: 0.55rem 0.75rem;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: #fff;
@@ -3520,10 +3556,21 @@ header a.tone-badge {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-height: 44px;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--t-secondary);
   cursor: pointer;
+}
+
+.adobe-checkbox {
+  width: 24px;
+  height: 24px;
+  min-width: 44px;
+  min-height: 44px;
+  accent-color: #38bdf8;
+  cursor: pointer;
+  margin: 0;
 }
 
 .adobe-slider-label-row {
@@ -3544,7 +3591,8 @@ header a.tone-badge {
 }
 
 .adobe-action-btn {
-  padding: 0.5rem 1rem;
+  min-height: 44px;
+  padding: 0.6rem 1.15rem;
   border-radius: var(--r-round);
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -3648,11 +3696,15 @@ header a.tone-badge {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--r-round);
-  padding: 0.35rem 0.75rem;
+  min-height: 44px;
+  padding: 0.5rem 0.95rem;
   font-family: var(--font-mono);
   font-size: 0.74rem;
   color: var(--t-secondary);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
 }
 
@@ -3714,7 +3766,7 @@ header a.tone-badge {
 .tok-str { color: #a7f3d0; }
 .tok-num { color: #fbbf24; }
 .tok-bi { color: #38bdf8; }
-.tok-cmt { color: #6b7280; font-style: italic; }
+.tok-cmt { color: #94a3b8; font-style: italic; }
 .tok-dir { color: #c084fc; font-weight: 700; }
 
 
@@ -3743,6 +3795,7 @@ body.presenter-active #presenter-progress-bar {
   background: linear-gradient(90deg, var(--c-ember) 0%, var(--c-amber) 100%);
   box-shadow: 0 0 10px rgba(249, 115, 22, 0.7);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: width;
 }
 
 /* Presenter Elapsed Timer */
