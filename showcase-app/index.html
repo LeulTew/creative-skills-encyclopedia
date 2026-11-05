@@ -50,6 +50,7 @@
     </div>
 
     <nav class="nav-menu" aria-label="Main Navigation">
+      <a href="#hero" class="nav-link active">Overview</a>
       <a href="#manifesto" class="nav-link">Manifesto</a>
       <a href="#syllabus" class="nav-link">Curriculum</a>
       <a href="#skills-catalog" class="nav-link">Encyclopedia</a>
@@ -76,50 +77,77 @@
   <!-- Scroll Container -->
   <main id="stage-container" class="stage-container">
 
-    <!-- CHAPTER 1: HERO VIEWPORT -->
+    <!-- CHAPTER 1: HERO VIEWPORT (ASYMMETRIC EDITORIAL LAYOUT) -->
     <section id="hero" class="chapter chapter-hero" aria-label="Hero Introduction">
-      <div class="hero-content">
-        <div class="chapter-eyebrow">
-          <span class="eyebrow-num">01</span>
-          <span class="eyebrow-title">CREATIVE ENGINEERING &bull; 2026 MONOGRAPH</span>
+      <div class="hero-split-container">
+        <!-- Left Column: Editorial Display Typography -->
+        <div class="hero-text-pane">
+          <div class="chapter-eyebrow">
+            <span class="eyebrow-num">01</span>
+            <span class="eyebrow-title">CREATIVE ENGINEERING &bull; 2026 MONOGRAPH</span>
+          </div>
+
+          <h1 class="hero-display">
+            CREATIVE<br>ENGINEERING
+          </h1>
+
+          <p class="hero-thesis">
+            Deterministic 3D systems, headless Blender automation, fluid kinetic choreography, and production-grade digital craft.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#syllabus" class="btn-primary">Explore Curriculum</a>
+            <a href="#specimen-gallery" class="btn-secondary">Launch 3D Bench</a>
+          </div>
+
+          <div class="hero-specimen-bar">
+            <span class="bar-label">Active 3D Specimen:</span>
+            <div class="specimen-quick-select" role="group" aria-label="Select 3D Specimen">
+              <button class="quick-pill active" data-specimen="kinetic_core">Kinetic Chrono-Core</button>
+              <button class="quick-pill" data-specimen="cyber_monolith">Cyber Monolith</button>
+              <button class="quick-pill" data-specimen="dna_helix">DNA Helix</button>
+              <button class="quick-pill" data-specimen="neural_sphere">Neural Core</button>
+            </div>
+          </div>
+
+          <div class="scroll-prompt" aria-hidden="true">
+            <span>Scroll to explore</span>
+            <div class="scroll-stem"></div>
+          </div>
         </div>
 
-        <h1 class="hero-display">
-          CREATIVE<br>ENGINEERING
-        </h1>
-
-        <p class="hero-thesis">
-          Deterministic 3D systems, headless Blender automation, fluid motion choreography, and high-craft digital design engineering.
-        </p>
-
-        <div class="scroll-prompt" aria-hidden="true">
-          <span>Scroll to inspect</span>
-          <div class="scroll-stem"></div>
-        </div>
+        <!-- Right Column: Dedicated 3D Canvas Stage Clearance -->
+        <div class="hero-stage-clearance" aria-hidden="true"></div>
       </div>
     </section>
 
-    <!-- CHAPTER 2: MANIFESTO & KINETIC TEXT -->
+    <!-- CHAPTER 2: MANIFESTO & KINETIC TEXT (ASYMMETRIC SPLIT) -->
     <section id="manifesto" class="chapter chapter-manifesto" aria-label="Engineering Manifesto">
-      <div class="manifesto-content">
-        <div class="chapter-eyebrow">
-          <span class="eyebrow-num">02</span>
-          <span class="eyebrow-title">CORE PRINCIPLES</span>
-        </div>
+      <div class="manifesto-split-container">
+        <!-- Left Column: 3D Stage Area Clearance -->
+        <div class="manifesto-stage-clearance" aria-hidden="true"></div>
 
-        <h2 class="sr-only">Manifesto</h2>
+        <!-- Right Column: Kinetic Editorial Typography -->
+        <div class="manifesto-text-pane">
+          <div class="chapter-eyebrow">
+            <span class="eyebrow-num">02</span>
+            <span class="eyebrow-title">CORE PRINCIPLES</span>
+          </div>
 
-        <div class="kinetic-text" aria-live="polite">
-          <span class="kinetic-sentence" data-sentence="0">Creative engineering rejects synthetic approximations in favor of physical precision.</span>
-          <span class="kinetic-sentence" data-sentence="1">Every asset is constructed through deterministic pipelines, headless Blender execution, and measured PBR materials.</span>
-          <span class="kinetic-sentence" data-sentence="2">Whole-canvas chromatic flavour worlds engineered to WCAG AA contrast across every theme.</span>
-          <span class="kinetic-sentence" data-sentence="3">We measure craft not by token count, but by mathematical restraint and verified execution.</span>
+          <h2 class="section-title">The Engineering Creed</h2>
+
+          <div class="kinetic-text" aria-live="polite">
+            <span class="kinetic-sentence" data-sentence="0">Deterministic 3D systems replace guesswork with physical mathematical precision.</span>
+            <span class="kinetic-sentence" data-sentence="1">Every asset is compiled through reproducible headless Blender pipelines and measured PBR materials.</span>
+            <span class="kinetic-sentence" data-sentence="2">Whole-canvas chromatic flavour worlds engineered with calibrated WCAG AA contrast.</span>
+            <span class="kinetic-sentence" data-sentence="3">Motion choreography synchronized to a unified RAF ticker with zero frame drops.</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CHAPTER 3: SOCRATIC CURRICULUM -->
-    <section id="syllabus" class="chapter chapter-syllabus" aria-label="Curriculum Syllabus">
+    <!-- CHAPTER 3: FOUNDATIONAL CURRICULUM -->
+    <section id="syllabus" class="chapter chapter-syllabus" aria-label="Foundational Curriculum">
       <div class="syllabus-header">
         <div class="chapter-eyebrow">
           <span class="eyebrow-num">03</span>
@@ -131,118 +159,118 @@
 
       <div class="curriculum-grid">
         <!-- Module 01 -->
-        <article class="curriculum-card" data-module-index="0">
+        <article class="curriculum-card" data-module-index="0" data-specimen="kinetic_core">
           <div class="card-num">01 / 10</div>
-          <h3 class="card-title">Zero-Slop Standard</h3>
-          <p class="card-desc">Signature viewports, 1-pixel still-to-live registration, strict word budgets, and anti-slop automated linting gates.</p>
+          <h3 class="card-title">Headless Blender &amp; 3D Pipelines</h3>
+          <p class="card-desc">Automated Python (bpy) asset generation, Cycles GPU baking, normal map synthesis, and glTF Meshopt packing.</p>
           <div class="card-footer">
-            <span class="card-tag">award-winning-streak-sites</span>
-            <code class="card-cmd">node tools/anti-slop-lint.mjs</code>
+            <span class="card-tag">Blender 5.2 Automation</span>
+            <span class="card-tech">Python bpy &bull; Cycles</span>
           </div>
         </article>
 
         <!-- Module 02 -->
-        <article class="curriculum-card" data-module-index="1">
+        <article class="curriculum-card" data-module-index="1" data-specimen="kinetic_core">
           <div class="card-num">02 / 10</div>
-          <h3 class="card-title">Display Typography</h3>
-          <p class="card-desc">Mathematical clamp scaling, variable font axes, wide tracking, and cultural scripts treated as fine art.</p>
+          <h3 class="card-title">Studio Lighting &amp; PBR Colorimetry</h3>
+          <p class="card-desc">Khronos PBR Neutral tone mapping, physical metalness/roughness materials, studio 3-point lighting rigs, and shadow bias tuning.</p>
           <div class="card-footer">
-            <span class="card-tag">high-end-visual-design</span>
-            <code class="card-cmd">clamp(3.5rem, 8vw, 9.5rem)</code>
+            <span class="card-tag">Tone Mapping &amp; Color</span>
+            <span class="card-tech">PBR Neutral &bull; sRGB</span>
           </div>
         </article>
 
         <!-- Module 03 -->
-        <article class="curriculum-card" data-module-index="2">
+        <article class="curriculum-card" data-module-index="2" data-specimen="dna_helix">
           <div class="card-num">03 / 10</div>
-          <h3 class="card-title">WebGL & PBR Shaders</h3>
-          <p class="card-desc">Khronos PBR Neutral tone mapping, Meshopt asset decompression, WebGPU pipelines, and deterministic Three.js setups.</p>
+          <h3 class="card-title">Unified RAF Motion Orchestration</h3>
+          <p class="card-desc">Synchronizing Lenis 1.1+ smooth scroll and GSAP 3.13+ ScrollTrigger onto a single requestAnimationFrame loop with lagSmoothing(0).</p>
           <div class="card-footer">
-            <span class="card-tag">threejs-webgpu-pbr</span>
-            <code class="card-cmd">renderer.toneMapping = Neutral</code>
+            <span class="card-tag">Motion Architecture</span>
+            <span class="card-tech">Lenis 1.1 &bull; GSAP 3.13</span>
           </div>
         </article>
 
         <!-- Module 04 -->
-        <article class="curriculum-card" data-module-index="3">
+        <article class="curriculum-card" data-module-index="3" data-specimen="dna_helix">
           <div class="card-num">04 / 10</div>
-          <h3 class="card-title">Raymarching & SDFs</h3>
-          <p class="card-desc">Pure mathematical geometric raymarching, smooth minimum blending, and real-time volumetric lighting.</p>
+          <h3 class="card-title">Kinetic Typography &amp; Variable Fonts</h3>
+          <p class="card-desc">Dynamic optical weight clamp scaling, fluid letterform transitions, SplitText physics, and character unmasking.</p>
           <div class="card-footer">
-            <span class="card-tag">particle-specimens</span>
-            <code class="card-cmd">smin(d1, d2, k)</code>
+            <span class="card-tag">Variable Typography</span>
+            <span class="card-tech">CSS clamp &bull; SplitText</span>
           </div>
         </article>
 
         <!-- Module 05 -->
-        <article class="curriculum-card" data-module-index="4">
+        <article class="curriculum-card" data-module-index="4" data-specimen="kinetic_core">
           <div class="card-num">05 / 10</div>
-          <h3 class="card-title">Headless Blender 5.2</h3>
-          <p class="card-desc">Automated bpy script execution via Blender MCP socket bridge, OptiX Cycles GPU acceleration, and GLB export.</p>
+          <h3 class="card-title">Whole-Canvas Chromatic Theming</h3>
+          <p class="card-desc">Variant world systems ([data-flavour]) where lighting, ambient depth, tokens, and materials dynamically transform with WCAG AA contrast.</p>
           <div class="card-footer">
-            <span class="card-tag">blender-mcp-pipeline</span>
-            <code class="card-cmd">blender -b --python pipeline.py</code>
+            <span class="card-tag">Chromatic Systems</span>
+            <span class="card-tech">Design Tokens &bull; WCAG AA</span>
           </div>
         </article>
 
         <!-- Module 06 -->
-        <article class="curriculum-card" data-module-index="5">
+        <article class="curriculum-card" data-module-index="5" data-specimen="neural_sphere">
           <div class="card-num">06 / 10</div>
-          <h3 class="card-title">Mesh Generation & Rigging</h3>
-          <p class="card-desc">Curled geometry generators, pillow pack shape keys, procedural normals, and headless Cycles rendering.</p>
+          <h3 class="card-title">Frontier Micro-UI &amp; Spatial Interfaces</h3>
+          <p class="card-desc">Porting cutting-edge 2026 registry patterns (React Bits, Magic UI, 21st.dev) to clean, zero-dependency vanilla architectures.</p>
           <div class="card-footer">
-            <span class="card-tag">product-site-blender-3d</span>
-            <code class="card-cmd">bpy.ops.export_scene.gltf()</code>
+            <span class="card-tag">Micro-Interactions</span>
+            <span class="card-tech">Vanilla TS &bull; Shaders</span>
           </div>
         </article>
 
         <!-- Module 07 -->
-        <article class="curriculum-card" data-module-index="6">
+        <article class="curriculum-card" data-module-index="6" data-specimen="neural_sphere">
           <div class="card-num">07 / 10</div>
-          <h3 class="card-title">Kinetic Motion & Lenis</h3>
-          <p class="card-desc">Sentence-by-sentence kinetic motion, Lenis RAF synchronization, SplitText physics, and zero-jank scrubbing.</p>
+          <h3 class="card-title">Procedural Raymarching &amp; SDF Shaders</h3>
+          <p class="card-desc">Custom Three.js onBeforeCompile shader chunks, GGX grazing-lobe corrections, and procedural signed distance fields.</p>
           <div class="card-footer">
-            <span class="card-tag">gsap-lenis-orchestrator</span>
-            <code class="card-cmd">lenis.on('scroll', ScrollTrigger)</code>
+            <span class="card-tag">Raymarching &amp; SDF</span>
+            <span class="card-tech">GLSL &bull; Smooth Minimum</span>
           </div>
         </article>
 
         <!-- Module 08 -->
-        <article class="curriculum-card" data-module-index="7">
+        <article class="curriculum-card" data-module-index="7" data-specimen="cyber_monolith">
           <div class="card-num">08 / 10</div>
-          <h3 class="card-title">Frontier UI Registries</h3>
-          <p class="card-desc">React Bits, 21st.dev, Magic UI, and NumberFlow layout-preserving animated counters.</p>
+          <h3 class="card-title">Deterministic Video Automation</h3>
+          <p class="card-desc">Seek-safe HTML-to-MP4 video render architectures using HyperFrames and programmatic motion engines.</p>
           <div class="card-footer">
-            <span class="card-tag">frontier-ui-registry-sync</span>
-            <code class="card-cmd">node tools/sync-frontier.mjs</code>
+            <span class="card-tag">Video Engineering</span>
+            <span class="card-tech">Seek-Safe RAF &bull; MP4</span>
           </div>
         </article>
 
         <!-- Module 09 -->
-        <article class="curriculum-card" data-module-index="8">
+        <article class="curriculum-card" data-module-index="8" data-specimen="kinetic_core">
           <div class="card-num">09 / 10</div>
-          <h3 class="card-title">Whole-Canvas Flavour Worlds</h3>
-          <p class="card-desc">Theme token switching, ambient and directional lighting synchronization, and WCAG AA contrast verification.</p>
+          <h3 class="card-title">1-Pixel Registration &amp; Still Handoff</h3>
+          <p class="card-desc">Zero-FOUC web delivery bridging static pre-rendered packaging stills to live 60fps WebGL viewports without layout shifts.</p>
           <div class="card-footer">
-            <span class="card-tag">brand-theme-tokenizer</span>
-            <code class="card-cmd">data-flavour="ember|cobalt"</code>
+            <span class="card-tag">Still-to-WebGL</span>
+            <span class="card-tech">Render Blocking &bull; FOV</span>
           </div>
         </article>
 
         <!-- Module 10 -->
-        <article class="curriculum-card" data-module-index="9">
+        <article class="curriculum-card" data-module-index="9" data-specimen="cyber_monolith">
           <div class="card-num">10 / 10</div>
-          <h3 class="card-title">Deterministic Video Pipelines</h3>
-          <p class="card-desc">ExtendScript bridges, HyperFrames deterministic render engines, and 60fps local video packaging.</p>
+          <h3 class="card-title">Responsive Mobile Frustums</h3>
+          <p class="card-desc">Dynamic vertical FOV and camera frustum adaptation ensuring complex 3D viewports never clip on 390px mobile screens.</p>
           <div class="card-footer">
-            <span class="card-tag">hyperframes</span>
-            <code class="card-cmd">hyperframes check && render</code>
+            <span class="card-tag">Mobile Frustum Math</span>
+            <span class="card-tech">Aspect Ratio &bull; FOV</span>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- CHAPTER 4: INTERACTIVE SKILLS ENCYCLOPEDIA -->
+    <!-- CHAPTER 4: SKILLS CATALOG & ENCYCLOPEDIA -->
     <section id="skills-catalog" class="chapter chapter-catalog" aria-label="Skills Encyclopedia">
       <div class="catalog-header">
         <div class="chapter-eyebrow">
@@ -253,182 +281,153 @@
         <p class="section-desc">Curated archive of production-grade skills, automation scripts, and shaders.</p>
       </div>
 
-      <!-- Controls: Search & Category Filter Tabs -->
-      <div class="catalog-controls">
-        <div class="search-wrap">
-          <label for="catalog-search" class="sr-only">Search Skills</label>
-          <input type="text" id="catalog-search" class="search-input" placeholder="Search skills, techniques, or commands...">
-          <span class="search-count" id="catalog-count">Showing 96 skills</span>
+      <!-- Search & Category Filter Toolbar -->
+      <div class="catalog-toolbar">
+        <div class="search-input-wrapper">
+          <input type="text" id="skill-search-input" class="search-input" placeholder="Search skills, techniques, or commands..." aria-label="Search skills">
+          <span id="skill-counter" class="skill-counter">Showing 16 of 16 skills</span>
         </div>
 
-        <div class="filter-tabs" role="tablist" aria-label="Filter by Domain">
-          <button class="filter-tab active" data-category="all" role="tab" aria-selected="true">All Disciplines</button>
-          <button class="filter-tab" data-category="spatial" role="tab" aria-selected="false">3D & WebGL</button>
-          <button class="filter-tab" data-category="motion" role="tab" aria-selected="false">Motion & Physics</button>
-          <button class="filter-tab" data-category="design" role="tab" aria-selected="false">Design Systems</button>
-          <button class="filter-tab" data-category="automation" role="tab" aria-selected="false">Creative Automation</button>
+        <div class="category-tabs" role="tablist" aria-label="Filter by discipline">
+          <button class="tab-btn active" data-category="all" role="tab" aria-selected="true">All Disciplines</button>
+          <button class="tab-btn" data-category="3D & WebGL" role="tab" aria-selected="false">3D &amp; WebGL</button>
+          <button class="tab-btn" data-category="Motion & Physics" role="tab" aria-selected="false">Motion &amp; Physics</button>
+          <button class="tab-btn" data-category="Design Systems" role="tab" aria-selected="false">Design Systems</button>
+          <button class="tab-btn" data-category="Creative Automation" role="tab" aria-selected="false">Creative Automation</button>
         </div>
       </div>
 
-      <!-- Dynamic Skills Grid -->
-      <div id="skills-grid" class="skills-grid" aria-live="polite">
-        <!-- Populated dynamically by skills-catalog.js -->
-      </div>
+      <!-- Skills Card Grid Container -->
+      <div id="skills-grid" class="skills-grid" aria-live="polite"></div>
     </section>
 
-    <!-- CHAPTER 5: HEADLESS BLENDER 5.2 STUDIO & SPECIMEN GALLERY -->
-    <section id="specimen-gallery" class="chapter chapter-blender" aria-label="Headless 3D Studio & Specimen Gallery">
-      <div class="lab-header">
+    <!-- CHAPTER 5: HEADLESS 3D STUDIO & SPECIMEN GALLERY (UNOBSTRUCTED 3D STAGE) -->
+    <section id="specimen-gallery" class="chapter chapter-studio" aria-label="3D Studio and Specimen Gallery">
+      <div class="studio-header">
         <div class="chapter-eyebrow">
           <span class="eyebrow-num">05</span>
           <span class="eyebrow-title">3D ASSET BENCH</span>
         </div>
-        <h2 class="section-title">Headless 3D Studio & Specimen Gallery</h2>
-        <p class="section-desc">Interactive WebGL stage rendering genuine Blender 5.2 OptiX-compiled 3D models with live PBR adjustments.</p>
+        <h2 class="section-title">Interactive 3D Studio</h2>
+        <p class="section-desc">Direct WebGL stage rendering genuine Blender 5.2 OptiX-compiled 3D models with real-time PBR shader response. Drag anywhere to orbit.</p>
       </div>
 
-      <div class="lab-controls-panel">
-        <!-- Specimen Selector -->
-        <div class="control-group">
-          <label class="control-label">Select 3D Specimen</label>
-          <div class="specimen-btn-group" role="group" aria-label="Specimen Selection">
-            <button class="specimen-btn active" data-specimen="monolith">Monolith</button>
-            <button class="specimen-btn" data-specimen="dna">DNA Helix</button>
-            <button class="specimen-btn" data-specimen="sphere">Neural Sphere</button>
-            <button class="specimen-btn" data-specimen="temple">Colonnade</button>
-            <button class="specimen-btn" data-specimen="pack">Pillow Pack</button>
+      <!-- Clear Central Viewport for 3D Interaction -->
+      <div class="studio-viewport-stage" aria-label="Interactive 3D Stage">
+        <div class="orbit-hint" aria-hidden="true">
+          <span>&circlearrowleft; Drag anywhere to rotate in 360&deg; &bull; Scroll to zoom</span>
+        </div>
+      </div>
+
+      <!-- Floating Translucent Glass Control Dock at Bottom -->
+      <div class="studio-floating-dock" role="region" aria-label="3D Studio Controls">
+        <div class="dock-row dock-specimens">
+          <span class="dock-label">Specimen:</span>
+          <div class="dock-buttons">
+            <button class="specimen-btn active" data-specimen="kinetic_core">Kinetic Chrono-Core</button>
+            <button class="specimen-btn" data-specimen="cyber_monolith">Cyber Monolith</button>
+            <button class="specimen-btn" data-specimen="dna_helix">DNA Double Helix</button>
+            <button class="specimen-btn" data-specimen="neural_sphere">Neural Core</button>
           </div>
         </div>
 
-        <!-- Material Tuning Sliders -->
-        <div class="sliders-grid">
-          <div class="slider-box">
-            <div class="slider-head">
-              <label for="wireframe-toggle">Wireframe Inspection</label>
-              <input type="checkbox" id="wireframe-toggle" class="toggle-input">
-            </div>
+        <div class="dock-row dock-sliders">
+          <div class="control-item">
+            <label for="wireframe-toggle" class="control-label">Wireframe</label>
+            <input type="checkbox" id="wireframe-toggle" class="control-checkbox">
           </div>
 
-          <div class="slider-box">
-            <div class="slider-head">
-              <label for="roughness-slider">Surface Roughness</label>
-              <span id="roughness-val" class="slider-val">0.20</span>
+          <div class="control-item">
+            <div class="control-label-val">
+              <label for="roughness-slider">Roughness</label>
+              <span id="roughness-val" class="ctrl-val">0.20</span>
             </div>
-            <input type="range" id="roughness-slider" min="0.0" max="1.0" step="0.02" value="0.20" class="range-slider">
+            <input type="range" id="roughness-slider" min="0" max="1" step="0.01" value="0.20" class="control-slider">
           </div>
 
-          <div class="slider-box">
-            <div class="slider-head">
-              <label for="metalness-slider">Metallic Reflection</label>
-              <span id="metalness-val" class="slider-val">0.85</span>
+          <div class="control-item">
+            <div class="control-label-val">
+              <label for="metalness-slider">Metalness</label>
+              <span id="metalness-val" class="ctrl-val">0.85</span>
             </div>
-            <input type="range" id="metalness-slider" min="0.0" max="1.0" step="0.02" value="0.85" class="range-slider">
+            <input type="range" id="metalness-slider" min="0" max="1" step="0.01" value="0.85" class="control-slider">
           </div>
 
-          <div class="slider-box">
-            <div class="slider-head">
-              <label for="light-slider">Key Light Yaw</label>
-              <span id="light-val" class="slider-val">35&deg;</span>
+          <div class="control-item">
+            <div class="control-label-val">
+              <label for="light-yaw-slider">Key Light Yaw</label>
+              <span id="light-yaw-val" class="ctrl-val">35&deg;</span>
             </div>
-            <input type="range" id="light-slider" min="0" max="360" step="5" value="35" class="range-slider">
+            <input type="range" id="light-yaw-slider" min="-180" max="180" step="1" value="35" class="control-slider">
           </div>
         </div>
 
-        <!-- Model Info Box -->
-        <div class="specimen-info-card">
-          <div class="specimen-meta">
-            <span class="meta-item"><strong>Source:</strong> Blender 5.2 LTS OptiX Cycles GPU</span>
-            <span class="meta-item"><strong>Tone Mapping:</strong> Khronos PBR Neutral</span>
-            <span class="meta-item"><strong>Shader:</strong> MeshStandardMaterial</span>
-          </div>
-          <p class="specimen-tip">Drag across the viewport to orbit. Scroll or pinch to zoom. Adjust PBR parameters above for real-time shader response.</p>
+        <div class="dock-telemetry">
+          <span>Engine: Three.js r170+ &bull; Tone Mapping: Khronos PBR Neutral &bull; Shader: MeshStandardMaterial</span>
         </div>
       </div>
     </section>
 
-    <!-- CHAPTER 6: SOCRATIC TEACHING DECK -->
-    <section id="teaching-deck" class="chapter chapter-deck" aria-label="Socratic Teaching & Presentation Deck">
-      <div class="deck-header">
-        <div class="chapter-eyebrow">
-          <span class="eyebrow-num">06</span>
-          <span class="eyebrow-title">PRESENTATION & LECTURE MODE</span>
-        </div>
-        <h2 class="section-title">The Socratic Lecture Deck</h2>
-        <p class="section-desc">Sequential walk-through engineered for interactive presentation and peer learning.</p>
-      </div>
-
-      <!-- Dedicated Deck Presentation Container -->
-      <div id="presentation-deck" class="presentation-deck-box" role="region" aria-label="Slide Presentation">
-        <!-- Active Slide Viewport -->
-        <div class="slide-viewport" id="slide-viewport">
-          <!-- Populated by presenter-deck.js -->
-        </div>
-
-        <!-- Deck Controls Bar -->
-        <div class="deck-controls-bar">
-          <button id="deck-prev" class="deck-nav-btn" aria-label="Previous Slide">&larr; Previous</button>
-          
-          <div class="deck-indicators" id="deck-indicators" role="tablist" aria-label="Slide indicators">
-            <!-- Populated by presenter-deck.js -->
+    <!-- CHAPTER 6: SOCRATIC TEACHING DECK (ASYMMETRIC SPLIT) -->
+    <section id="teaching-deck" class="chapter chapter-deck" aria-label="Socratic Teaching Deck">
+      <div class="deck-split-container">
+        <!-- Left Column: Lecture Deck Slide -->
+        <div class="deck-slide-pane">
+          <div class="chapter-eyebrow">
+            <span class="eyebrow-num">06</span>
+            <span class="eyebrow-title">PRESENTATION &amp; LECTURE MODE</span>
           </div>
 
-          <span class="slide-counter" id="slide-counter">Slide 01 / 10</span>
+          <h2 class="section-title">The Socratic Lecture Deck</h2>
+          <p class="section-desc">Sequential walk-through engineered for interactive presentation and peer learning.</p>
 
-          <button id="deck-next" class="deck-nav-btn" aria-label="Next Slide">Next &rarr;</button>
+          <div id="deck-slide-container" class="deck-slide-card" aria-live="polite">
+            <!-- Populated dynamically by presenter-deck.js -->
+          </div>
+
+          <div class="deck-navigation-bar">
+            <button id="deck-prev-btn" class="deck-nav-btn" aria-label="Previous Slide">&larr; Previous</button>
+            
+            <div id="deck-dots" class="deck-dots" role="tablist" aria-label="Slide Indicator">
+              <!-- Dots dynamically inserted -->
+            </div>
+
+            <span id="deck-slide-counter" class="deck-slide-counter">Slide 01 / 10</span>
+
+            <button id="deck-next-btn" class="deck-nav-btn" aria-label="Next Slide">Next &rarr;</button>
+          </div>
+
+          <div class="deck-hotkey-hint">
+            <span>Use &larr; / &rarr; keys or Spacebar to navigate slides</span>
+          </div>
         </div>
 
-        <div class="deck-keyboard-hint">
-          <span>Keyboard shortcut: Use &larr; / &rarr; arrow keys or Spacebar to navigate slides.</span>
-        </div>
+        <!-- Right Column: 3D Stage Clearance -->
+        <div class="deck-stage-clearance" aria-hidden="true"></div>
       </div>
     </section>
 
-    <!-- CHAPTER 7: COLOPHON & FOOTER -->
-    <footer id="colophon" class="chapter chapter-footer" aria-label="Colophon">
-      <div class="footer-wrap">
-        <div class="footer-brand">LEUL TEWELDE &bull; CREATIVE ENGINEERING</div>
-        <p class="footer-copy">Constructed with Blender 5.2 LTS, Three.js r170+, GSAP 3.12+, and Lenis 1.1+. Designed with mathematical restraint.</p>
-        <div class="footer-links">
-          <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer">Skills Repository</a>
-          <a href="https://github.com/LeulTew/creative-skills-encyclopedia" target="_blank" rel="noopener noreferrer">Source Code</a>
-          <a href="#hero">Back to Top &uarr;</a>
+    <!-- CHAPTER 7: FOOTER & COLOPHON -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="footer-brand">LEUL TEWELDE &bull; CREATIVE ENGINEERING</span>
+          <p class="footer-copy">Crafted with deterministic 3D pipelines, Three.js, GSAP, and headless Blender 5.2.</p>
+        </div>
+
+        <div class="footer-right">
+          <a href="https://github.com/LeulTew/skills" target="_blank" rel="noopener noreferrer" class="footer-link">
+            GitHub Skills Repository &nearr;
+          </a>
+          <span class="footer-dot">&bull;</span>
+          <a href="#hero" class="footer-link">Back to Top &uarr;</a>
         </div>
       </div>
     </footer>
 
   </main>
 
-  <!-- Skill Code Inspection Modal Dialog -->
-  <dialog id="skill-modal" class="skill-modal" aria-labelledby="modal-skill-title">
-    <div class="modal-inner">
-      <div class="modal-header">
-        <div>
-          <span id="modal-skill-category" class="modal-cat">DOMAIN</span>
-          <h3 id="modal-skill-title" class="modal-title">Skill Title</h3>
-        </div>
-        <button id="modal-close" class="modal-close-btn" aria-label="Close dialog">&times;</button>
-      </div>
-
-      <p id="modal-skill-desc" class="modal-desc"></p>
-
-      <div class="modal-code-wrap">
-        <div class="modal-code-bar">
-          <span>Execution Pattern</span>
-          <button id="modal-copy-btn" class="modal-copy-btn" aria-label="Copy code to clipboard">Copy</button>
-        </div>
-        <pre class="modal-pre"><code id="modal-skill-code" class="modal-code"></code></pre>
-      </div>
-
-      <div class="modal-footer">
-        <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="modal-github-btn">
-          <span>Open in GitHub</span>
-          <span class="arrow" aria-hidden="true">&nearr;</span>
-        </a>
-      </div>
-    </div>
-  </dialog>
-
-  <!-- Application Bootstrap (ES Module) -->
+  <!-- Core Application Scripts -->
   <script type="module" src="./app.js"></script>
 </body>
 </html>

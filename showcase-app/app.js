@@ -210,8 +210,8 @@ function setupSpecimenControls() {
   }
 
   // Key Light Yaw Slider
-  const lightSlider = document.getElementById('light-slider');
-  const lightVal = document.getElementById('light-val');
+  const lightSlider = document.getElementById('light-yaw-slider') || document.getElementById('light-slider');
+  const lightVal = document.getElementById('light-yaw-val') || document.getElementById('light-val');
   if (lightSlider) {
     lightSlider.addEventListener('input', (e) => {
       const val = parseFloat(e.target.value) || 0;

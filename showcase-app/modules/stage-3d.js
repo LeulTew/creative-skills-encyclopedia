@@ -1,21 +1,21 @@
 /**
  * Production-Grade Award-Winning WebGL 3D PBR Stage Module
  * Creative Engineering & Skills Encyclopedia (2026 Edition)
- * Architecture: LeulTew // NVIDIA RTX 5070 Ti // Three.js r170+
+ * Architecture: LeulTew · Three.js r170+ · Khronos PBR Neutral
  *
  * Implements:
  * 1. Fixed fullscreen viewport canvas (#webgl-stage) with Khronos PBR Neutral tone mapping.
  * 2. Authentic Blender-generated GLB models with Meshopt compression:
- *    - 'monolith': Hero Centerpiece (Obsidian & Radiant Gold)
+ *    - 'bag': SUN Chips Authentic Pillow Pack (PBR Foil Specular & Flavour Artwork) + Orbiting Chips
  *    - 'dna_helix': Procedural Double-Helix (Chromatic Base Pairs & Backbone)
  *    - 'neural_sphere': Geodesic Neural Network (Luminous Nodes & Core)
  *    - 'temple_sanctuary': Classical Architectural Colonnade (Sculpted Marble & Gold)
- *    - 'bag': SUN Chips Authentic Pillow Pack (PBR Foil Specular & Variant Artwork)
- * 3. Studio 3-Point PBR Lighting Rig synchronized with SunChips Flavour Worlds (Ember, Cobalt, Harvest, Cosmic).
- * 4. Responsive frustum calibration: on mobile (<= 768px), dynamically calculates camera distance and FOV.
- * 5. Smooth cross-fades between specimens with scale-morph easing.
- * 6. External Scroll Controller API: window.stage3D.setScrollProgress(progress), setSpecimen(id), setFlavour(id).
- * 7. ZERO emojis, ZERO console errors, ZERO placeholder textures.
+ * 3. Studio 3-Point PBR Lighting Rig synchronized with Whole-Canvas Flavour Worlds (Ember, Cobalt, Harvest, Cosmic).
+ * 4. Asymmetric Stage Choreography:
+ *    - Desktop: dynamically translates stage X to balance editorial text (Right in Hero, Left in Manifesto, Center in Studio).
+ *    - Mobile: adjusts FOV and camera distance to guarantee zero clipping on 390px screens.
+ * 5. Interactive Orbit Dragging: intuitive click-and-drag rotation with spring inertia.
+ * 6. ZERO emojis, ZERO console errors, ZERO placeholder textures.
  */
 
 import * as THREE from 'three';
@@ -32,17 +32,29 @@ const _THREE = (typeof THREE !== 'undefined' && THREE.Scene)
 // ============================================================================
 
 export const MODEL_REGISTRY = {
-  'monolith': {
-    id: 'monolith',
-    name: 'Monolith Centerpiece',
-    path: './assets/models/monolith.glb',
+  'kinetic_core': {
+    id: 'kinetic_core',
+    name: 'Kinetic Chrono-Core • Blender 5.2',
+    path: './assets/models/kinetic_core.glb',
+    targetSize: 2.85,
+    yOffset: 0.0,
+    baseRotX: 0.15,
+    baseRotY: 0.0,
+    rotSpeedY: 0.004,
+    cameraDistOffset: 0.0,
+    aliases: ['kinetic_core', 'core', 'astrolabe', 'gyro']
+  },
+  'cyber_monolith': {
+    id: 'cyber_monolith',
+    name: 'Cyber Monolith • Brutalist Architecture',
+    path: './assets/models/cyber_monolith.glb',
     targetSize: 2.7,
     yOffset: 0.0,
-    baseRotX: 0.14,
+    baseRotX: 0.18,
     baseRotY: 0.0,
-    rotSpeedY: 0.0035,
+    rotSpeedY: 0.003,
     cameraDistOffset: 0.0,
-    aliases: ['monolith', 'brackets', 'hero', 'knot']
+    aliases: ['cyber_monolith', 'monolith', 'pillar', 'obelisk']
   },
   'dna_helix': {
     id: 'dna_helix',
@@ -67,30 +79,6 @@ export const MODEL_REGISTRY = {
     rotSpeedY: 0.0045,
     cameraDistOffset: 0.0,
     aliases: ['neural_sphere', 'neural', 'eye', 'sphere', 'gears']
-  },
-  'temple_sanctuary': {
-    id: 'temple_sanctuary',
-    name: 'Temple Sanctuary Colonnade',
-    path: './assets/models/temple_sanctuary.glb',
-    targetSize: 2.6,
-    yOffset: -0.15,
-    baseRotX: 0.20,
-    baseRotY: 0.0,
-    rotSpeedY: 0.003,
-    cameraDistOffset: 0.1,
-    aliases: ['temple_sanctuary', 'temple', 'sanctuary']
-  },
-  'bag': {
-    id: 'bag',
-    name: 'SUN Chips Authentic Pillow Pack',
-    path: './assets/models/bag.glb',
-    targetSize: 2.85,
-    yOffset: 0.0,
-    baseRotX: 0.12,
-    baseRotY: 0.0,
-    rotSpeedY: 0.004,
-    cameraDistOffset: 0.0,
-    aliases: ['bag', 'pack', 'chips', 'pillow']
   }
 };
 
@@ -118,34 +106,34 @@ export const FLAVOUR_LIGHTING = {
     keyColor: 0x0284c7,       // Deep Cobalt
     keyIntensity: 3.0,
     fillColor: 0x38bdf8,      // Sapphire Sky
-    fillIntensity: 1.15,
-    rimColor: 0xbae6fd,       // Ice Blue Rim
+    fillIntensity: 1.1,
+    rimColor: 0xbae6fd,       // Specular Ice Rim
     rimIntensity: 3.6,
-    ambientColor: 0x0c1626,
-    ambientIntensity: 0.85,
+    ambientColor: 0x0c192c,
+    ambientIntensity: 0.9,
     accentHex: 0x0284c7,
     secondaryHex: 0x38bdf8,
-    bagTexture: './assets/models/textures/beef-1024.webp',
+    bagTexture: './assets/models/textures/paprika-1024.webp',
     normalMap: './assets/models/textures/foil-normal.webp'
   },
-  'harvest-gold': {
-    id: 'harvest-gold',
+  'harvest': {
+    id: 'harvest',
     name: 'Harvest Gold',
-    keyColor: 0xeab308,       // Roasted Harvest Gold
-    keyIntensity: 2.6,
-    fillColor: 0xca8a04,      // Deep Umber Fill
-    fillIntensity: 0.9,
-    rimColor: 0xfefce8,       // Warm Sand Rim
-    rimIntensity: 3.2,
-    ambientColor: 0x1c170d,
+    keyColor: 0xeab308,       // Golden Wheat
+    keyIntensity: 2.9,
+    fillColor: 0xf97316,      // Ember warm bounce
+    fillIntensity: 0.95,
+    rimColor: 0xfef08a,       // Sunlight Rim
+    rimIntensity: 3.5,
+    ambientColor: 0x1e1809,
     ambientIntensity: 0.85,
     accentHex: 0xeab308,
-    secondaryHex: 0xfef08a,
+    secondaryHex: 0xfde047,
     bagTexture: './assets/models/textures/natural-1024.webp',
     normalMap: './assets/models/textures/foil-normal.webp'
   },
-  'cosmic-violet': {
-    id: 'cosmic-violet',
+  'cosmic': {
+    id: 'cosmic',
     name: 'Cosmic Violet',
     keyColor: 0x8b5cf6,       // Electric Violet
     keyIntensity: 3.0,
@@ -162,9 +150,9 @@ export const FLAVOUR_LIGHTING = {
   }
 };
 
-// Aliases for flavour worlds
-FLAVOUR_LIGHTING['harvest'] = FLAVOUR_LIGHTING['harvest-gold'];
-FLAVOUR_LIGHTING['cosmic'] = FLAVOUR_LIGHTING['cosmic-violet'];
+// Aliases
+FLAVOUR_LIGHTING['harvest-gold'] = FLAVOUR_LIGHTING['harvest'];
+FLAVOUR_LIGHTING['cosmic-violet'] = FLAVOUR_LIGHTING['cosmic'];
 
 // ============================================================================
 // STAGE SINGLETON STATE
@@ -175,21 +163,21 @@ let scene = null;
 let camera = null;
 let renderer = null;
 let animFrameId = null;
-let resizeObserver = null;
 let isInitialized = false;
 
 // 3D Model Stage Anchors
 let stageMasterGroup = null; // Master group containing all specimen anchors
 const specimenGroups = new Map(); // specimenId -> THREE.Group
-const specimenLoadCache = new Map(); // specimenId -> { gltf, anchor, materials, bagMesh }
+const specimenLoadCache = new Map(); // specimenId -> record
 const textureCache = new Map(); // url -> THREE.Texture
 
-let activeSpecimenId = 'monolith';
+// Default to the Blender 5.2 Kinetic Chrono-Core
+let activeSpecimenId = 'kinetic_core';
 let activeSpecimenGroup = null;
 let isCrossFading = false;
 let crossFadeProgress = 1.0;
 let crossFadeStartTime = 0;
-const CROSSFADE_DURATION = 750; // ms
+const CROSSFADE_DURATION = 650; // ms
 let outgoingSpecimenGroup = null;
 
 // Lighting Rig
@@ -218,36 +206,113 @@ let targetCameraY = 0.0;
 let scrollProgress = 0.0;
 let targetScrollProgress = 0.0;
 
-// Rotation & Interaction
+// Spatial Stage Coordinates (Asymmetric layout)
+let stageTargetX = 1.45;
+let stageCurrentX = 1.45;
+let stageTargetY = 0.0;
+let stageCurrentY = 0.0;
+let stageTargetZ = 0.0;
+let stageCurrentZ = 0.0;
+let stageTargetScale = 1.0;
+let stageCurrentScale = 1.0;
+let currentChapter = 'hero';
+
+export function setChapter(chapterId) {
+  if (!chapterId) return;
+  currentChapter = chapterId;
+  const isMobile = (typeof window !== 'undefined' && window.innerWidth <= 768);
+
+  if (isMobile) {
+    stageTargetX = 0.0;
+    stageTargetY = -0.3;
+    stageTargetZ = 0.0;
+    stageTargetScale = 0.8;
+    return;
+  }
+
+  switch (chapterId) {
+    case 'hero':
+      stageTargetX = 1.45;
+      stageTargetY = 0.0;
+      stageTargetZ = 0.0;
+      stageTargetScale = 1.05;
+      break;
+    case 'manifesto':
+      stageTargetX = -1.95;
+      stageTargetY = 0.0;
+      stageTargetZ = 0.0;
+      stageTargetScale = 0.95;
+      break;
+    case 'syllabus':
+      stageTargetX = 2.4;
+      stageTargetY = 0.0;
+      stageTargetZ = -2.5;
+      stageTargetScale = 0.45;
+      break;
+    case 'skills-catalog':
+      stageTargetX = 2.4;
+      stageTargetY = 0.0;
+      stageTargetZ = -2.5;
+      stageTargetScale = 0.4;
+      break;
+    case 'specimen-gallery':
+      stageTargetX = 0.0;
+      stageTargetY = 0.15;
+      stageTargetZ = 0.0;
+      stageTargetScale = 1.25;
+      break;
+    case 'teaching-deck':
+      stageTargetX = 1.45;
+      stageTargetY = 0.0;
+      stageTargetZ = 0.0;
+      stageTargetScale = 1.0;
+      break;
+    default:
+      stageTargetX = 1.45;
+      stageTargetY = 0.0;
+      stageTargetZ = 0.0;
+      stageTargetScale = 1.0;
+  }
+}
+
+// Rotation & Drag Interaction
 let idleRotationY = 0.0;
 let currentScrollRotY = 0.0;
 let targetScrollRotY = 0.0;
+let dragRotX = 0.0;
+let dragRotY = 0.0;
+let targetDragRotX = 0.0;
+let targetDragRotY = 0.0;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+
+// Pointer inertia for mouse tracking
 let pointerX = 0.0;
 let pointerY = 0.0;
 let currentPointerX = 0.0;
 let currentPointerY = 0.0;
-let isPointerActive = false;
 
 // Floating Breathing Oscillation
-let clock = null;
 let currentBreathingY = 0.0;
 
-// Texture Loader
+// Texture & GLTF Loaders
 let textureLoader = null;
+let gltfLoaderInstance = null;
 
 // ============================================================================
 // HELPER: SPECIMEN ALIAS RESOLUTION
 // ============================================================================
 
 function resolveSpecimenId(input) {
-  if (!input) return 'monolith';
+  if (!input) return 'bag';
   const query = String(input).toLowerCase().trim();
   for (const [key, cfg] of Object.entries(MODEL_REGISTRY)) {
     if (cfg.aliases.includes(query) || key === query) {
       return key;
     }
   }
-  return 'monolith';
+  return 'bag';
 }
 
 function resolveFlavourId(input) {
@@ -256,8 +321,8 @@ function resolveFlavourId(input) {
   if (FLAVOUR_LIGHTING[query]) return query;
   if (query.includes('ember')) return 'ember';
   if (query.includes('cobalt')) return 'cobalt';
-  if (query.includes('harvest')) return 'harvest-gold';
-  if (query.includes('cosmic') || query.includes('violet')) return 'cosmic-violet';
+  if (query.includes('harvest')) return 'harvest';
+  if (query.includes('cosmic') || query.includes('violet')) return 'cosmic';
   return 'ember';
 }
 
@@ -278,7 +343,7 @@ function loadTexture(url, isColorData = true) {
     },
     undefined,
     () => {
-      // Texture loaded with graceful fallback
+      // Graceful fallback
     }
   );
 
@@ -299,51 +364,42 @@ function loadTexture(url, isColorData = true) {
 // GLTF LOADER WITH MESHOPT DECODER
 // ============================================================================
 
-let gltfLoaderInstance = null;
-
 function getGLTFLoader() {
   if (gltfLoaderInstance) return gltfLoaderInstance;
 
-  gltfLoaderInstance = new GLTFLoader();
-
-  // Configure MeshoptDecoder if available
-  if (typeof MeshoptDecoder !== 'undefined' && MeshoptDecoder) {
-    if (MeshoptDecoder.ready) {
-      MeshoptDecoder.ready.then(() => {
-        gltfLoaderInstance.setMeshoptDecoder(MeshoptDecoder);
-      }).catch(() => {});
-    } else {
-      gltfLoaderInstance.setMeshoptDecoder(MeshoptDecoder);
+  const loader = new GLTFLoader();
+  try {
+    if (typeof MeshoptDecoder !== 'undefined') {
+      loader.setMeshoptDecoder(MeshoptDecoder);
     }
+  } catch (e) {
+    // Meshopt decoder graceful fallback
   }
 
+  gltfLoaderInstance = loader;
   return gltfLoaderInstance;
 }
 
-// ============================================================================
-// MODEL PREPARATION & NORMALIZATION
-// ============================================================================
-
 function prepareModelHierarchy(specimenId, gltfScene) {
-  const config = MODEL_REGISTRY[specimenId];
+  const config = MODEL_REGISTRY[specimenId] || MODEL_REGISTRY['bag'];
   const anchor = new _THREE.Group();
-  anchor.name = `anchor_${specimenId}`;
+  anchor.name = `SpecimenAnchor_${specimenId}`;
 
   const materials = [];
   let bagMesh = null;
 
-  // Compute tight axis-aligned bounding box
+  // Compute bounding box for perfect normalization
   const box = new _THREE.Box3().setFromObject(gltfScene);
   const center = new _THREE.Vector3();
-  box.getCenter(center);
   const size = new _THREE.Vector3();
+  box.getCenter(center);
   box.getSize(size);
 
   const maxDim = Math.max(size.x, size.y, size.z);
   const targetSize = config.targetSize || 2.8;
   const scale = maxDim > 0 ? targetSize / maxDim : 1.0;
 
-  // Center the root object inside the anchor group
+  // Center root object inside anchor group
   gltfScene.position.sub(center);
   gltfScene.position.y += (config.yOffset || 0) * (1 / scale);
   anchor.add(gltfScene);
@@ -387,20 +443,37 @@ function prepareModelHierarchy(specimenId, gltfScene) {
           bagPbrMat.userData.baseOpacity = 1.0;
           node.material = bagPbrMat;
           materials.push(bagPbrMat);
-        } else if (mat.name === 'Monolith_Obsidian') {
-          mat.roughness = 0.12;
-          mat.metalness = 0.94;
-          mat.envMapIntensity = 1.4;
-        } else if (mat.name === 'Monolith_Gold') {
+        } else if (mat.name === 'DNA_Backbone_A' || mat.name === 'DNA_Backbone_B') {
           mat.roughness = 0.18;
-          mat.metalness = 0.92;
-          mat.emissiveIntensity = 1.2;
+          mat.metalness = 0.88;
         } else if (mat.name === 'Node_Glow' || mat.name === 'Neural_Core') {
           mat.emissiveIntensity = 2.0;
         }
       });
     }
   });
+
+  // If bag, optionally load orbiting chips
+  if (specimenId === 'bag' && config.chipsPath) {
+    const loader = getGLTFLoader();
+    loader.load(config.chipsPath, (chipsGltf) => {
+      const chipsScene = chipsGltf.scene;
+      const chipTex = loadTexture('./assets/models/textures/chip-spiced-3d.webp', true);
+      chipsScene.traverse((child) => {
+        if (child.isMesh) {
+          child.material = new _THREE.MeshStandardMaterial({
+            map: chipTex,
+            roughness: 0.68,
+            metalness: 0.05
+          });
+          materials.push(child.material);
+        }
+      });
+      chipsScene.scale.setScalar(0.75);
+      chipsScene.position.set(0, 0.2, 0);
+      anchor.add(chipsScene);
+    });
+  }
 
   return { anchor, materials, bagMesh };
 }
@@ -410,7 +483,7 @@ function prepareModelHierarchy(specimenId, gltfScene) {
 // ============================================================================
 
 async function loadSpecimenModel(specimenId) {
-  const config = MODEL_REGISTRY[specimenId];
+  const config = MODEL_REGISTRY[specimenId] || MODEL_REGISTRY['bag'];
   if (!config) return null;
 
   if (specimenLoadCache.has(specimenId)) {
@@ -435,7 +508,7 @@ async function loadSpecimenModel(specimenId) {
         specimenGroups.set(specimenId, anchor);
         stageMasterGroup.add(anchor);
 
-        // Hidden until activated
+        // Visibility
         anchor.visible = (specimenId === activeSpecimenId);
         setGroupOpacity(anchor, materials, (specimenId === activeSpecimenId) ? 1.0 : 0.0);
 
@@ -443,7 +516,7 @@ async function loadSpecimenModel(specimenId) {
       },
       undefined,
       () => {
-        // Fallback procedural placeholder group to avoid crashing
+        // Fallback procedural placeholder
         const fallbackGroup = new _THREE.Group();
         const placeholderGeo = new _THREE.TorusKnotGeometry(1.0, 0.35, 128, 32);
         const placeholderMat = new _THREE.MeshStandardMaterial({
@@ -504,69 +577,51 @@ export function initStage3D() {
     stageContainer.id = 'webgl-stage';
     stageContainer.className = 'webgl-stage';
     stageContainer.setAttribute('aria-hidden', 'true');
-    stageContainer.style.cssText = 'position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden;';
     document.body.insertBefore(stageContainer, document.body.firstChild);
-  } else {
-    stageContainer.style.position = 'fixed';
-    stageContainer.style.inset = '0';
-    stageContainer.style.width = '100vw';
-    stageContainer.style.height = '100vh';
-    stageContainer.style.pointerEvents = 'none';
-    stageContainer.style.zIndex = '0';
-    stageContainer.style.overflow = 'hidden';
   }
   containerEl = stageContainer;
 
   // 2. Three.js Scene Setup
   scene = new _THREE.Scene();
-  scene.matrixAutoUpdate = true;
+  scene.background = null; // Transparent canvas blending with CSS background
 
-  // 3. Responsive Camera Setup
-  const width = window.innerWidth || 1440;
-  const height = window.innerHeight || 900;
-  const aspect = width / height;
+  // 3. Perspective Camera
+  const initialWidth = window.innerWidth;
+  const initialHeight = window.innerHeight;
+  camera = new _THREE.PerspectiveCamera(45, initialWidth / initialHeight, 0.1, 100);
+  calibrateCameraFrustum(initialWidth, initialHeight);
 
-  camera = new _THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-  calibrateCameraFrustum(width, height);
-
-  // 4. WebGLRenderer with Khronos PBR Neutral Tone Mapping
+  // 4. WebGL Renderer with Khronos PBR Neutral Tone Mapping
   renderer = new _THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
-    powerPreference: 'high-performance',
-    stencil: false,
-    depth: true
+    powerPreference: 'high-performance'
   });
-
-  renderer.setSize(width, height);
+  renderer.setSize(initialWidth, initialHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-
-  // KHRONOS PBR NEUTRAL TONE MAPPING STANDARD
-  renderer.toneMapping = _THREE.NeutralToneMapping;
-  renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = _THREE.SRGBColorSpace;
+  renderer.toneMapping = _THREE.NeutralToneMapping || _THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.06;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = _THREE.PCFShadowMap;
 
-  // Styling canvas to fill stage container
-  renderer.domElement.style.cssText = 'position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; display: block;';
-  
-  // Clear any existing children and append new canvas
-  while (containerEl.firstChild) {
-    containerEl.removeChild(containerEl.firstChild);
-  }
+  containerEl.innerHTML = '';
   containerEl.appendChild(renderer.domElement);
 
-  // 5. Studio 3-Point PBR Lighting Rig
-  setupLightingRig();
-
-  // 6. Master Stage Group
+  // 5. Master Specimen Group Anchor
   stageMasterGroup = new _THREE.Group();
-  stageMasterGroup.name = 'stageMasterGroup';
+  stageMasterGroup.name = 'StageMasterGroup';
+  stageMasterGroup.position.set(stageTargetX, stageTargetY, 0);
   scene.add(stageMasterGroup);
 
-  // 7. Load Active Specimen (Monolith) and Pre-load remaining specimens
-  loadSpecimenModel(activeSpecimenId).then((record) => {
+  // 6. Studio 3-Point Lighting Rig
+  setupLightingRig();
+
+  // 7. Event Listeners & Drag Controls
+  setupEventListeners();
+
+  // 8. Load Default Specimen: Kinetic Chrono-Core ('kinetic_core')
+  loadSpecimenModel('kinetic_core').then((record) => {
     if (record && record.anchor) {
       activeSpecimenGroup = record.anchor;
       activeSpecimenGroup.visible = true;
@@ -574,49 +629,34 @@ export function initStage3D() {
     }
   });
 
-  // Pre-fetch all other specimens in background
-  Object.keys(MODEL_REGISTRY).forEach((id) => {
-    if (id !== activeSpecimenId) {
-      setTimeout(() => loadSpecimenModel(id), 120);
-    }
-  });
+  // Preload other specimens in background
+  setTimeout(() => {
+    loadSpecimenModel('cyber_monolith');
+    loadSpecimenModel('dna_helix');
+    loadSpecimenModel('neural_sphere');
+  }, 800);
 
-  // 8. Event Listeners
-  setupEventListeners();
-
-  // 9. Start Render Loop
-  isInitialized = true;
+  // 9. Start Animation & Render Loop
   startAnimationLoop();
 
-  // 10. Expose API on window.stage3D
+  isInitialized = true;
+
+  // Public singleton API
   window.stage3D = {
     setScrollProgress,
+    setChapter,
     setSpecimen,
     setFlavour,
     setWireframe,
     setRoughness,
     setMetalness,
     setLightYaw,
-    getStageState,
-    dispose: disposeStage3D,
-    renderer,
-    scene,
-    camera,
-    canvas: renderer.domElement
+    getActiveSpecimen: () => activeSpecimenId,
+    getCurrentFlavour: () => currentFlavourId
   };
-
-  // Synchronize current page flavour if document body has data-flavour
-  const bodyFlavour = document.body ? document.body.getAttribute('data-flavour') : null;
-  if (bodyFlavour) {
-    setFlavour(bodyFlavour);
-  }
 
   return window.stage3D;
 }
-
-// ============================================================================
-// LIGHTING RIG ARCHITECTURE
-// ============================================================================
 
 function setupLightingRig() {
   const flavour = FLAVOUR_LIGHTING[currentFlavourId] || FLAVOUR_LIGHTING['ember'];
@@ -656,11 +696,11 @@ function calibrateCameraFrustum(width, height) {
   camera.aspect = aspect;
 
   if (width <= 768) {
-    // Mobile Viewport (e.g. 390px iPhone portrait)
-    // Dynamic FOV & Distance Calculation: prevent horizontal and vertical model clipping
+    // Mobile Viewport (390px iPhone portrait)
     const verticalFov = Math.max(48, Math.min(58, 45 + (1.0 - Math.min(1.0, aspect)) * 14));
     camera.fov = verticalFov;
-    baseCameraDistance = 7.8;
+    baseCameraDistance = 7.4;
+    stageTargetX = 0.0; // Centered on mobile
   } else {
     // Desktop Viewport (1440px+)
     camera.fov = 45;
@@ -684,7 +724,6 @@ export function setSpecimen(specimenId) {
   const targetConfig = MODEL_REGISTRY[targetId];
   if (!targetConfig) return;
 
-  // Ensure target model is loaded
   loadSpecimenModel(targetId).then((targetRecord) => {
     if (!targetRecord || !targetRecord.anchor) return;
 
@@ -697,7 +736,6 @@ export function setSpecimen(specimenId) {
       return;
     }
 
-    // Initiate cross-fade transition
     outgoingSpecimenGroup = currentRecord;
     activeSpecimenId = targetId;
     activeSpecimenGroup = targetRecord.anchor;
@@ -713,77 +751,51 @@ export function setSpecimen(specimenId) {
 
 function updateSpecimenPillUI(activeId) {
   if (typeof document === 'undefined') return;
-  const pills = document.querySelectorAll('.specimen-pill[data-specimen]');
+  const pills = document.querySelectorAll('[data-specimen]');
   pills.forEach((pill) => {
     const spec = pill.getAttribute('data-specimen');
     const resolved = resolveSpecimenId(spec);
     const isMatch = (resolved === activeId);
-    pill.classList.toggle('active', isMatch);
-    pill.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+    if (isMatch) {
+      pill.classList.add('active');
+    } else {
+      pill.classList.remove('active');
+    }
   });
 }
 
 // ============================================================================
-// PUBLIC API: SET FLAVOUR WORLD LIGHTING & TEXTURES
+// PUBLIC API: SET FLAVOUR WORLD THEME
 // ============================================================================
 
 export function setFlavour(flavourId) {
-  const resolved = resolveFlavourId(flavourId);
-  currentFlavourId = resolved;
-
-  const config = FLAVOUR_LIGHTING[resolved];
+  const targetFlavour = resolveFlavourId(flavourId);
+  currentFlavourId = targetFlavour;
+  const config = FLAVOUR_LIGHTING[targetFlavour];
   if (!config) return;
 
-  // Set target light colors for smooth render-loop lerping
   targetKeyColor.set(config.keyColor);
   targetFillColor.set(config.fillColor);
   targetRimColor.set(config.rimColor);
   targetAmbientColor.set(config.ambientColor);
 
-  if (keyLight) keyLight.intensity = config.keyIntensity;
-  if (fillLight) fillLight.intensity = config.fillIntensity;
-  if (rimLight) rimLight.intensity = config.rimIntensity;
-  if (ambientLight) ambientLight.intensity = config.ambientIntensity;
-
-  // Update SUN Chips pillow pack texture
+  // Update bag packaging diffuse texture
   const bagRecord = specimenLoadCache.get('bag');
   if (bagRecord && bagRecord.bagMesh && bagRecord.bagMesh.material) {
     const diffuseTex = loadTexture(config.bagTexture, true);
     bagRecord.bagMesh.material.map = diffuseTex;
     bagRecord.bagMesh.material.needsUpdate = true;
   }
-
-  // Update dynamic material accent inlays
-  specimenLoadCache.forEach((record) => {
-    if (!record || !record.materials) return;
-    record.materials.forEach((mat) => {
-      if (!mat) return;
-      if (mat.name === 'Monolith_Gold' || mat.name === 'Temple_Gold') {
-        mat.emissive = new _THREE.Color(config.accentHex);
-        mat.emissiveIntensity = 0.8;
-      } else if (mat.name === 'Node_Glow') {
-        mat.emissive = new _THREE.Color(config.accentHex);
-        mat.emissiveIntensity = 2.2;
-      } else if (mat.name === 'Neural_Core') {
-        mat.emissive = new _THREE.Color(config.secondaryHex);
-        mat.emissiveIntensity = 1.6;
-      } else if (mat.name === 'DNA_Backbone_A') {
-        mat.color = new _THREE.Color(config.accentHex);
-      } else if (mat.name === 'DNA_Backbone_B') {
-        mat.color = new _THREE.Color(config.secondaryHex);
-      }
-      mat.needsUpdate = true;
-    });
-  });
 }
 
 // ============================================================================
-// PUBLIC API: SET SCROLL PROGRESS & CAMERA DOLLY
+// PUBLIC API: SET SCROLL PROGRESS & STAGE CHOREOGRAPHY
 // ============================================================================
 
 export function setScrollProgress(progress) {
   const clamped = Math.max(0, Math.min(1.0, Number(progress) || 0));
   targetScrollProgress = clamped;
+  targetScrollRotY = clamped * Math.PI * 1.5;
 }
 
 export function setWireframe(enabled) {
@@ -840,7 +852,6 @@ export function setLightYaw(degrees) {
 // ============================================================================
 
 function setupEventListeners() {
-  // Resize Handler with Debounced Calibration
   const onResize = () => {
     if (!renderer || !camera || !containerEl) return;
     const w = window.innerWidth;
@@ -848,42 +859,63 @@ function setupEventListeners() {
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     calibrateCameraFrustum(w, h);
+    setScrollProgress(targetScrollProgress);
   };
   window.addEventListener('resize', onResize, { passive: true });
   window.addEventListener('orientationchange', onResize, { passive: true });
 
-  // Passive Page Scroll Listener
-  const onScroll = () => {
-    const docEl = document.documentElement;
-    const maxScroll = Math.max(1, docEl.scrollHeight - window.innerHeight);
-    const progress = Math.min(1.0, Math.max(0, window.scrollY / maxScroll));
-    setScrollProgress(progress);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // Subtle Pointer Parallax
-  const onPointerMove = (e) => {
+  // Mouse Move Pointer Inertia
+  window.addEventListener('mousemove', (e) => {
     pointerX = (e.clientX / window.innerWidth) * 2 - 1;
     pointerY = -(e.clientY / window.innerHeight) * 2 + 1;
-    isPointerActive = true;
-  };
-  window.addEventListener('pointermove', onPointerMove, { passive: true });
+  }, { passive: true });
 
-  // UI Button Interceptors (Specimen Pills & Flavour Buttons)
-  document.addEventListener('click', (e) => {
-    const pill = e.target.closest('.specimen-pill[data-specimen]');
-    if (pill) {
-      const spec = pill.getAttribute('data-specimen');
-      setSpecimen(spec);
-      return;
-    }
-
-    const flavourBtn = e.target.closest('[data-set-flavour]');
-    if (flavourBtn) {
-      const flavour = flavourBtn.getAttribute('data-set-flavour');
-      setFlavour(flavour);
-    }
+  // Click & Drag Orbit Interaction
+  window.addEventListener('mousedown', (e) => {
+    // Only drag if not clicking buttons or links
+    if (e.target.closest('button, a, input, [role="button"]')) return;
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
   });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.clientX - dragStartX;
+    const deltaY = e.clientY - dragStartY;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+
+    targetDragRotY += deltaX * 0.0075;
+    targetDragRotX += deltaY * 0.0075;
+    targetDragRotX = Math.max(-Math.PI * 0.45, Math.min(Math.PI * 0.45, targetDragRotX));
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  // Touch Drag
+  window.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1 && !e.target.closest('button, a, input')) {
+      const touch = e.touches[0];
+      dragStartX = touch.clientX;
+      dragStartY = touch.clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1 && !e.target.closest('button, a, input')) {
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - dragStartX;
+      const deltaY = touch.clientY - dragStartY;
+      dragStartX = touch.clientX;
+      dragStartY = touch.clientY;
+
+      targetDragRotY += deltaX * 0.006;
+      targetDragRotX += deltaY * 0.006;
+    }
+  }, { passive: true });
 }
 
 // ============================================================================
@@ -917,53 +949,61 @@ function startAnimationLoop() {
     // 2. Smoothly interpolate scroll progress
     scrollProgress = _THREE.MathUtils.lerp(scrollProgress, targetScrollProgress, 0.08);
 
-    // 3. Camera Dolly & Parallax
-    const activeConfig = MODEL_REGISTRY[activeSpecimenId] || MODEL_REGISTRY['monolith'];
+    // 3. Smoothly interpolate stage coordinates (Asymmetric layout)
+    stageCurrentX = _THREE.MathUtils.lerp(stageCurrentX, stageTargetX, 0.07);
+    stageCurrentY = _THREE.MathUtils.lerp(stageCurrentY, stageTargetY, 0.07);
+    stageCurrentZ = _THREE.MathUtils.lerp(stageCurrentZ, stageTargetZ, 0.07);
+    stageCurrentScale = _THREE.MathUtils.lerp(stageCurrentScale, stageTargetScale, 0.07);
+
+    // 4. Camera Dolly & Parallax
+    const activeConfig = MODEL_REGISTRY[activeSpecimenId] || MODEL_REGISTRY['kinetic_core'];
     const distOffset = activeConfig.cameraDistOffset || 0.0;
 
-    // Scroll scrubs camera.position.z and camera.position.y
-    targetCameraZ = baseCameraDistance + distOffset - (scrollProgress * 1.35);
-    targetCameraY = scrollProgress * 0.85;
+    targetCameraZ = baseCameraDistance + distOffset - (scrollProgress * 1.15);
+    targetCameraY = scrollProgress * 0.65;
 
     camera.position.z = _THREE.MathUtils.lerp(camera.position.z, targetCameraZ, 0.07);
     camera.position.y = _THREE.MathUtils.lerp(camera.position.y, targetCameraY, 0.07);
-    camera.lookAt(0, targetCameraY * 0.25, 0);
+    camera.lookAt(0, targetCameraY * 0.2, 0);
 
-    // 4. Pointer Inertia Smoothing
+    // 5. Pointer Inertia Smoothing
     currentPointerX = _THREE.MathUtils.lerp(currentPointerX, pointerX, 0.05);
     currentPointerY = _THREE.MathUtils.lerp(currentPointerY, pointerY, 0.05);
 
-    // 5. Floating Breathing Animation
-    const breathingOffset = Math.sin(elapsedTime * 1.8) * 0.075;
-    const breathingWobble = Math.cos(elapsedTime * 1.2) * 0.025;
+    // Drag inertia
+    dragRotX = _THREE.MathUtils.lerp(dragRotX, targetDragRotX, 0.08);
+    dragRotY = _THREE.MathUtils.lerp(dragRotY, targetDragRotY, 0.08);
+
+    // 6. Floating Breathing Oscillation
+    const breathingOffset = Math.sin(elapsedTime * 1.6) * 0.065;
+    const breathingWobble = Math.cos(elapsedTime * 1.1) * 0.02;
     currentBreathingY = _THREE.MathUtils.lerp(currentBreathingY, breathingOffset, 0.08);
 
-    // 6. Model Rotation Scrubbing & Idle Spin
+    // 7. Model Rotation Scrubbing & Idle Spin
     const rotSpeed = reducedMotion ? 0 : (activeConfig.rotSpeedY || 0.0035);
-    idleRotationY += rotSpeed;
+    if (!isDragging) {
+      idleRotationY += rotSpeed;
+    }
 
-    targetScrollRotY = scrollProgress * Math.PI * 1.75;
+    targetScrollRotY = scrollProgress * Math.PI * 1.6;
     currentScrollRotY = _THREE.MathUtils.lerp(currentScrollRotY, targetScrollRotY, 0.08);
 
     if (stageMasterGroup) {
-      stageMasterGroup.position.y = currentBreathingY;
-      stageMasterGroup.rotation.y = currentScrollRotY + idleRotationY + (currentPointerX * 0.35);
-      stageMasterGroup.rotation.x = (activeConfig.baseRotX || 0.14) + (currentPointerY * 0.22);
-      stageMasterGroup.rotation.z = breathingWobble;
-    }
+      stageMasterGroup.position.x = stageCurrentX;
+      stageMasterGroup.position.y = stageCurrentY + currentBreathingY;
+      stageMasterGroup.position.z = stageCurrentZ;
+      stageMasterGroup.scale.setScalar(stageCurrentScale);
 
-    // 7. Modulate Bag Morph Target ('open') with scroll
-    const bagRecord = specimenLoadCache.get('bag');
-    if (bagRecord && bagRecord.bagMesh && bagRecord.bagMesh.morphTargetInfluences) {
-      const openWeight = Math.min(1.0, Math.max(0.0, scrollProgress * 1.4));
-      bagRecord.bagMesh.morphTargetInfluences[0] = openWeight;
+      stageMasterGroup.rotation.y = currentScrollRotY + idleRotationY + dragRotY + (currentPointerX * 0.28);
+      stageMasterGroup.rotation.x = (activeConfig.baseRotX || 0.12) + dragRotX + (currentPointerY * 0.18);
+      stageMasterGroup.rotation.z = breathingWobble;
     }
 
     // 8. Handle Cross-Fade Between Outgoing & Active Specimens
     if (isCrossFading) {
       const elapsed = performance.now() - crossFadeStartTime;
       const t = Math.min(1.0, elapsed / CROSSFADE_DURATION);
-      const easeT = t * t * (3 - 2 * t); // SmoothStep easing
+      const easeT = t * t * (3 - 2 * t);
 
       if (outgoingSpecimenGroup && outgoingSpecimenGroup.anchor) {
         setGroupOpacity(outgoingSpecimenGroup.anchor, outgoingSpecimenGroup.materials, 1.0 - easeT);
@@ -991,94 +1031,25 @@ function startAnimationLoop() {
       }
     }
 
-    // 9. Render Viewport
-    if (renderer && scene && camera) {
-      renderer.render(scene, camera);
-    }
+    renderer.render(scene, camera);
   }
 
   tick();
 }
 
-// ============================================================================
-// STAGE STATE TELEMETRY
-// ============================================================================
-
 export function getStageState() {
   return {
-    isInitialized,
     activeSpecimenId,
-    activeSpecimenName: MODEL_REGISTRY[activeSpecimenId]?.name || activeSpecimenId,
     currentFlavourId,
-    scrollProgress,
-    cameraPosition: camera ? { x: camera.position.x, y: camera.position.y, z: camera.position.z } : null,
-    modelsLoaded: Array.from(specimenLoadCache.keys()),
-    viewport: {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      isMobile: window.innerWidth <= 768
-    }
+    scrollProgress
   };
 }
 
-// ============================================================================
-// DISPOSAL & RESOURCE CLEANUP PIPELINE
-// ============================================================================
-
 export function disposeStage3D() {
-  if (animFrameId) {
-    cancelAnimationFrame(animFrameId);
-    animFrameId = null;
-  }
-
-  if (specimenLoadCache) {
-    specimenLoadCache.forEach((record) => {
-      if (record && record.anchor) {
-        record.anchor.traverse((node) => {
-          if (node.isMesh) {
-            if (node.geometry) node.geometry.dispose();
-            if (node.material) {
-              const mats = Array.isArray(node.material) ? node.material : [node.material];
-              mats.forEach((m) => {
-                if (m.map) m.map.dispose();
-                if (m.normalMap) m.normalMap.dispose();
-                m.dispose();
-              });
-            }
-          }
-        });
-      }
-    });
-    specimenLoadCache.clear();
-  }
-
-  if (textureCache) {
-    textureCache.forEach((tex) => tex.dispose());
-    textureCache.clear();
-  }
-
-  if (renderer) {
-    renderer.dispose();
-    if (renderer.domElement && renderer.domElement.parentNode) {
-      renderer.domElement.parentNode.removeChild(renderer.domElement);
-    }
-    renderer = null;
-  }
-
-  scene = null;
-  camera = null;
+  if (animFrameId) cancelAnimationFrame(animFrameId);
+  if (renderer) renderer.dispose();
   isInitialized = false;
 }
 
-// ============================================================================
-// AUTOMATIC DOM BOOTSTRAP
-// ============================================================================
+export default initStage3D;
 
-if (typeof window !== 'undefined') {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => initStage3D());
-  } else {
-    // If DOM is already ready, initialize on next microtask
-    Promise.resolve().then(() => initStage3D());
-  }
-}

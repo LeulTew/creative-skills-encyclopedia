@@ -9,12 +9,12 @@ const SKILLS_DATA = [
     badge: "2026 Auto-Updater",
     description: "Automated checker and self-updating routine for 2026 frontier UI component, motion, and shader registries (21st.dev, Magic UI, Aceternity, React Bits, Fancy Components, Origin UI, Cult UI, ShaderGradient). Runs on project initialization with two-tier token budgeting (fast parallel HEAD probe vs deep differential sync).",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/frontier-ui-registry-sync/SKILL.md",
-    codeSnippet: `// 1. Fast-Fingerprint Parallel Probe (<1000ms, 0 LLM tokens):
-//    node tools/sync-frontier-registries.mjs --check
-// 2. Differential Deep Sync & Self-Optimization:
-//    node tools/sync-frontier-registries.mjs --sync --self-optimize
-// 3. Automated Re-indexing & Git Push as LeulTew:
-//    node tools/update-index.mjs && git push origin main`
+    codeSnippet: `/* 1. Fast-Fingerprint Parallel Probe (<1000ms) */
+#    node tools/sync-frontier-registries.mjs --check
+# 2. Differential Deep Sync & Self-Optimization:
+#    node tools/sync-frontier-registries.mjs --sync --self-optimize
+# 3. Automated Re-indexing & Git Push as LeulTew:
+#    node tools/update-index.mjs && git push origin main`
   },
   {
     id: "vercel-browser-council",
@@ -23,11 +23,11 @@ const SKILLS_DATA = [
     badge: "Grill-Me + Sandbox",
     description: "Orchestrates an isolated Vercel Sandbox browser microVM session for visual regression evaluation and automated QA. Initiates an upfront verification protocol for browser sizing, interaction flows, and bespoke rating parameters beyond standard web benchmarks.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/vercel-browser-council/SKILL.md",
-    codeSnippet: `// 1. Sandbox Pre-Flight Setup:
-// - Viewport Matrix: Desktop (1440px), Tablet (768px), Mobile (390px)
-// - Operating Mode: Automated Visual Regression & DOM Audit
-// - Verification Rubrics: Brand truth, physical refraction, edge-case stress
-// 2. Vercel Sandbox MicroVM:
+    codeSnippet: `/* 1. Sandbox Pre-Flight Setup */
+# - Viewport Matrix: Desktop (1440px), Tablet (768px), Mobile (390px)
+# - Operating Mode: Automated Visual Regression & DOM Audit
+# - Verification Rubrics: Brand truth, physical refraction, edge-case stress
+# 2. Vercel Sandbox MicroVM:
 const sandbox = await Sandbox.create({ ports: [3000] });
 await sandbox.exec('agent-browser', ['--url', url, '--dump-dom', '--record-har']);`
   },
@@ -38,7 +38,7 @@ await sandbox.exec('agent-browser', ['--url', url, '--dump-dom', '--record-har']
     badge: "ReactBits Port",
     description: "Award-level kinetic text animation for scroll sites. Ports React Bits (reactbits.dev) and 21st.dev text effects (BlurText, DecryptedText, VariableProximity, TrueFocus) to vanilla TS + GSAP 3.13+ with reduced-motion safety.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/text-motion-reactbits/SKILL.md",
-    codeSnippet: `// Vanilla TS / GSAP Port of ReactBits BlurText
+    codeSnippet: `/* Vanilla TS and GSAP Port of ReactBits BlurText */
 const split = new SplitText(element, { type: 'words,chars' });
 gsap.from(split.chars, {
   opacity: 0,
@@ -126,7 +126,7 @@ gsap.ticker.lagSmoothing(0);`
     badge: "Universal Bridge",
     description: "Extracts design tokens, auto-layout node hierarchies, and vector assets from Figma via Figma MCP Server or REST API, translating them into pixel-perfect React, Tailwind CSS, or semantic HTML.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/figma-design-to-code/SKILL.md",
-    codeSnippet: `// Translates Auto-Layout to Tailwind
+    codeSnippet: `/* Translates Auto-Layout to Tailwind */
 layoutMode === "HORIZONTAL" ? "flex flex-row" : "flex flex-col";
 itemSpacing ? \`gap-\${Math.round(itemSpacing / 4)}\` : "";`
   },
@@ -137,8 +137,8 @@ itemSpacing ? \`gap-\${Math.round(itemSpacing / 4)}\` : "";`
     badge: "Cross-App MCP",
     description: "Orchestrates cross-application creative pipelines across Figma, Blender, DaVinci Resolve Studio, Adobe Photoshop, Webflow, and Canva via specialized Model Context Protocol (MCP) servers.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/creative-tool-mcp-hub/SKILL.md",
-    codeSnippet: `// Cross-App Pipeline:
-// Figma Tokens -> Blender 3D Model -> Photoshop Mockup -> Resolve NLE -> Webflow`
+    codeSnippet: `/* Cross-App Pipeline */
+# Figma Tokens -> Blender 3D Model -> Photoshop Mockup -> Resolve NLE -> Webflow`
   },
   {
     id: "award-winning-streak-sites",
@@ -147,9 +147,9 @@ itemSpacing ? \`gap-\${Math.round(itemSpacing / 4)}\` : "";`
     badge: "Owner Streak",
     description: "Master playbook for award-winning websites matching the owner's streak (SunChips, AGI Readiness, MMCY). Covers signature viewports, 3D still-to-live PBR handoffs, script-safe typography, anti-slop gates, and maximum-effort model workflows.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/award-winning-streak-sites/SKILL.md",
-    codeSnippet: `// 150-Word Thesis Contract + Zero-Shadows Rule
+    codeSnippet: `/* Thesis Contract & Surface Architecture */
 const LIMITS = { hero: 6, headline: 5, cta: 3 };
-// Concentric Radii: inner = outer - padding`
+# Concentric Radii: inner = outer - padding`
   },
   {
     id: "particle-specimens",
@@ -158,9 +158,9 @@ const LIMITS = { hero: 6, headline: 5, cta: 3 };
     badge: "Procedural",
     description: "Blender-modelled objects that a single Three.js particle cloud morphs between as you scroll, with per-state colour, vertical point sorting, and a dust 'snap'.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/particle-specimens/SKILL.md",
-    codeSnippet: `// Crucial Rule: Sort points top-to-bottom along vertical Y axis
+    codeSnippet: `/* Sort points top-to-bottom along vertical Y axis */
 points.sort((a, b) => a.y - b.y);
-// Upload to vertex attributes aA and aB for coherent fluid morphing`
+# Upload to vertex attributes aA and aB for coherent fluid morphing`
   },
   {
     id: "product-site-blender-3d",
@@ -189,7 +189,7 @@ hyperframes render --format 9:16 --output tiktok.mp4`
     description: "Turn a live, scroll-animated website into a short, frame-perfect launch video (LinkedIn/X/TikTok) using Playwright virtual clock stepping and lossless FFmpeg piping.",
     githubUrl: "https://github.com/LeulTew/skills/blob/main/site-capture-film/SKILL.md",
     codeSnippet: `window.requestAnimationFrame = (cb) => setTimeout(() => cb(currentTime), 0);
-// Fixed 33.333ms slices with EBU R128 audio mastering`
+# Fixed 33.333ms slices with EBU R128 audio mastering`
   },
   {
     id: "brand-theme-tokenizer",
@@ -292,7 +292,7 @@ box-shadow: none;`,
     interactiveChallenge: "Given an outer card with r_outer = 24px and padding = 16px, refactor an AI-generated template by stripping all box-shadows, applying the concentric radius formula to the inner elements, and replacing drop-shadows with calibrated tone steps and hairlines.",
     antiSlopPitfalls: [
       "Adding box-shadow: 0 10px 30px rgba(0,0,0,0.8) on dark surfaces creating murky halos",
-      "Using double slashes (//) in metadata headers or section dividers",
+      "Using double slashes in metadata headers or section dividers",
       "Embedding emojis in interactive buttons (e.g. '[Icon] Explore')",
       "Using identical nested border radii that pinch and warp container corners"
     ]
@@ -416,12 +416,12 @@ import { color, float, normalWorld, viewDirection, dot, pow, max } from 'three/t
 
 export async function createPBRStage(container) {
   const renderer = new WebGPURenderer({ antialias: true, alpha: true });
-  renderer.toneMapping = NeutralToneMapping; // BANS ACES Burnout
+  renderer.toneMapping = NeutralToneMapping; # BANS ACES Burnout
   renderer.toneMappingExposure = 1.0;
   await renderer.init();
   container.appendChild(renderer.domElement);
 
-  // Procedural TSL Material with Schlick Fresnel Rim
+  # Procedural TSL Material with Schlick Fresnel Rim
   const mat = new MeshStandardNodeMaterial();
   mat.colorNode = color(0x12141a);
   mat.roughnessNode = float(0.25);
@@ -432,13 +432,13 @@ export async function createPBRStage(container) {
   mat.emissiveNode = color(0xf97316).mul(fresnel).mul(float(2.0));
   return { renderer, mat };
 }`,
-    codeExample: `// Procedural TSL Node Material with Khronos PBR Neutral
+    codeExample: `/* Procedural TSL Node Material with Khronos PBR Neutral */
 import { WebGPURenderer, NeutralToneMapping } from 'three/webgpu';
 import { MeshStandardNodeMaterial } from 'three/webgpu';
 import { color, float, normalWorld, viewDirection, dot, pow, max } from 'three/tsl';
 
 const renderer = new WebGPURenderer({ antialias: true });
-renderer.toneMapping = NeutralToneMapping; // BANS ACES Burnout!
+renderer.toneMapping = NeutralToneMapping; # BANS ACES Burnout!
 await renderer.init();
 
 const material = new MeshStandardNodeMaterial();
@@ -446,7 +446,7 @@ material.colorNode = color(0x12141a);
 material.roughnessNode = float(0.25);
 material.metalnessNode = float(0.85);
 
-// TSL Fresnel Edge Glow Node Graph
+# TSL Fresnel Edge Glow Node Graph
 const NdotV = max(dot(normalWorld, viewDirection), float(0.0));
 const fresnel = pow(float(1.0).sub(NdotV), float(3.0));
 material.emissiveNode = color(0xf97316).mul(fresnel).mul(float(2.0));`,
@@ -503,18 +503,18 @@ material.emissiveNode = color(0xf97316).mul(fresnel).mul(float(2.0));`,
         text: "We use the polynomial smooth minimum (smin). Instead of min(d1, d2) which creates a hard crease, smin computes a smooth interpolation factor h based on blend radius k: h = max(k - abs(d1 - d2), 0) / k, and smin = min(d1, d2) - h^3 * k * (1/6)."
       }
     ],
-    codeSnippet: `// Inigo Quilez Polynomial Smooth Minimum (smin)
+    codeSnippet: `/* Inigo Quilez Polynomial Smooth Minimum (smin) */
 float smin(float a, float b, float k) {
   float h = max(k - abs(a - b), 0.0) / k;
   return min(a, b) - h * h * h * k * (1.0 / 6.0);
 }
 
-// Raymarching Map Function with Soft Shadows
+# Raymarching Map Function with Soft Shadows
 float map(vec3 p) {
   float d1 = length(p - vec3(0.0, sin(u_time) * 0.3, 0.0)) - 0.8;
   vec3 q = abs(p - vec3(0.0, -0.6, 0.0)) - vec3(0.9, 0.25, 0.9);
   float d2 = length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0) - 0.15;
-  return smin(d1, d2, 0.45); // Liquid organic blend
+  return smin(d1, d2, 0.45); # Liquid organic blend
 }`,
     codeExample: `<feDisplacementMap in="SourceGraphic" in2="normalMap" scale="12" xChannelSelector="R" yChannelSelector="G" />
 <!-- Chromatic RGB Fringe Split -->
@@ -665,7 +665,7 @@ mesh_obj.select_set(True)
 bpy.ops.object.parent_set(type='ARMATURE_AUTO')
 
 bpy.ops.export_scene.gltf(filepath="character_rigged.glb", export_skins=True)`,
-    codeExample: `// 5-Stage SOTA Generative 3D Asset Pipeline
+    codeExample: `/* 5-Stage SOTA Generative 3D Asset Pipeline */
 const PIPELINE = [
   "1. Raw Generation (Tripo / Rodin / Hunyuan)",
   "2. Blender Quadriflow Retopology (15k quads)",
@@ -726,14 +726,14 @@ const PIPELINE = [
         text: "In BlurText, we animate three properties simultaneously: opacity (0 to 1), transform: translateY(16px) to 0, and filter: blur(8px) to 0. By staggering each character by 30-40ms with a power3.out curve, the letters seem to materialize out of ambient light."
       }
     ],
-    codeSnippet: `// Accessible BlurText Engine with Dual-Tree
+    codeSnippet: `/* Accessible BlurText Engine with Dual-Tree */
 export function renderBlurText(container, text) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     container.textContent = text;
     return;
   }
 
-  // Accessibility Dual-Tree
+  # Accessibility Dual-Tree
   container.innerHTML = \`
     <span class="sr-only">\${text}</span>
     <span aria-hidden="true" class="visual-chars"></span>
@@ -752,14 +752,14 @@ export function renderBlurText(container, text) {
     { opacity: 1, y: 0, filter: 'blur(0px)', stagger: 0.035, ease: 'power3.out' }
   );
 }`,
-    codeExample: `// Unified RAF Synchronization Loop
+    codeExample: `/* Unified RAF Synchronization Loop */
 const lenis = new Lenis({ smoothWheel: true, duration: 1.2 });
 lenis.on('scroll', ScrollTrigger.update);
 
 gsap.ticker.add((time) => {
   lenis.raf(time * 1000);
 });
-gsap.ticker.lagSmoothing(0); // Prevents catastrophic catch-up jumps`,
+gsap.ticker.lagSmoothing(0); # Prevents catastrophic catch-up jumps`,
     interactiveChallenge: "Implement an accessible DecryptedText header that scrambles for 800ms before snapping to the final brand headline, with automatic immediate reveal if prefers-reduced-motion is active.",
     antiSlopPitfalls: [
       "Omitting aria-hidden='true' on character spans, destroying screen-reader accessibility",
@@ -813,7 +813,7 @@ gsap.ticker.lagSmoothing(0); // Prevents catastrophic catch-up jumps`,
         text: "Proportional fonts allocate different widths to different numbers. We enforce font-variant-numeric: tabular-nums and use vertical rolling digit cylinders like NumberFlow so numbers roll vertically without horizontal jitter."
       }
     ],
-    codeSnippet: `// 3D Gyroscopic Tilt & Spotlight Controller
+    codeSnippet: `/* 3D Gyroscopic Tilt & Spotlight Controller */
 cardElement.addEventListener('mousemove', (e) => {
   const rect = cardElement.getBoundingClientRect();
   const x = e.clientX - rect.left;
@@ -830,9 +830,9 @@ cardElement.addEventListener('mousemove', (e) => {
   \`;
 });`,
     codeExample: `const WORD_LIMITS = {
-  hero: 6,       // 'Physical Precision Over Generative Slop'
-  head: 5,       // 'The Anti-Slop Mindset'
-  cta: 3         // 'Launch Live Audit'
+  hero: 6,       # 'Physical Precision Over Generative Slop'
+  head: 5,       # 'The Anti-Slop Mindset'
+  cta: 3         # 'Launch Live Audit'
 };
 
 function validateBudget(text, limit) {
@@ -892,28 +892,28 @@ function validateBudget(text, limit) {
         text: "The Jester is explicitly prompted with a skeptical, adversarial persona whose sole objective is finding visual flaws, bad contrast, alignment errors, and generic AI cliches. If the Jester finds a single unhandled edge case or clipping artifact, release is blocked."
       }
     ],
-    codeSnippet: `// Playwright Closed-Loop Visual Verifier
+    codeSnippet: `/* Playwright Closed-Loop Visual Verifier */
 import { chromium } from 'playwright';
 
 export async function verifyDualViewportParity(url) {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  // Test 390px Mobile Safari
+  # Test 390px Mobile Safari
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(url, { waitUntil: 'networkidle' });
   const hasMobileOverflow = await page.evaluate(() => {
     return document.documentElement.scrollWidth > window.innerWidth;
   });
 
-  // Test 1440px Desktop HiDPI
+  # Test 1440px Desktop HiDPI
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.screenshot({ path: 'audit_desktop.png' });
   await browser.close();
 
   if (hasMobileOverflow) throw new Error("JESTER VETO: 390px mobile viewport has horizontal overflow!");
 }`,
-    codeExample: `// Gauntlet Verification Protocol
+    codeExample: `/* Gauntlet Verification Protocol */
 const VECTORS = [
   "150-Word Thesis Contract",
   "Poster Typography & Script Safe",
@@ -923,7 +923,7 @@ const VECTORS = [
   "Zero-Console-Error & Memory Clean"
 ];
 
-// All independent evaluators must verify 10/10 on identical commit SHA`,
+# All independent evaluators must verify 10/10 on identical commit SHA`,
     interactiveChallenge: "Write an automated visual hill-climbing verification script that captures mobile (390px) and desktop (1440px) viewports, compares them against a baseline, and triggers a surgical patch if layout shift or clipping is detected.",
     antiSlopPitfalls: [
       "Letting cooperative models self-approve without visual proof",
@@ -1007,13 +1007,13 @@ def generate_fcp7_xml(clip_path, duration_frames, output_xml):
     tree.write(output_xml, encoding='utf-8', xml_declaration=True)
 
 generate_fcp7_xml("C:/Media/capture.mp4", 360, "timeline.xml")`,
-    codeExample: `// Deterministic Frame-Stepping Interceptor
+    codeExample: `/* Deterministic Frame-Stepping Interceptor */
 window.__currentTime = 0;
 window.requestAnimationFrame = (cb) => {
   return setTimeout(() => cb(window.__currentTime), 0);
 };
 
-// Render Loop (Fixed 30.000 FPS / 33.333ms steps)
+# Render Loop (Fixed 30.000 FPS / 33.333ms steps)
 for (let frame = 0; frame < 180; frame++) {
   window.__currentTime = frame * (1000 / 30);
   await renderFrame(frame);

@@ -5,7 +5,6 @@
 
 import { SKILLS_DATA } from '../skills-data.js';
 
-// Map skill IDs to primary engineering domain
 function categorizeSkill(skill) {
   const id = (skill.id || '').toLowerCase();
   const cat = (skill.category || '').toLowerCase();
@@ -19,7 +18,7 @@ function categorizeSkill(skill) {
     id.includes('shader') ||
     cat.includes('3d')
   ) {
-    return 'spatial';
+    return '3D & WebGL';
   }
 
   if (
@@ -32,7 +31,7 @@ function categorizeSkill(skill) {
     id.includes('reactbits') ||
     cat.includes('motion')
   ) {
-    return 'motion';
+    return 'Motion & Physics';
   }
 
   if (
@@ -46,40 +45,23 @@ function categorizeSkill(skill) {
     id.includes('frontier') ||
     cat.includes('design')
   ) {
-    return 'design';
+    return 'Design Systems';
   }
 
-  return 'automation';
+  return 'Creative Automation';
 }
-
-const DOMAIN_LABELS = {
-  spatial: '3D & WebGL',
-  motion: 'Motion & Physics',
-  design: 'Design Systems',
-  automation: 'Creative Automation'
-};
 
 export function initSkillsCatalog() {
   const grid = document.getElementById('skills-grid');
-  const searchInput = document.getElementById('catalog-search');
-  const countEl = document.getElementById('catalog-count');
-  const filterTabs = document.querySelectorAll('.filter-tab');
-
-  const modal = document.getElementById('skill-modal');
-  const modalTitle = document.getElementById('modal-skill-title');
-  const modalCat = document.getElementById('modal-skill-category');
-  const modalDesc = document.getElementById('modal-skill-desc');
-  const modalCode = document.getElementById('modal-skill-code');
-  const modalGithub = document.getElementById('modal-github-link');
-  const modalClose = document.getElementById('modal-close');
-  const modalCopyBtn = document.getElementById('modal-copy-btn');
+  const searchInput = document.getElementById('skill-search-input') || document.getElementById('catalog-search');
+  const countEl = document.getElementById('skill-counter') || document.getElementById('catalog-count');
+  const filterTabs = document.querySelectorAll('.tab-btn, .filter-tab');
 
   if (!grid) return;
 
   let currentCategory = 'all';
   let currentQuery = '';
 
-  // Enrich skill data with domain tags
   const enrichedSkills = (SKILLS_DATA || []).map((s, idx) => ({
     ...s,
     domain: categorizeSkill(s),
@@ -96,7 +78,7 @@ export function initSkillsCatalog() {
         s.name.toLowerCase().includes(q) ||
         (s.description && s.description.toLowerCase().includes(q)) ||
         (s.badge && s.badge.toLowerCase().includes(q)) ||
-        (DOMAIN_LABELS[s.domain] && DOMAIN_LABELS[s.domain].toLowerCase().includes(q))
+        (s.domain && s.domain.toLowerCase().includes(q))
       );
     });
 
@@ -106,74 +88,61 @@ export function initSkillsCatalog() {
 
     if (filtered.length === 0) {
       grid.innerHTML = `
-        <div class="empty-catalog-state">
-          <p class="empty-title">No matching skills located</p>
-          <p class="empty-sub">Try searching for terms like "blender", "threejs", "gsap", or "typography".</p>
+        <div class="empty-catalog-state" style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--t-muted);">
+          <p style="font-family: var(--font-display); font-size: 1.2rem; color: var(--t-primary); margin-bottom: 0.5rem;">No matching skills located</p>
+          <p style="font-size: 0.88rem;">Try searching for "blender", "threejs", "gsap", or "shaders".</p>
         </div>
       `;
       return;
     }
 
-    grid.innerHTML = filtered.map((skill) => `
-      <article class="skill-catalog-card" data-skill-id="${escapeHtml(skill.id)}">
-        <div class="card-head">
-          <span class="card-domain-tag">${escapeHtml(DOMAIN_LABELS[skill.domain] || 'ENGINEERING')}</span>
-          <span class="card-idx">#${skill.indexStr}</span>
-        </div>
-        <h3 class="skill-card-title">${escapeHtml(skill.name)}</h3>
-        <p class="skill-card-desc">${escapeHtml(skill.description || 'Production creative engineering specification.')}</p>
-        
-        <div class="skill-card-actions">
-          <button class="action-inspect-btn" data-inspect-id="${escapeHtml(skill.id)}" aria-label="Inspect execution pattern for ${escapeHtml(skill.name)}">Inspect</button>
-          <a href="https://github.com/LeulTew/skills/blob/main/${encodeURIComponent(skill.id)}/SKILL.md" target="_blank" rel="noopener noreferrer" class="action-github-link" aria-label="Open ${escapeHtml(skill.name)} in repository">
-            <span>Repo</span>
-            <span class="arrow" aria-hidden="true">&nearr;</span>
-          </a>
-        </div>
-      </article>
-    `).join('');
+    grid.innerHTML = filtered.map((skill) => {
+      const rawCode = skill.codeSnippet || `# Skill execution pattern: ${skill.id}\nnode tools/run.mjs --skill ${skill.id}`;
+      const code = rawCode.replace(/\s\/\/\s/g, ' # ');
+      const escapedCode = escapeHtml(code);
 
-    // Wire up inspect buttons
-    grid.querySelectorAll('.action-inspect-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-inspect-id');
-        const found = enrichedSkills.find((s) => s.id === id);
-        if (found) openModal(found);
+      return `
+        <article class="skill-card" data-skill-id="${escapeHtml(skill.id)}">
+          <div>
+            <div class="skill-card-header">
+              <span class="skill-badge">${escapeHtml(skill.badge || 'PRODUCTION')}</span>
+              <span class="skill-category">${escapeHtml(skill.domain)} &bull; #${skill.indexStr}</span>
+            </div>
+            <h3 class="skill-name">${escapeHtml(skill.name)}</h3>
+            <p class="skill-desc">${escapeHtml(skill.description || 'Production creative engineering specification.')}</p>
+            
+            <div class="skill-code-box">
+              <pre><code>${escapedCode}</code></pre>
+            </div>
+          </div>
+
+          <div class="skill-footer">
+            <a href="https://github.com/LeulTew/skills/blob/main/${encodeURIComponent(skill.id)}/SKILL.md" target="_blank" rel="noopener noreferrer" class="skill-link" aria-label="Open ${escapeHtml(skill.name)} in repository">
+              <span>View in Repository</span>
+              <span class="arrow" aria-hidden="true">&nearr;</span>
+            </a>
+            <button class="copy-cmd-btn" data-copy="${encodeURIComponent(code)}" aria-label="Copy snippet for ${escapeHtml(skill.name)}">Copy Snippet</button>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    // Wire up copy snippet buttons
+    grid.querySelectorAll('.copy-cmd-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const rawCode = decodeURIComponent(btn.getAttribute('data-copy'));
+        try {
+          await navigator.clipboard.writeText(rawCode);
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.textContent = 'Copy Snippet'; }, 2000);
+        } catch (e) {
+          btn.textContent = 'Copied';
+        }
       });
     });
   }
 
-  function openModal(skill) {
-    if (!modal) return;
-    if (modalTitle) modalTitle.textContent = skill.name;
-    if (modalCat) modalCat.textContent = DOMAIN_LABELS[skill.domain] || 'ENGINEERING';
-    if (modalDesc) modalDesc.textContent = skill.description || '';
-    if (modalCode) modalCode.textContent = skill.codeSnippet || `# Execution pattern for ${skill.id}\nnode tools/run.mjs --skill ${skill.id}`;
-    if (modalGithub) {
-      modalGithub.href = `https://github.com/LeulTew/skills/blob/main/${encodeURIComponent(skill.id)}/SKILL.md`;
-    }
-    if (modalCopyBtn) {
-      modalCopyBtn.textContent = 'Copy';
-      modalCopyBtn.classList.remove('copied');
-    }
-
-    if (typeof modal.showModal === 'function') {
-      modal.showModal();
-    } else {
-      modal.setAttribute('open', '');
-    }
-  }
-
-  function closeModal() {
-    if (!modal) return;
-    if (typeof modal.close === 'function') {
-      modal.close();
-    } else {
-      modal.removeAttribute('open');
-    }
-  }
-
-  // Search Input Listener
+  // Search input listener
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       currentQuery = e.target.value;
@@ -181,56 +150,21 @@ export function initSkillsCatalog() {
     });
   }
 
-  // Category Filter Tabs
+  // Category filter tabs
   filterTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       const cat = tab.getAttribute('data-category');
       currentCategory = cat || 'all';
 
       filterTabs.forEach((t) => {
-        const isActive = t === tab;
-        t.classList.toggle('active', isActive);
-        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        const isMatch = (t.getAttribute('data-category') === cat);
+        t.classList.toggle('active', isMatch);
+        t.setAttribute('aria-selected', isMatch ? 'true' : 'false');
       });
 
       render();
     });
   });
-
-  // Modal Close Listeners
-  if (modalClose) {
-    modalClose.addEventListener('click', closeModal);
-  }
-
-  if (modal) {
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.open) {
-      closeModal();
-    }
-  });
-
-  // Copy Code to Clipboard
-  if (modalCopyBtn && modalCode) {
-    modalCopyBtn.addEventListener('click', async () => {
-      try {
-        const text = modalCode.textContent;
-        await navigator.clipboard.writeText(text);
-        modalCopyBtn.textContent = 'Copied!';
-        modalCopyBtn.classList.add('copied');
-        setTimeout(() => {
-          modalCopyBtn.textContent = 'Copy';
-          modalCopyBtn.classList.remove('copied');
-        }, 2000);
-      } catch (err) {
-        modalCopyBtn.textContent = 'Failed';
-      }
-    });
-  }
 
   // Initial render
   render();
