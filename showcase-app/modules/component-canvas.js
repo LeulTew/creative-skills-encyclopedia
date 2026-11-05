@@ -1119,7 +1119,7 @@ export function initShaderCanvasPlayground() {
   if (cobeSpinBtn) {
     cobeSpinBtn.addEventListener('click', () => {
       const isSpinning = cobeGlobeStage.toggleAutoSpin();
-      if (cobeSpinIcon) cobeSpinIcon.textContent = isSpinning ? '||' : '▷';
+      if (cobeSpinIcon) cobeSpinIcon.textContent = isSpinning ? 'Pause' : 'Play';
       if (cobeSpinText) cobeSpinText.textContent = isSpinning ? 'Pause Spin' : 'Resume Spin';
     });
   }

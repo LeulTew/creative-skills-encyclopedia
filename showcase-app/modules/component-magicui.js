@@ -277,7 +277,7 @@ function injectStyles() {
         opacity: 0.45;
       }
       100% {
-        width: 420px;
+        width: 420px; max-width: 100%;
         height: 420px;
         opacity: 0;
         transform: scale(1);
@@ -302,7 +302,7 @@ function injectStyles() {
         border-color: #38bdf8;
       }
       100% {
-        width: 380px;
+        width: 380px; max-width: 100%;
         height: 380px;
         opacity: 0;
         border-color: #f97316;
@@ -453,7 +453,7 @@ function injectStyles() {
 
     .pin-3d-card {
       position: relative;
-      width: 340px;
+      width: 340px; max-width: 100%;
       padding: 1.8rem;
       background: var(--c-elevated-zinc, #121520);
       border: 1px solid var(--c-hairline-bright, rgba(255, 255, 255, 0.14));
@@ -578,7 +578,7 @@ function ensureStageDOM() {
   stageContainer.className = 'magic-stage-section';
   stageContainer.innerHTML = `
     <!-- Magic UI & Aceternity Section Header -->
-    <div class="liquid-glass-card" style="margin-bottom: 2rem;">
+    <div class="bento-section-wrapper" style="margin-bottom: 2rem;">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
         <div>
           <span class="meta-tag" style="margin-bottom:0.5rem; border-color:rgba(56,189,248,0.3); color:var(--c-sapphire);">
@@ -603,7 +603,7 @@ function ensureStageDOM() {
     <div class="magic-grid-2col">
       
       <!-- 1. AnimatedBeam (Magic UI) -->
-      <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+      <div class="bento-section-wrapper" style="display:flex; flex-direction:column; justify-content:space-between;">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
             <span class="meta-tag">Magic UI · AnimatedBeam</span>
@@ -680,7 +680,7 @@ function ensureStageDOM() {
       </div>
 
       <!-- 2. RippleEffect (Magic UI) -->
-      <div class="liquid-glass-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+      <div class="bento-section-wrapper" style="display:flex; flex-direction:column; justify-content:space-between;">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
             <span class="meta-tag">Magic UI · RippleEffect</span>
@@ -835,7 +835,7 @@ function ensureStageDOM() {
     </div>
 
     <!-- Row 3: PinContainer3D Interactive Stage -->
-    <div class="liquid-glass-card" style="margin-bottom: 2rem;">
+    <div class="bento-section-wrapper" style="margin-bottom: 2rem;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
         <div>
           <span class="meta-tag">Aceternity UI · PinContainer3D</span>

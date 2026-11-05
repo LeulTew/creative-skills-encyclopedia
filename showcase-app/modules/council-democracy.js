@@ -985,7 +985,7 @@ export function initCouncilDemocracy() {
   appendTerminalLine({
     agent: 'opus',
     type: 'critique',
-    html: `<span class="t-time">${getLogTimestamp()}</span> <span class="t-opus">[CLAUDE OPUS 5.5]</span> Ethiopic typography clamp scaling verified at 5.8rem on desktop and 2.4rem on mobile.`
+    html: `<span class="t-time">${getLogTimestamp()}</span> <span class="t-opus">[CLAUDE OPUS 5.5]</span> Bricolage Grotesque typography clamp scaling verified at 5.8rem on desktop and 2.4rem on mobile.`
   });
   appendTerminalLine({
     agent: 'astra',

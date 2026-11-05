@@ -272,10 +272,10 @@ function mountMicroUIStageIfNeeded() {
       Deterministic tactile micro-interactions engineered with sub-pixel layout stability and physical cursor feedback. Explore dual-axis perspective matrix transforms with dynamic specular glare, layout-preserving odometer counters with sliding digit cylinders, and magnetic spring pointer attractors ($F = -k \cdot x$).
     </p>
 
-    <div class="microui-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem; margin-bottom:1.2rem;">
+    <div class="microui-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap:1.5rem; margin-bottom:1.2rem;">
       
       <!-- 1. Hover.dev 3D Tilt Card -->
-      <div class="liquid-glass-card microui-subcard" style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
+      <div class="microui-subcell" style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
             <span class="meta-tag">Hover.dev · 3D Tilt</span>
@@ -329,7 +329,7 @@ function mountMicroUIStageIfNeeded() {
       </div>
 
       <!-- 2. NumberFlow Odometer Counter -->
-      <div class="liquid-glass-card microui-subcard" style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
+      <div class="microui-subcell" style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
             <span class="meta-tag">NumberFlow · Emil Kowalski</span>
@@ -384,7 +384,7 @@ function mountMicroUIStageIfNeeded() {
       </div>
 
       <!-- 3. MagneticButton -->
-      <div class="liquid-glass-card microui-subcard" style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
+      <div class="microui-subcell" style="background:var(--c-deep-zinc); border:1px solid var(--c-cobalt-rim); border-radius:var(--r-inner); padding:1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
         <div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
             <span class="meta-tag">Hover.dev · Magnetic Physics</span>
